@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #181818;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    width: 1230px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.header-container > nav {
+    display: flex;
+    color: #ffffff;
+    width: 980px;
+    justify-content: space-between;
+}
+
+.header-container > nav > div:hover {
+    color: #888888;
+    cursor: pointer;
+}
+
+.header-container > div {
+    width: 93px;
+    display: flex;
+    justify-content: space-between;
+}
