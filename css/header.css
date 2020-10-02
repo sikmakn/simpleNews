@@ -5,7 +5,6 @@
 }
 
 header {
-
     background: #181818;
     height: 70px;
     display: flex;
@@ -25,6 +24,8 @@ header {
     color: #ffffff;
     width: 980px;
     justify-content: space-between;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .header-container > nav > div:hover {
