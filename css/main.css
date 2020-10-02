@@ -5,6 +5,11 @@ main {
     margin: 31px auto 0;
 }
 
+h2 {
+    font-size: 20px;
+    margin-bottom: 23px;
+}
+
 /*tag*/
 .tag {
     color: #ffffff;
@@ -74,7 +79,6 @@ main {
 
 .main-news-container > .big-news-container p {
     font-size: 16px;
-    line-height: 150%;
     margin-top: 15px;
 }
 
@@ -82,19 +86,10 @@ main {
     margin-bottom: 54px;
 }
 
-.last-news {
-    width: 240px;
-}
-
 /*hot container*/
 
 .hot-container {
     width: 240px;
-}
-
-.hot-container > h2 {
-    font-size: 20px;
-    margin-bottom: 23px;
 }
 
 .small-news-container {
@@ -113,4 +108,20 @@ main {
 .small-news-container > h2 {
     margin-top: 8px;
     margin-bottom: 11px;
+}
+
+/*last news*/
+.last-news {
+    width: 240px;
+}
+
+.last-news .news-description{
+    font-size: 12px;
+    margin-bottom: 18px;
+    line-height: 150%;
+}
+
+.last-news .news-description >span{
+    margin-right: 7px;
+    color: #888888;
 }
