@@ -1,0 +1,14 @@
+.last-news {
+    width: 240px;
+}
+
+.last-news .news-description{
+    font-size: 12px;
+    margin-bottom: 18px;
+    line-height: 150%;
+}
+
+.last-news .news-description >span{
+    margin-right: 7px;
+    color: #888888;
+}

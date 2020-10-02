@@ -1,0 +1,36 @@
+main {
+    display: flex;
+}
+
+.statistics-container {
+}
+
+.full-news-container {
+    margin-left: 180px;
+    width: 780px;
+    margin-right: 30px;
+}
+
+.full-news-container > .info-container {
+    margin-bottom: 18px;
+}
+
+.full-news-container h1 {
+    font-size: 35px;
+    line-height: 120%;
+    margin-bottom: 33px;
+}
+
+.full-news-container img {
+    width: 780px;
+    height: 407px;
+    margin-bottom: 34px;
+}
+
+.full-news-container > .full-text {
+    font-size: 18px;
+}
+
+.full-news-container > .full-text > p {
+    margin-bottom: 27px;
+}
