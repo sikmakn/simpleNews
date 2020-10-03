@@ -42,3 +42,20 @@ h2 {
 .tag.blue {
     background: #609FFF;
 }
+
+.button-container button {
+    padding: 12px 32px 16px;
+    border: none;
+    background: none;
+    font-weight: 500;
+}
+
+.button-container button.add-button {
+    background: #FF1850;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+}

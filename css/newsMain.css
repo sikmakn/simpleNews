@@ -107,19 +107,6 @@ main {
     width: 100%;
 }
 
-.comments-container .add-container .button-container button {
-    padding: 12px 32px 16px;
-    border: none;
-    background: none;
-    font-weight: 500;
-}
-
-.comments-container .add-container .button-container button.add-button {
-    background: #FF1850;
-    color: #ffffff;
-    font-weight: 600;
-}
-
 .user-comment-image {
     border-radius: 50%;
     width: 70px;
