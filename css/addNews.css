@@ -38,6 +38,7 @@ main {
     color: #000000;
     font-weight: bold;
     font-size: 35px;
+    opacity: 1;
 }
 
 .full-news-container .image-container {
