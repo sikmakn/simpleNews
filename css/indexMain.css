@@ -22,6 +22,13 @@ main {
 /*main news*/
 .main-news-container {
     width: 690px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-news-container > .big-news-container a {
+    text-decoration: none;
+    color: #000000;
 }
 
 .main-news-container > .big-news-container > img {
@@ -62,12 +69,17 @@ main {
     margin-bottom: 26px;
 }
 
-.small-news-container > img {
+.small-news-container >a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.small-news-container > a > img {
     width: 240px;
     margin-bottom: 15px;
 }
 
-.small-news-container > h2 {
+.small-news-container > a > h2 {
     font-size: 14px;
 }
 
