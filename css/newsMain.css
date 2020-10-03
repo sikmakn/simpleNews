@@ -34,3 +34,68 @@ main {
 .full-news-container > .full-text > p {
     margin-bottom: 27px;
 }
+
+.full-news-container > .full-text > p:last-child {
+    margin-bottom: 0;
+}
+
+/*comments-container*/
+.comments-container {
+    margin-top: 45px;
+}
+
+.comments-container .name {
+    color: #888888;
+    font-size: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 46px;
+    border-bottom: 1px solid #ECECEC;;
+}
+
+.comments-container .name > span {
+    color: #000000;
+}
+
+.comments-container .add-container {
+    display: flex;
+    margin-bottom: 45px;
+}
+
+.comments-container .add-container img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    margin-right: 21px;
+}
+
+.comments-container .add-container > div {
+    width: 690px;
+}
+
+.comments-container .add-container input {
+    color: #888888;
+    border: none;
+    border-bottom: 1px solid #ECECEC;
+    padding-bottom: 4px;
+    width: 100%;
+    margin-bottom: 11px;
+}
+
+.comments-container .add-container .button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.comments-container .add-container .button-container button {
+    padding: 12px 32px 16px;
+    border: none;
+    background: none;
+    font-weight: 500;
+}
+
+.comments-container .add-container .button-container button.add-button{
+    background: #FF1850;
+    color: #ffffff;
+    font-weight: 600;
+}
