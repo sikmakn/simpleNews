@@ -1,10 +1,36 @@
 main {
     display: flex;
+    position: relative;
 }
 
+/*statistics*/
 .statistics-container {
+    position: fixed;
+    top: 344px;
+    height: 109px;
+    width: 98px;
+    color: #6A6A6A;
+    font-size: 16px;
+    line-height: 120%;
 }
 
+.statistics-container > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 21px;
+}
+
+.statistics-container img {
+    width: 23px;
+    height: 23px;
+    margin-right: 13px;
+}
+
+.statistics-container > .edit {
+    cursor: pointer;
+}
+
+/*end statistics*/
 .full-news-container {
     margin-left: 180px;
     width: 780px;
@@ -123,15 +149,16 @@ main {
     margin-bottom: 8px;
 }
 
-.comment-container > div > .comment-text .answer-reference{
+.comment-container > div > .comment-text .answer-reference {
     color: #FF1850;
 }
 
-.comment-container > div > .answer{
+.comment-container > div > .answer {
     color: #888888;
     font-weight: 500;
 }
-.comment-container > div >.hide-show{
+
+.comment-container > div > .hide-show {
     color: #FF1850;
     display: flex;
     align-items: center;
@@ -140,6 +167,6 @@ main {
     font-weight: 500;
 }
 
-.comment-container > div >.hide-show > img{
+.comment-container > div > .hide-show > img {
     margin-right: 12px;
 }
