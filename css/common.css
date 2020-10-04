@@ -43,6 +43,30 @@ h2 {
     background: #609FFF;
 }
 
+.tag.red {
+    background: #F34C4C;
+}
+
+.tag.darkgreen {
+    background: #97CC00;
+}
+
+.tag.orange {
+    background: #FFAD33;
+}
+
+.tag.violet {
+    background: #8100E6;
+}
+
+.tag.lightblue {
+    background: #00C8D4;
+}
+
+.tag.lightred {
+    background: #F15A2A;
+}
+
 .button-container button {
     padding: 12px 32px 16px;
     border: none;

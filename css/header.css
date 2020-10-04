@@ -5,12 +5,27 @@ header {
     align-items: center;
 }
 
+.active-tag {
+    color: #888888;
+}
+
 .header-container {
     width: 1230px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
+    position: relative;
+}
+
+#search-input-container {
+    position: absolute;
+    top: 13px;
+    right: 100px;
+    background: #181818;
+    border: none;
+    border-bottom: 1px solid #888888;
+    color: #ffffff;
 }
 
 .header-container > nav {

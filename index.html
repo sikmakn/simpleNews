@@ -14,28 +14,29 @@
 <header>
     <div class="header-container">
         <a href="./index.html"><img src="./public/logo.svg" alt="LIVE"></a>
-        <nav>
-            <div>Новости</div>
-            <div>Финансы</div>
-            <div>Недвижимость</div>
-            <div>Спорт</div>
-            <div>Афиша</div>
-            <div>Магазины</div>
-            <div>Работа</div>
-            <div>ТВ программа</div>
-            <div>Почта</div>
-            <div>Погода</div>
+        <nav id="nav">
+            <div id="news" class="active-tag">Новости</div>
+            <div id="finance">Финансы</div>
+            <div id="real estate">Недвижимость</div>
+            <div id="sport">Спорт</div>
+            <div id="movies">Афиша</div>
+            <div id="shops">Магазины</div>
+            <div id="job">Работа</div>
+            <div id="TV">ТВ программа</div>
+            <div id="mail">Почта</div>
+            <div id="weather">Погода</div>
         </nav>
         <div>
-            <img src="./public/search.svg" alt="поиск">
+            <input type="search" id="search-input-container" style="display: none">
+            <img src="./public/search.svg" alt="поиск" id="search">
             <img src="./public/user_logo.svg" alt="user">
             <img src="./public/add.svg" alt="добавить новость">
         </div>
     </div>
 </header>
 <main>
-    <div class="main-news-container">
-        <div class="big-news-container">
+    <div id="main-news-container" class="main-news-container">
+        <div class="big-news-container" style="display: none">
             <a href="./news.html">
                 <img src="./public/news1.jpg" alt="">
             </a>
@@ -62,14 +63,20 @@
                     в своей «Эпитоме» пишет, что на момент смерти Гаю было примерно сорок семь лет.</p>
             </a>
         </div>
-        <!-- Вторая новость -->
-        <div class="big-news-container">
-            <a href="./news.html">
-                <img src="./public/news1.jpg" alt="">
-            </a>
-            <div class="info-container">
-                <div class="tag yellow">НЕДВИЖИМОСТЬ</div>
-                <span class="data">29 сентября 2020 в 10:58</span>
+
+    </div>
+    <div class="hot-container">
+        <h2>Горячее</h2>
+        <div id="trends-container">
+            <div class="small-news-container" style="display: none">
+                <a href="./news.html" class="image-link">
+                    <img src="./public/news1.jpg" alt="">
+                </a>
+                <div class="tag blue">СПОРТ</div>
+                <a class="header" href="./news.html">
+                    <h2>Проглотившая слона змея стала классикой
+                        за 2000 лет до «Маленького принца».</h2>
+                </a>
                 <div class="statistic">
                     <div>
                         <img src="./public/heart.svg" alt="">
@@ -81,115 +88,20 @@
                     </div>
                 </div>
             </div>
-            <a href="./news.html">
-                <h1>Требониан Галл происходил из старинного этрусского рода. В конце правления императора Деция Траяна
-                    он
-                    занимал должность легата</h1>
-                <p>Будущий император Гай Вибий Требониан Галл родился около 206 года.
-                    Эта датировка основана на сообщении Псевдо-Аврелия Виктора, который в своей «Эпитоме» пишет, что на
-                    момент смерти Гаю было примерно сорок семь лет.</p>
-            </a>
         </div>
-        <!--конец второй новости-->
-    </div>
-    <div class="hot-container">
-        <h2>Горячее</h2>
-
-        <div class="small-news-container">
-            <a href="./news.html" class="image-link">
-                <img src="./public/news1.jpg" alt="">
-            </a>
-            <div class="tag blue">СПОРТ</div>
-            <a class="header" href="./news.html">
-                <h2>Проглотившая слона змея стала классикой
-                    за 2000 лет до «Маленького принца».</h2>
-            </a>
-            <div class="statistic">
-                <div>
-                    <img src="./public/heart.svg" alt="">
-                    1,5 тыс
-                </div>
-                <div>
-                    <img src="./public/comments.svg" alt="">
-                    11,5 тыс
-                </div>
-            </div>
-        </div>
-        <!--контейнер новостей-->
-        <div class="small-news-container">
-            <a href="./news.html">
-                <img src="./public/news1.jpg" alt="">
-            </a>
-            <div class="tag blue">СПОРТ</div>
-            <a class="header" href="./news.html">
-                <h2>Проглотившая слона змея стала классикой за 2000 лет до «Маленького принца».</h2>
-            </a>
-            <div class="statistic">
-                <div>
-                    <img src="./public/heart.svg" alt="">
-                    1,5 тыс
-                </div>
-                <div>
-                    <img src="./public/comments.svg" alt="">
-                    11,5 тыс
-                </div>
-            </div>
-        </div>
-        <div class="small-news-container">
-            <a href="./news.html">
-                <img src="./public/news1.jpg" alt="">
-            </a>
-            <div class="tag blue">СПОРТ</div>
-            <a class="header" href="./news.html">
-                <h2>Проглотившая слона змея стала классикой за 2000 лет до «Маленького принца».</h2>
-            </a>
-            <div class="statistic">
-                <div>
-                    <img src="./public/heart.svg" alt="">
-                    1,5 тыс
-                </div>
-                <div>
-                    <img src="./public/comments.svg" alt="">
-                    11,5 тыс
-                </div>
-            </div>
-        </div>
-        <!--конец-->
     </div>
     <div class="last-news">
         <h2>Последние новости</h2>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список,
-            где в Минске устанавливают видеокамеры для наблюдения за улицей
+        <div id="last-news-container">
+            <div class="news-description" style="display: none">
+                <span>16:20</span>
+                В Сети появился список,
+                где в Минске устанавливают видеокамеры для наблюдения за улицей
+            </div>
         </div>
-        <!-- маленькие новости ещё-->
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <div class="news-description">
-            <span>16:20</span>
-            В Сети появился список, где в Минске устанавливают видеокамеры для наблюдения за улицей
-        </div>
-        <!--конец-->
     </div>
 </main>
+<script src="./src/index.js" type="module"></script>
+<script src="./src/header.js" type="module"></script>
 </body>
 </html>
