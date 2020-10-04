@@ -58,3 +58,9 @@ main {
 .full-news-container .full-text {
     margin-bottom: 53px;
 }
+
+.button-container{
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+}

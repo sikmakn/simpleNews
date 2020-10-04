@@ -5,7 +5,7 @@
     line-height: 150%;
 }
 
-main{
+main {
     width: 1230px;
     margin: 31px auto 0;
     display: flex;
@@ -56,6 +56,6 @@ h2 {
     font-weight: 600;
 }
 
-[contentEditable=true]:empty:not(:focus):before{
-    content:attr(data-text)
+[contentEditable=true]:empty:not(:focus):before {
+    content: attr(data-text)
 }
