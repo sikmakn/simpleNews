@@ -27,3 +27,7 @@ export function addStatistic(node, likesCount, commentsCount) {
     const comments = makeFriendlyNumber(commentsCount);
     node.children[1].innerHTML = `<img src="./public/comments.svg" alt=""> ${comments}`;
 }
+
+export function switchDisplay(node) {
+    node.style.display = node.style.display === "none" ? "flex" : "none";
+}

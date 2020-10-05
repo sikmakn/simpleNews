@@ -7,6 +7,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/addNews.css">
     <link rel="stylesheet" href="css/indexMain.css">
     <link rel="stylesheet" href="./css/lastNews.css">
 </head>
@@ -30,11 +31,11 @@
             <input type="search" id="search-input-container" style="display: none">
             <img src="./public/search.svg" alt="поиск" id="search">
             <img src="./public/user_logo.svg" alt="user">
-            <img src="./public/add.svg" alt="добавить новость">
+            <img src="./public/add.svg" alt="добавить новость" id="add-page-link">
         </div>
     </div>
 </header>
-<main>
+<main id="main-page">
     <div id="main-news-container" class="main-news-container">
         <div class="big-news-container" style="display: none">
             <a href="./news.html">
@@ -101,7 +102,38 @@
         </div>
     </div>
 </main>
+<main id="add-page" style="display: none">
+    <form action="#" method="post" id="add-news-form" enctype="multipart/form-data" class="full-news-container">
+        <div class="info-container">
+            Категория:
+            <select name="tag">
+                <option value="sport">Спорт</option>
+                <option value="finance">Финансы</option>
+                <option value="real estate">Недвижимость</option>
+                <option value="movies">Афиша</option>
+                <option value="shops">Магазины</option>
+                <option value="job">Работа</option>
+                <option value="TV">ТВ программа</option>
+                <option value="mail">Почта</option>
+                <option value="weather">Погода</option>
+            </select>
+        </div>
+        <input name="title" type="text" placeholder="Текст заголовка" class="news-name">
+        <div id="image-container" class="image-container">
+            <label for="file">
+                <img src="./public/plus.svg" alt="">
+            </label>
+            <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png .svg .gif">
+        </div>
+        <div class="full-text" contentEditable=true data-text="Основной текст новости" id="full-text"></div>
+        <div class="button-container">
+            <button id="cancel-button">Отмена</button>
+            <button class="add-button" id="save">Сохранить новость</button>
+        </div>
+    </form>
+</main>
 <script src="./src/index.js" type="module"></script>
+<script src="./src/addNews.js" type="module"></script>
 <script src="./src/header.js" type="module"></script>
 </body>
 </html>

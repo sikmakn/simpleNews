@@ -12,6 +12,10 @@ main {
     color: #888888;
 }
 
+.info-container select option{
+    border: none;
+}
+
 .info-container select {
     border: none;
     font-weight: 600;
@@ -63,4 +67,12 @@ main {
     width: 100%;
     justify-content: flex-end;
     display: flex;
+}
+
+#add-news-form #file{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    position: absolute;
+    z-index: -10;
 }
