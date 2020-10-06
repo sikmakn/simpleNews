@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/addNews.css">
     <link rel="stylesheet" href="css/indexMain.css">
     <link rel="stylesheet" href="./css/lastNews.css">
+    <link rel="stylesheet" href="./css/newsMain.css">
 </head>
 <body>
 <header>
@@ -35,7 +36,7 @@
         </div>
     </div>
 </header>
-<main id="main-page">
+<main id="main-page" >
     <div id="main-news-container" class="main-news-container">
         <div class="big-news-container" style="display: none">
             <a href="./news.html">
@@ -103,7 +104,7 @@
     </div>
 </main>
 <main id="add-page" style="display: none">
-    <form action="#" method="post" id="add-news-form" enctype="multipart/form-data" class="full-news-container">
+    <form action="#" onsubmit="return false" method="post" id="add-news-form" enctype="multipart/form-data" class="full-news-container">
         <div class="info-container">
             Категория:
             <select name="tag">
@@ -131,6 +132,109 @@
             <button class="add-button" id="save">Сохранить новость</button>
         </div>
     </form>
+</main>
+<main id="news-page" style="display: none">
+    <div class="statistics-container">
+        <div>
+            <img src="./public/heart.svg" alt="">
+            11,5 тыс
+        </div>
+        <div>
+            <img src="./public/comments.svg" alt="">
+            11,5 тыс
+        </div>
+        <img src="./public/edit.svg" alt="" class="edit">
+    </div>
+    <div class="full-news-container">
+        <div class="info-container">
+            <div class="tag green">ФИНАНСЫ</div>
+            <span class="data">29 сентября 2020 в 10:58</span>
+        </div>
+        <h1>Мининформ приостанавливает статус СМИ для TUT.BY на три месяца
+            с 1 октября</h1>
+        <img src="./public/news1.jpg" alt="">
+        <div class="full-text">
+            <p>По приказу министра, с 1 октября TUT.BY утратит статус СМИ. При этом мы по-прежнему будем работать как
+                интернет-ресурс без статуса СМИ.</p>
+            <p>Напомним, что регистрация интернет-ресурсов в качестве сетевых изданий в Беларуси носит добровольный
+                характер. Статус СМИ дает некоторые преимущества, в частности возможность на законных основаниях
+                присутствовать в порядке, определенном законодательством Республики Беларусь, в районах вооруженных
+                конфликтов или чрезвычайных ситуаций, на массовых мероприятиях, в местах других общественно важных
+                событий и
+                передавать оттуда информацию. Однако TUT.BY был зарегистрирован как СМИ лишь в январе 2019 года, до
+                этого —
+                с момента основания в 2000 году — портал работал без этого статуса.</p>
+            <p>По приказу министра, с 1 октября TUT.BY утратит статус СМИ. При этом мы по-прежнему будем работать как
+                интернет-ресурс без статуса СМИ.</p>
+            <p>Напомним, что регистрация интернет-ресурсов в качестве сетевых изданий в Беларуси носит добровольный
+                характер. Статус СМИ дает некоторые преимущества, в частности возможность на законных основаниях
+                присутствовать в порядке, определенном законодательством Республики Беларусь, в районах вооруженных
+                конфликтов или чрезвычайных ситуаций, на массовых мероприятиях, в местах других общественно важных
+                событий и
+                передавать оттуда информацию. Однако TUT.BY был зарегистрирован как СМИ лишь в январе 2019 года, до
+                этого —
+                с момента основания в 2000 году — портал работал без этого статуса.</p>
+        </div>
+        <div class="comments-container">
+            <div class="name">Комментарии: <span>11,5 тыс</span></div>
+            <div class="add-container">
+                <img class="user-comment-image" src="./public/user_logo.svg" alt="">
+                <div>
+                    <input type="text" placeholder="Оставьте комментарий">
+                    <div class="button-container">
+                        <button>Отмена</button>
+                        <button class="add-button">Оставить комментарий</button>
+                    </div>
+                </div>
+            </div>
+            <div class="added-comments-container">
+                <div class="comment-container">
+                    <img class="user-comment-image" src="./public/user_logo.svg" alt="">
+                    <div>
+                        <span class="username">Андрей Свиридов</span>
+                        <div class="comment-text">
+                            На Максима подписан уже месяца три, все пересмотрел - много в чем не согласен с ним но и
+                            много в чем разделяю его мнение.
+                            Спасибо за работу.
+                            Ваш канал лично меня заставляет задуматся и в тех моментах с которыми не согласен заставляет
+                            самому попитатся докопатся до истины.
+                            А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!
+                        </div>
+                        <span class="answer">Ответить</span>
+                        <span class="hide-show"> <img src="./public/up-arrow.svg" alt="">Скрыть все ответы</span>
+                        <div class="comment-container">
+                            <img src="./public/user_logo.svg" alt="" class="subcomment-user-logo">
+                            <div>
+                                <span class="username">Я</span>
+                                <div class="comment-text">
+                                    <span class="answer-reference">@Максим Давыдов</span>
+                                    На Максима подписан уже месяца три, все пересмотрел - много в чем не согласен с ним
+                                    но и
+                                    много в чем разделяю его мнение.
+                                    Спасибо за работу.
+                                    Ваш канал лично меня заставляет задуматся и в тех моментах с которыми не согласен
+                                    заставляет
+                                    самому попитатся докопатся до истины.
+                                    А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!
+                                </div>
+                                <span class="answer">Редактировать</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="last-news">
+        <h2>Последние новости</h2>
+        <div id="last-news-container-newspage">
+            <div class="news-description" style="display: none">
+                <span>16:20</span>
+                В Сети появился список,
+                где в Минске устанавливают видеокамеры для наблюдения за улицей
+            </div>
+        </div>
+    </div>
 </main>
 <script src="./src/index.js" type="module"></script>
 <script src="./src/addNews.js" type="module"></script>

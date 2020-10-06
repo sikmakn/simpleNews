@@ -1,5 +1,5 @@
 import {DATE_OPTION} from "./options.js";
-import {addImage, addStatistic, addTag} from "./helpers.js";
+import {addImage, addStatistic, addTag, addNewsLinkClick} from "./helpers.js";
 
 export default {
     id: "main-news-container",
@@ -9,9 +9,10 @@ export default {
 function configCardNode(node, oneNews) {
     const {id, tag, date, title, description, commentsCount, likesCount, img} = oneNews;
     node.style.display = "block";
-    node.id = id;
+    addNewsLinkClick(node.children[0], id);
     addImage(node.children[0], img);
     addInfo(node.children[1], tag, date, commentsCount, likesCount);
+    addNewsLinkClick(node.children[2], id);
     addTextContent(node.children[2], title, description);
 }
 

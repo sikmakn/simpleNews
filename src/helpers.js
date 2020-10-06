@@ -1,4 +1,5 @@
 import {TAG_COLORS, TAG_NAMES} from "./options.js";
+import outNews from "./news.js";
 
 export function makeFriendlyNumber(num) {
     if (num >= 1000000)
@@ -30,4 +31,11 @@ export function addStatistic(node, likesCount, commentsCount) {
 
 export function switchDisplay(node) {
     node.style.display = node.style.display === "none" ? "flex" : "none";
+}
+
+export function addNewsLinkClick(node, id) {
+    node.onclick = event => {
+        event.preventDefault();
+        outNews(id);
+    };
 }

@@ -1,12 +1,14 @@
+import {addNewsLinkClick} from "./helpers.js";
+
 export default {
-    id:"last-news-container",
+    id: "last-news-container",
     configCardNode
 }
 
-function configCardNode(node, {id, title, date}) {
+export function configCardNode(node, {id, title, date}) {
     node.style.display = "block";
-    node.id = id;
-    node.innerHTML='';
+    addNewsLinkClick(node, id);
+    node.innerHTML = '';
     node.append(createDateSpan(date));
     node.append(title);
 }
