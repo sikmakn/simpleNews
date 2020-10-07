@@ -157,3 +157,8 @@ main {
 .comment-container > div > .hide-show > img {
     margin-right: 12px;
 }
+
+.sub-comment-container {
+    display: flex;
+    flex-direction: column;
+}

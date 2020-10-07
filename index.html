@@ -36,10 +36,10 @@
         </div>
     </div>
 </header>
-<main id="main-page" >
+<main id="main-page">
     <div id="main-news-container" class="main-news-container">
         <div class="big-news-container" style="display: none">
-            <a href="./news.html">
+            <a href="#">
                 <img src="./public/news1.jpg" alt="">
             </a>
             <div class="info-container">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <a href="./news.html">
+            <a href="#">
                 <h1>Требониан Галл происходил из старинного этрусского рода.
                     В конце правления императора Деция Траяна он
                     занимал должность легата</h1>
@@ -71,11 +71,11 @@
         <h2>Горячее</h2>
         <div id="trends-container">
             <div class="small-news-container" style="display: none">
-                <a href="./news.html" class="image-link">
+                <a href="#" class="image-link">
                     <img src="./public/news1.jpg" alt="">
                 </a>
                 <div class="tag blue">СПОРТ</div>
-                <a class="header" href="./news.html">
+                <a class="header" href="#">
                     <h2>Проглотившая слона змея стала классикой
                         за 2000 лет до «Маленького принца».</h2>
                 </a>
@@ -104,7 +104,8 @@
     </div>
 </main>
 <main id="add-page" style="display: none">
-    <form action="#" onsubmit="return false" method="post" id="add-news-form" enctype="multipart/form-data" class="full-news-container">
+    <form action="#" onsubmit="return false" method="post" id="add-news-form" enctype="multipart/form-data"
+          class="full-news-container">
         <div class="info-container">
             Категория:
             <select name="tag">
@@ -177,7 +178,7 @@
         </div>
         <div class="comments-container">
             <div class="name">Комментарии: <span>11,5 тыс</span></div>
-            <div class="add-container">
+            <div id="add-comment-container" class="add-container">
                 <img class="user-comment-image" src="./public/user_logo.svg" alt="">
                 <div>
                     <input type="text" placeholder="Оставьте комментарий">
@@ -187,8 +188,8 @@
                     </div>
                 </div>
             </div>
-            <div class="added-comments-container">
-                <div class="comment-container">
+            <div id="comment-container" class="added-comments-container">
+                <div class="comment-container" style="display: none">
                     <img class="user-comment-image" src="./public/user_logo.svg" alt="">
                     <div>
                         <span class="username">Андрей Свиридов</span>
@@ -202,22 +203,34 @@
                         </div>
                         <span class="answer">Ответить</span>
                         <span class="hide-show"> <img src="./public/up-arrow.svg" alt="">Скрыть все ответы</span>
-                        <div class="comment-container">
+                        <div class="sub-comment-container">
+                            <div class="comment-container" style="display: none">
+                                <img src="./public/user_logo.svg" alt="" class="subcomment-user-logo">
+                                <div>
+                                    <span class="username">Я</span>
+                                    <div class="comment-text">
+                                        <span class="answer-reference">@Максим Давыдов</span>
+                                        На Максима подписан уже месяца три, все пересмотрел - много в чем не согласен с
+                                        ним
+                                        но и
+                                        много в чем разделяю его мнение.
+                                        Спасибо за работу.
+                                        Ваш канал лично меня заставляет задуматся и в тех моментах с которыми не
+                                        согласен
+                                        заставляет
+                                        самому попитатся докопатся до истины.
+                                        А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!
+                                    </div>
+                                    <span class="answer">Редактировать</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: none" class="comment-container">
                             <img src="./public/user_logo.svg" alt="" class="subcomment-user-logo">
                             <div>
                                 <span class="username">Я</span>
-                                <div class="comment-text">
-                                    <span class="answer-reference">@Максим Давыдов</span>
-                                    На Максима подписан уже месяца три, все пересмотрел - много в чем не согласен с ним
-                                    но и
-                                    много в чем разделяю его мнение.
-                                    Спасибо за работу.
-                                    Ваш канал лично меня заставляет задуматся и в тех моментах с которыми не согласен
-                                    заставляет
-                                    самому попитатся докопатся до истины.
-                                    А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!
-                                </div>
-                                <span class="answer">Редактировать</span>
+                                <input class="comment-text" type="text">
+                                <span class="answer">Сохранить</span>
                             </div>
                         </div>
                     </div>

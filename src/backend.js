@@ -1,4 +1,5 @@
 let lastId = 4;
+let lastCommentId = 2;
 
 export const news = [
     {
@@ -135,3 +136,100 @@ export function addNews(newArticle) {
     });
     return article;
 }
+
+export const allComments = [
+    {
+        id: 1,
+        newsId: 1,
+        text: 'текст комметария',
+        user: {
+            userId: 1,
+            username: 'Иван Иванов',
+            img: './public/user_logo3.jpg'
+        },
+        subComments: [
+            {
+                id: 1,
+                commentId: 1,
+                newsId: 1,
+                userToAnswer: {
+                    userId: 2,
+                    username: 'Олег Викторов',
+                    img: './public/user_logo2.jpg'
+                },
+                text: 'текс подкомментария',
+                user: {
+                    userId: 1,
+                    username: 'Иван Иванов',
+                    img: './public/user_logo3.jpg'
+                },
+            }
+        ],
+
+    },
+    {
+        id: 2,
+        newsId: 1,
+        text: 'текст комметария2',
+        user: {
+            userId: 1,
+            username: 'Иван Иванов',
+            img: './public/user_logo3.jpg'
+        },
+        subComments: [
+            {
+                id: 1,
+                commentId: 1,
+                newsId: 1,
+                userToAnswer: {
+                    userId: 2,
+                    username: 'Олег Викторов',
+                    img: './public/user_logo2.jpg'
+                },
+                text: 'текс подкомментария',
+                user: {
+                    userId: 1,
+                    username: 'Иван Иванов',
+                    img: './public/user_logo3.jpg'
+                }
+            }
+        ],
+
+    }
+];
+
+export function updateComment(id, text) {
+    allComments.find(c => c.id === id).text = text;
+}
+
+export function updateSubComment(id, text) {
+    allComments.find(c => c.subComments.find(sc => sc.id === id))
+        .subComments.find(sc => sc.id === id).text = text;
+}
+
+export function addComment(text, newsId) {
+    lastCommentId++;
+    allComments.push({
+        newsId,
+        text,
+        id: lastCommentId,
+        user: {...loggedUser}
+    });
+}
+
+export function addSubComment(newsId, text, user, answerTo) {
+    const subComments = allComments.find(c => c.id === newsId).subComments;
+    subComments.push({
+        id: subComments[subComments.length - 1].id + 1,
+        text,
+        user,
+        answerTo
+    });
+}
+
+export const loggedUser = {
+    id: 1,
+    username: 'Дядя Володя',
+    img: './public/user_logo.svg'
+};
+
