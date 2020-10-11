@@ -32,14 +32,40 @@ function answerHandler(newsId, answerNode) {
     };
 }
 
-function redactCommentHandler({id, text, node}) {
-    updateComment(id, text);
-    configText(node, null, text);
+function redactCommentHandler({id, node}) {
+    let isEditable = false;
+    node.children[1].children[2].onclick = () => {
+        if (!isEditable) {
+            console.log(node.children)
+            node.children[1].children[1].setAttribute("contentEditable", "true");
+            node.children[1].children[2].innerHTML = "Сохранить";
+        } else {
+            node.children[1].children[1].removeAttribute("contentEditable");
+            const text = node.children[1].children[1].innerText;
+            updateComment(id, text);
+            configText(node.children[1].children[1], null, text);
+            node.children[1].children[2].innerHTML = "Редактировать";
+        }
+        isEditable = !isEditable;
+    }
 }
 
-function redactSubComment({id, text, answerTo, node}) {
-    updateSubComment(id, text);
-    configText(node, answerTo, text)
+
+function redactSubComment({id, answerTo, node}) {
+    let isEditable = false;
+    node.children[1].children[2].onclick = () => {
+        if (!isEditable) {
+            node.children[1].children[1].setAttribute("contentEditable", "true");
+            node.children[1].children[2].innerHTML = "Сохранить";
+        } else {
+            node.children[1].children[1].removeAttribute("contentEditable");
+            const text = node.children[1].children[1].innerText;
+            updateSubComment(id, text);
+            configText(node.children[1].children[1], answerTo, text);
+            node.children[1].children[2].innerHTML = "Редактировать";
+        }
+        isEditable = !isEditable;
+    }
 }
 
 function configHideShowButton(contentContainer) {
@@ -69,7 +95,8 @@ function configComment({user, id, text, commentId, answerTo}, node, redactHandle
     copy.children[0].src = user.img;
     const contentContainer = copy.children[1];
     if (user.id === loggedUser.id) {
-        configCommentBehavior(contentContainer, "Я", "Редактировать", redactHandler);
+        configCommentBehavior(contentContainer, "Я", "Редактировать",
+            () => redactHandler({id, node:copy, answerTo}));
     } else {
         configCommentBehavior(contentContainer, user.username, "Ответить", answerHandler);
     }
