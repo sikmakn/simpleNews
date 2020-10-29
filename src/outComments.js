@@ -36,7 +36,6 @@ function redactCommentHandler({id, node}) {
     let isEditable = false;
     node.children[1].children[2].onclick = () => {
         if (!isEditable) {
-            console.log(node.children)
             node.children[1].children[1].setAttribute("contentEditable", "true");
             node.children[1].children[2].innerHTML = "Сохранить";
         } else {
@@ -96,7 +95,7 @@ function configComment({user, id, text, commentId, answerTo}, node, redactHandle
     const contentContainer = copy.children[1];
     if (user.id === loggedUser.id) {
         configCommentBehavior(contentContainer, "Я", "Редактировать",
-            () => redactHandler({id, node:copy, answerTo}));
+            () => redactHandler({id, node: copy, answerTo}));
     } else {
         configCommentBehavior(contentContainer, user.username, "Ответить", answerHandler);
     }

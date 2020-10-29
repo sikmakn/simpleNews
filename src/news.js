@@ -1,7 +1,7 @@
 import outCards from "./outCards.js";
 import {addComment, fullNews, loggedUser, news} from "./backend.js";
 import {configCardNode} from "./lastNewsCardConfig.js";
-import {addStatistic, addTag, htmlToElement, makeFriendlyNumber} from "./helpers.js";
+import {addStatistic, addTag, makeFriendlyNumber} from "./helpers.js";
 import {DATE_OPTION} from "./options.js";
 import {switchToNews} from "./router.js";
 import outComments from "./outComments.js";

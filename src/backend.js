@@ -209,7 +209,7 @@ export function makeLike(newsId) {
     const oneNews = news.find(n => n.id === newsId);
     oneNews.isLiked = !oneNews.isLiked;
     const oneFullNews = fullNews.find(n => n.id === newsId);
-    oneFullNews.isLiked = ! oneFullNews.isLiked;
+    oneFullNews.isLiked = !oneFullNews.isLiked;
 }
 
 export function updateComment(id, text) {
