@@ -1,0 +1,20 @@
+header {
+  background: #181818;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.headerContainer {
+  width: 1230px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.headerContainer > div {
+  width: 93px;
+  display: flex;
+  justify-content: space-between;
+}

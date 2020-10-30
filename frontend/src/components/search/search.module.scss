@@ -1,0 +1,30 @@
+@import '../../colors.module';
+
+.searchContainer {
+  position: relative;
+
+  input {
+    position: absolute;
+    left: -195px;
+    top: -3px;
+    border: none;
+    border-bottom: 1px solid $lightgrey;
+    background: none;
+    width: 183px;
+    height: 26px;
+    background: $black;
+  }
+
+  .active {
+    display: block;
+  }
+
+  .unActive {
+    display: none;
+  }
+
+  .activateIcon {
+    cursor: pointer;
+  }
+
+}

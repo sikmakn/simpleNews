@@ -1,0 +1,13 @@
+nav {
+  display: flex;
+  color: #ffffff;
+  width: 980px;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+nav > div:hover {
+  color: #888888;
+  cursor: pointer;
+}
