@@ -4,6 +4,7 @@ import classes from './tagsFilter.module.scss';
 const TagsFilter:React.FC = () =>{
     return (
         <nav className={classes.nav}>
+            {/*todo links*/}
             <div>Новости</div>
             <div>Финансы</div>
             <div>Недвижимость</div>
