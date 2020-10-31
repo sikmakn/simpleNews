@@ -1,4 +1,4 @@
-@import '../../colors.module';
+@import '../../commonCss/colors';
 
 .searchContainer {
   position: relative;
@@ -12,7 +12,7 @@
     background: none;
     width: 183px;
     height: 26px;
-    background: $black;
+    background: $header_background_color;
   }
 
   .active {

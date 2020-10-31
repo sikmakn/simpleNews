@@ -1,6 +1,8 @@
+@import '../../commonCss/colors';
+
 nav {
   display: flex;
-  color: #ffffff;
+  color: $header_text_color;
   width: 980px;
   justify-content: space-between;
   font-weight: 600;
@@ -8,6 +10,6 @@ nav {
 }
 
 nav > div:hover {
-  color: #888888;
+  color: $midgrey;
   cursor: pointer;
 }

@@ -1,12 +1,15 @@
+@import '../../commonCss/colors';
+@import '../../commonCss/common';
+
 header {
-  background: #181818;
+  background: $header_background_color;
   height: 70px;
   display: flex;
   align-items: center;
 }
 
 .headerContainer {
-  width: 1230px;
+  width: $working_area_width;
   display: flex;
   justify-content: space-between;
   align-items: center;
