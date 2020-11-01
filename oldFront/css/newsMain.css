@@ -3,7 +3,7 @@ main {
     position: relative;
 }
 
-/*statistics*/
+/*statistic*/
 .statistics-container {
     position: fixed;
     top: 344px;
@@ -30,7 +30,7 @@ main {
     cursor: pointer;
 }
 
-/*end statistics*/
+/*end statistic*/
 .full-news-container {
     margin-left: 180px;
     width: 780px;

@@ -7,15 +7,15 @@ export interface TagProps {
 }
 
 export enum TagName {
-    SPORT,
-    FINANCE,
-    MOVIES,
-    REAL_STATE,
-    SHOPS,
-    WORKING,
-    TV,
-    MAIL,
-    WEATHER
+    SPORT = 'sport',
+    FINANCE = 'finance',
+    MOVIES = 'movies',
+    REAL_STATE = 'real_state',
+    SHOPS = 'shops',
+    WORKING = 'working',
+    TV = 'tv',
+    MAIL = 'mail',
+    WEATHER = 'weather',
 }
 
 const tags = {

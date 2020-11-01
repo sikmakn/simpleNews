@@ -4,4 +4,5 @@ main {
   width: $working_area_width;
   margin: 0 auto;
   display: flex;
+  justify-content: space-between;
 }

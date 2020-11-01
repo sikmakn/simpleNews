@@ -1,0 +1,15 @@
+.statistic {
+  display: flex;
+  color: #888888;
+  font-size: 12px;
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 21px;
+
+    img {
+      margin-right: 6px;
+    }
+  }
+}
