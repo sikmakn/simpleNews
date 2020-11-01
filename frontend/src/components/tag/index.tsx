@@ -64,7 +64,7 @@ const tags = {
         path: '/weather',
         color: '#F15A2A',
     },
-}
+};
 
 const Tag: React.FC<TagProps> = ({name}) =>
     (<Link

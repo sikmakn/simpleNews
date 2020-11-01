@@ -3,6 +3,7 @@ import Header from '../../components/header';
 import MainLayout from '../../components/mainLayout';
 import styles from './news.module.scss';
 import BigNewsCard from "../../components/bigNewsCard";
+import SmallNewsCard from "../../components/smallNewsCard";
 
 const bigNews = [
     {
@@ -52,6 +53,42 @@ const bigNews = [
     }
 ];
 
+const smallNews = [
+    {
+        id: '1',
+        img: 'news1.jpg',
+        tag: 'finance',
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+        statistic: {
+            likesCount: 1500,
+            commentsCount: 11500,
+        }
+    },
+    {
+        id: '2',
+        img: 'news1.jpg',
+        tag: 'sport',
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+        statistic: {
+            likesCount: 1500,
+            commentsCount: 11500,
+        }
+    },
+    {
+        id: '3',
+        img: 'news1.jpg',
+        tag: 'tv',
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+        statistic: {
+            likesCount: 1500,
+            commentsCount: 11500,
+        }
+    }
+];
+
 const MainPage: React.FC = () => {
     return (
         <>
@@ -59,6 +96,10 @@ const MainPage: React.FC = () => {
             <MainLayout>
                 <div className={styles.mainNewsContainer}>
                     {bigNews.map(n => <BigNewsCard key={n.id} {...n}/>)}
+                </div>
+                <div className={styles.hotContainer}>
+                    <h2>Горячее</h2>
+                    {smallNews.map(n => <SmallNewsCard key={n.id} {...n}/>)}
                 </div>
             </MainLayout>
         </>

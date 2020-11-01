@@ -21,7 +21,7 @@ export interface BigNewsCardProps {
 const BigNewsCard: React.FC<BigNewsCardProps> =
     ({id, img, tag, date, title, description, statistic}) => (
         <div className={styles.bigNewsContainer}>
-            <Link to={`news/${id}`}>
+            <Link to={`news/${id}`} className={styles.newsLink}>
                 <img src={img} alt=""/>
             </Link>
             <div className={styles.infoContainer}>
@@ -29,7 +29,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
                 <Date date={date}/>
                 <Statistic {...statistic}/>
             </div>
-            <Link to={`news/${id}`}>
+            <Link to={`news/${id}`} className={styles.newsLink}>
                 <h1>{title}</h1>
                 <p>{description}</p>
             </Link>
