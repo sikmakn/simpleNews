@@ -5,6 +5,7 @@ import styles from './news.module.scss';
 import BigNewsCard from "../../components/bigNewsCard";
 import SmallNewsCard from "../../components/smallNewsCard";
 import LastNewsCard from "../../components/lastNewsCard";
+import NewsColumnLayout from "../../components/newsColumnLayout";
 
 const bigNews = [
     {
@@ -119,14 +120,12 @@ const MainPage: React.FC = () => {
                 <div className={styles.mainNewsContainer}>
                     {bigNews.map(n => <BigNewsCard key={n.id} {...n}/>)}
                 </div>
-                <div className={styles.hotContainer}>
-                    <h2>Горячее</h2>
+                <NewsColumnLayout columnTitle={'Горячее'}>
                     {smallNews.map(n => <SmallNewsCard key={n.id} {...n}/>)}
-                </div>
-                <div className={styles.hotContainer}>
-                    <h2>Последние новости</h2>
+                </NewsColumnLayout>
+                <NewsColumnLayout columnTitle={'Последние новости'}>
                     {lastNews.map(n => <LastNewsCard key={n.id} {...n}/>)}
-                </div>
+                </NewsColumnLayout>
             </MainLayout>
         </>
     );
