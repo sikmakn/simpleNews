@@ -1,13 +1,14 @@
 import React from 'react';
-import {Link} from "react-router-dom";
-import classes from './header.module.scss';
-import TagsFilter from "../tagsFIlter";
-import Search from "../search";
+import {Link} from 'react-router-dom';
+import styles from './header.module.scss';
+import TagsFilter from '../tagsFIlter';
+import Search from '../search';
+import {PAGE_PATHS} from '../../paths';
 
 const Header: React.FC = () => {
-    return (<header className={classes.header}>
-            <div className={classes.headerContainer}>
-                <Link to="/">
+    return (<header className={styles.header}>
+            <div className={styles.headerContainer}>
+                <Link to={PAGE_PATHS.MAIN}>
                     <img src="logo.svg" alt="LIVE"/>
                 </Link>
                 <TagsFilter/>

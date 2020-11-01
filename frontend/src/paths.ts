@@ -11,3 +11,7 @@ export const TAG_PATHS = {
     [TagEnum.MAIL]: '/mail',
     [TagEnum.WEATHER]: '/weather',
 }
+
+export const PAGE_PATHS = {
+  MAIN:'/',
+};
