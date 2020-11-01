@@ -50,7 +50,7 @@ const tags = {
         color: '#FFAD33',
     },
     [TagName.TV]: {
-        name: 'ТВ_ПРОГРАММА',
+        name: 'ТВ ПРОГРАММА',
         path: '/tv',
         color: '#8100E6',
     },

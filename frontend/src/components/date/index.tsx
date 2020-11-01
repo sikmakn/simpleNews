@@ -11,7 +11,9 @@ const Date: React.FC<DateProps> = ({date}) =>
             date.toLocaleString('ru', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
             })}
     </span>)
 

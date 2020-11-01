@@ -24,7 +24,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
             <Link to={`news/${id}`}>
                 <img src={img} alt=""/>
             </Link>
-            <div className="info-container">
+            <div className={styles.infoContainer}>
                 <Tag name={tag as TagName}/>
                 <Date date={date}/>
                 <Statistic {...statistic}/>

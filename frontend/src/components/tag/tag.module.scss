@@ -1,4 +1,4 @@
-@import '../../commonCss/common';
+@import '../../commonCss/colors';
 
 .tag {
   color: $light_text_color;
@@ -6,5 +6,5 @@
   font-weight: 600;
   font-size: 11px;
   margin-right: 30px;
-  display: inline-block
+  display: inline-block;
 }
