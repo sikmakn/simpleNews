@@ -4,6 +4,7 @@ import MainLayout from '../../components/mainLayout';
 import styles from './news.module.scss';
 import BigNewsCard from "../../components/bigNewsCard";
 import SmallNewsCard from "../../components/smallNewsCard";
+import LastNewsCard from "../../components/lastNewsCard";
 
 const bigNews = [
     {
@@ -89,6 +90,27 @@ const smallNews = [
     }
 ];
 
+const lastNews = [
+    {
+        id: '1',
+        date: new Date(2020, 5, 22, 10, 22),
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+    },
+    {
+        id: '2',
+        date: new Date(2020, 5, 22, 10, 22),
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+    },
+    {
+        id: '3',
+        date: new Date(2020, 5, 22, 10, 22),
+        title: 'Требониан Галл происходил из старинного этрусского рода. ' +
+            'В конце правления императора Деция Траяна он занимал должность легата',
+    }
+];
+
 const MainPage: React.FC = () => {
     return (
         <>
@@ -100,6 +122,10 @@ const MainPage: React.FC = () => {
                 <div className={styles.hotContainer}>
                     <h2>Горячее</h2>
                     {smallNews.map(n => <SmallNewsCard key={n.id} {...n}/>)}
+                </div>
+                <div className={styles.hotContainer}>
+                    <h2>Последние новости</h2>
+                    {lastNews.map(n => <LastNewsCard key={n.id} {...n}/>)}
                 </div>
             </MainLayout>
         </>
