@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import styles from './bigNewsCard.module.scss';
-import Tag, {TagName} from '../tag';
+import Tag from '../tag';
 import Date from '../date';
 import Statistic from '../statistic';
+import {TagEnum} from '../../types/tag';
 
 export interface BigNewsCardProps {
     id: string
@@ -25,7 +26,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
                 <img src={img} alt=""/>
             </Link>
             <div className={styles.infoContainer}>
-                <Tag name={tag as TagName}/>
+                <Tag type={tag as TagEnum}/>
                 <Date date={date}/>
                 <Statistic {...statistic}/>
             </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Tag, {TagName} from '../tag';
+import Tag from '../tag';
 import Statistic from '../statistic';
 import styles from './smallNewsCard.module.scss';
+import {TagEnum} from "../../types/tag";
 
 export interface SmallNewsCardProps {
     id: string
@@ -22,7 +23,7 @@ const SmallNewsCard: React.FC<SmallNewsCardProps> =
                 <img src={img} alt=""/>
             </Link>
             <div className={styles.tagContainer}>
-                <Tag name={tag as TagName}/>
+                <Tag type={tag as TagEnum}/>
             </div>
             <Link to={`news/${id}`} className={styles.title}>
                 <h2>{title}</h2>
