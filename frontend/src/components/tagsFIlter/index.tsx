@@ -8,7 +8,7 @@ const TagsFilter: React.FC = () => {
     return (
         <nav className={styles.nav}>
             {Object.values(TagEnum).map(tagType => (
-                <Link to={TAG_PATHS[tagType]}>
+                <Link key={tagType} to={TAG_PATHS[tagType]}>
                     {TAGS[tagType].name}
                 </Link>
             ))}

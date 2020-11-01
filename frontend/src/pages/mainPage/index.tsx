@@ -2,10 +2,11 @@ import React from 'react';
 import Header from '../../components/header';
 import MainLayout from '../../components/mainLayout';
 import styles from './news.module.scss';
-import BigNewsCard from "../../components/bigNewsCard";
-import SmallNewsCard from "../../components/smallNewsCard";
-import LastNewsCard from "../../components/lastNewsCard";
-import NewsColumnLayout from "../../components/newsColumnLayout";
+import BigNewsCard from '../../components/bigNewsCard';
+import SmallNewsCard from '../../components/smallNewsCard';
+import LastNewsCard from '../../components/lastNewsCard';
+import NewsColumnLayout from '../../components/newsColumnLayout';
+import {RouteComponentProps} from 'react-router-dom';
 
 const bigNews = [
     {
@@ -112,7 +113,12 @@ const lastNews = [
     }
 ];
 
-const MainPage: React.FC = () => {
+export interface MainPageMatchParams {
+    tag:string
+}
+
+const MainPage: React.FC<RouteComponentProps<MainPageMatchParams>> = ({match}) => {
+    const {tag} = match.params;
     return (
         <>
             <Header/>
