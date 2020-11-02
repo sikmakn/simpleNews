@@ -1,0 +1,9 @@
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+
+  .subCommentsContainer {
+    width: 690px;
+  }
+}

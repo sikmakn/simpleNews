@@ -4,6 +4,7 @@ import styles from './header.module.scss';
 import TagsFilter from '../tagsFIlter';
 import Search from '../search';
 import {PAGE_PATHS} from '../../paths';
+import UserImage from "../userImage";
 
 const Header: React.FC = () => {
     return (<header className={styles.header}>
@@ -14,7 +15,7 @@ const Header: React.FC = () => {
                 <TagsFilter/>
                 <div>
                     <Search/>
-                    <img src={process.env.PUBLIC_URL + '/user_logo.svg'} alt="user"/>
+                    <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
                     <img src={process.env.PUBLIC_URL + '/add.svg'} alt="добавить новость"/>
                 </div>
             </div>

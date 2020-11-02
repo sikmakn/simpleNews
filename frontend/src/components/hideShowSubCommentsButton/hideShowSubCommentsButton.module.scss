@@ -1,0 +1,15 @@
+@import '../../commonCss/colors';
+
+.hideShow {
+  color: $brandcolor;
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+  margin-top: 8px;
+  font-weight: 500;
+  cursor: pointer;
+
+  img {
+    margin-right: 12px;
+  }
+}
