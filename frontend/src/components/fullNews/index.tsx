@@ -15,19 +15,16 @@ export interface FullNewsProps {
 }
 
 const FullNews: React.FC<FullNewsProps> =
-    ({id, title, text, date, tag, img}) => (
-        <div className={styles.fullNewsContainer}>
+    ({id, title, text, date, tag, img}) =>
+        (<div className={styles.fullNewsContainer}>
             <div className={styles.infoContainer}>
                 <Tag type={tag as TagEnum}/>
                 <Date date={date}/>
             </div>
             <h1>{title}</h1>
             <img src={img} alt=""/>
-            <div className={styles.fullText}>
-                {text}
-            </div>
+            <div className={styles.fullText}>{text}</div>
             <OneNewsCommentsContainer/>
-        </div>
-    );
+        </div>);
 
 export default FullNews;

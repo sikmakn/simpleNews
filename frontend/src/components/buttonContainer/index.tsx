@@ -5,10 +5,10 @@ export interface ButtonContainerProps {
     addButtonName: string
 }
 
-const ButtonContainer:React.FC<ButtonContainerProps> = ({addButtonName}) =>
+const ButtonContainer: React.FC<ButtonContainerProps> = ({addButtonName}) =>
     (<div className={styles.buttonContainer}>
-    <button>Отмена</button>
-    <button className={styles.addButton}>{addButtonName}</button>
-</div>);
+        <button>Отмена</button>
+        <button className={styles.addButton}>{addButtonName}</button>
+    </div>);
 
 export default ButtonContainer;
