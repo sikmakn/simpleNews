@@ -1,0 +1,19 @@
+@import '../../commonCss/colors';
+
+.statistic {
+  display: flex;
+  color: $midgrey;
+  font-size: 12px;
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 21px;
+
+    img {
+      margin-right: 6px;
+      height: 13px;
+      width: 13px;
+    }
+  }
+}

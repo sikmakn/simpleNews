@@ -13,6 +13,6 @@ export const TAG_PATHS = {
 }
 
 export const PAGE_PATHS = {
-    MAIN: '/:tag',
-    ONE_NEWS: 'news/:id',
+    MAIN: '/:tag?',
+    ONE_NEWS: '/news/:id',
 };

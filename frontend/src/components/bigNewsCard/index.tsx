@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import styles from './bigNewsCard.module.scss';
 import Tag from '../tag';
 import Date from '../date';
-import Statistic from '../statistic';
 import {TagEnum} from '../../types/tag';
+import HorizontalStatistic from '../horizontalStatistic';
 
 export interface BigNewsCardProps {
     id: string
@@ -28,7 +28,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
             <div className={styles.infoContainer}>
                 <Tag type={tag as TagEnum}/>
                 <Date date={date}/>
-                <Statistic {...statistic}/>
+                <HorizontalStatistic {...statistic}/>
             </div>
             <Link to={`news/${id}`} className={styles.newsLink}>
                 <h1>{title}</h1>

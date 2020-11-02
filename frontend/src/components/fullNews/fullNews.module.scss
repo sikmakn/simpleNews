@@ -1,0 +1,26 @@
+.fullNewsContainer {
+  margin-left: 180px;
+  width: 780px;
+  margin-right: 30px;
+
+  .infoContainer {
+    margin-bottom: 18px;
+  }
+
+  > h1 {
+    font-size: 35px;
+    line-height: 120%;
+    margin-bottom: 33px;
+  }
+
+  > img {
+    width: 780px;
+    height: 407px;
+    margin-bottom: 34px;
+  }
+
+  .fullText {
+    font-size: 18px;
+  }
+
+}

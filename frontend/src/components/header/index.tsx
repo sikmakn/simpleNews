@@ -9,13 +9,13 @@ const Header: React.FC = () => {
     return (<header className={styles.header}>
             <div className={styles.headerContainer}>
                 <Link to={PAGE_PATHS.MAIN}>
-                    <img src="logo.svg" alt="LIVE"/>
+                    <img src={process.env.PUBLIC_URL + '/logo.svg'} alt="LIVE"/>
                 </Link>
                 <TagsFilter/>
                 <div>
                     <Search/>
-                    <img src="user_logo.svg" alt="user"/>
-                    <img src="add.svg" alt="добавить новость"/>
+                    <img src={process.env.PUBLIC_URL + '/user_logo.svg'} alt="user"/>
+                    <img src={process.env.PUBLIC_URL + '/add.svg'} alt="добавить новость"/>
                 </div>
             </div>
         </header>
