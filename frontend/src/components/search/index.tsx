@@ -8,7 +8,7 @@ const Search: React.FC = () => {
         <div className={classes.searchContainer}>
             <input type="search" className={isActive ? classes.active : classes.unActive}/>
             <img
-                src="search.svg" alt="поиск"
+                src={process.env.PUBLIC_URL +'/search.svg'} alt="поиск"
                 className={classes.activateIcon}
                 onClick={() => setIsActive(!isActive)}
             />

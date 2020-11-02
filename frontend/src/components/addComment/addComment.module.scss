@@ -1,0 +1,34 @@
+@import '../../commonCss/colors';
+
+.addContainer {
+  display: flex;
+  margin-bottom: 45px;
+
+  > div {
+    width: 690px;
+  }
+
+  input {
+    color: $midgrey;
+    border: none;
+    border-bottom: 1px solid $verylightgrey;
+    padding-bottom: 4px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 11px;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .userCommentImage {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    margin-right: 21px;
+  }
+
+}

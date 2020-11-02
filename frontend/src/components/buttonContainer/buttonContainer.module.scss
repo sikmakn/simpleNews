@@ -1,0 +1,18 @@
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  button {
+    padding: 12px 32px 16px;
+    border: none;
+    background: none;
+    font-weight: 500;
+
+    &.addButton {
+      background: #FF1850;
+      color: #ffffff;
+      font-weight: 600;
+    }
+  }
+}
