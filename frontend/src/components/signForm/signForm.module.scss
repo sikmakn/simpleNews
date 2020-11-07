@@ -1,0 +1,19 @@
+.signBackground {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top:0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(217, 217, 217, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .signForm {
+    width: 400px;
+    padding: 35px;
+  }
+
+}

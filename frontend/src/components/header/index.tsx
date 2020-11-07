@@ -7,6 +7,9 @@ import {mainPagePath, PAGE_PATHS} from '../../paths';
 import UserImage from '../userImage';
 import logoImg from '../../assets/logo.svg';
 import addImg from '../../assets/add.svg';
+import SignButton from '../signButton';
+
+let isSignedIn = false;
 
 const Header: React.FC = () => {
     return (<header className={styles.header}>
@@ -17,7 +20,13 @@ const Header: React.FC = () => {
                 <TagsFilter/>
                 <div>
                     <Search/>
-                    <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
+                    {
+                        isSignedIn ?
+                            <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
+                            :
+                            <SignButton/>
+                    }
+
                     <Link to={PAGE_PATHS.ADD_ONE_NEWS}>
                         <img src={addImg} alt="добавить новость"/>
                     </Link>
