@@ -114,27 +114,28 @@ const lastNews = [
 ];
 
 export interface MainPageMatchParams {
-    tag:string
+    tag: string
 }
 
-const MainPage: React.FC<RouteComponentProps<MainPageMatchParams>> = ({match}) => {
-    const {tag} = match.params;
-    return (
-        <>
-            <Header/>
-            <MainLayout>
-                <div className={styles.mainNewsContainer}>
-                    {bigNews.map(n => <BigNewsCard key={n.id} {...n}/>)}
-                </div>
-                <NewsColumnLayout columnTitle={'Горячее'}>
-                    {smallNews.map(n => <SmallNewsCard key={n.id} {...n}/>)}
-                </NewsColumnLayout>
-                <NewsColumnLayout columnTitle={'Последние новости'}>
-                    {lastNews.map(n => <LastNewsCard key={n.id} {...n}/>)}
-                </NewsColumnLayout>
-            </MainLayout>
-        </>
-    );
-};
+const MainPage: React.FC<RouteComponentProps<MainPageMatchParams>> =
+    ({match}) => {
+        const {tag} = match.params;
+        return (
+            <>
+                <Header/>
+                <MainLayout>
+                    <div className={styles.mainNewsContainer}>
+                        {bigNews.map(n => <BigNewsCard key={n.id} {...n}/>)}
+                    </div>
+                    <NewsColumnLayout columnTitle={'Горячее'}>
+                        {smallNews.map(n => <SmallNewsCard key={n.id} {...n}/>)}
+                    </NewsColumnLayout>
+                    <NewsColumnLayout columnTitle={'Последние новости'}>
+                        {lastNews.map(n => <LastNewsCard key={n.id} {...n}/>)}
+                    </NewsColumnLayout>
+                </MainLayout>
+            </>
+        );
+    };
 
 export default MainPage;

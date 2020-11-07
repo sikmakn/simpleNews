@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './hideShowSubCommentsButton.module.scss';
+import upArrowImg from '../../assets/up-arrow.svg';
+import downArrowImg from '../../assets/down-arrow.svg';
 
 export interface HideShowSubCommentsButtonProps {
     visible: boolean
@@ -13,11 +15,11 @@ const HideShowSubCommentsButton: React.FC<HideShowSubCommentsButtonProps> =
             {
                 visible ?
                     <>
-                        <img src={process.env.PUBLIC_URL + '/up-arrow.svg'} alt=""/>
+                        <img src={upArrowImg} alt=""/>
                         Скрыть все ответы
                     </>
                     : <>
-                        <img src={process.env.PUBLIC_URL + '/down-arrow.svg'} alt=""/>
+                        <img src={downArrowImg} alt=""/>
                         Показать все ответы
                     </>
             }

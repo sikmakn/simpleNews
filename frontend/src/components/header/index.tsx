@@ -3,20 +3,24 @@ import {Link} from 'react-router-dom';
 import styles from './header.module.scss';
 import TagsFilter from '../tagsFIlter';
 import Search from '../search';
-import {PAGE_PATHS} from '../../paths';
-import UserImage from "../userImage";
+import {mainPagePath, PAGE_PATHS} from '../../paths';
+import UserImage from '../userImage';
+import logoImg from '../../assets/logo.svg';
+import addImg from '../../assets/add.svg';
 
 const Header: React.FC = () => {
     return (<header className={styles.header}>
             <div className={styles.headerContainer}>
-                <Link to={PAGE_PATHS.MAIN}>
-                    <img src={process.env.PUBLIC_URL + '/logo.svg'} alt="LIVE"/>
+                <Link to={mainPagePath()}>
+                    <img src={logoImg} alt="LIVE"/>
                 </Link>
                 <TagsFilter/>
                 <div>
                     <Search/>
                     <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
-                    <img src={process.env.PUBLIC_URL + '/add.svg'} alt="добавить новость"/>
+                    <Link to={PAGE_PATHS.ADD_ONE_NEWS}>
+                        <img src={addImg} alt="добавить новость"/>
+                    </Link>
                 </div>
             </div>
         </header>

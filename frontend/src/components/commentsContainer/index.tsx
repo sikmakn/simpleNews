@@ -35,6 +35,8 @@ const comments: [CommentProps] = [
 ];
 
 const CommentsContainer: React.FC = () =>
-    (<div className={styles.commentsContainer}>{comments.map(c => <Comment key={c.id} {...c}/>)}</div>);
+    (<div className={styles.commentsContainer}>
+        {comments.map(c => <Comment key={c.id} {...c}/>)}
+    </div>);
 
 export default CommentsContainer;

@@ -1,0 +1,18 @@
+.imageContainer {
+  width: 100%;
+  height: 407px;
+  background: #C4C4C4 no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 34px;
+
+  img {
+    cursor: pointer;
+    width: 66px;
+    height: 66px;
+  }
+  input{
+    display: none;
+  }
+}

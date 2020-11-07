@@ -15,4 +15,18 @@ export const TAG_PATHS = {
 export const PAGE_PATHS = {
     MAIN: '/:tag?',
     ONE_NEWS: '/news/:id',
+    ADD_ONE_NEWS: '/addOneNews',
+    EDIT_ONE_NEWS: '/editOneNews/:id?',
 };
+
+export function mainPagePath(tag: string = '') {
+    return `/${tag}`;
+}
+
+export function oneNewsPagePath(id: string) {
+    return `/news/${id}`;
+}
+
+export function editOneNewsPagePath(id: string) {
+    return `/editOneNews/${id}`;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './lastNewsCard.module.scss';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
+import {oneNewsPagePath} from '../../paths';
 
 export interface LastNewsCardProps {
     id: string
@@ -9,9 +10,10 @@ export interface LastNewsCardProps {
 }
 
 const LastNewsCard: React.FC<LastNewsCardProps> =
-    ({id, date, title}) =>
-        (
-            <Link to={`news/${id}`} className={styles.newsDescription}>
+    ({id, date, title}) => {
+        const oneNewsPath = oneNewsPagePath(id);
+        return (
+            <Link to={oneNewsPath} className={styles.newsDescription}>
                 <span>
                     {date.toLocaleString('ru', {
                         hour: 'numeric',
@@ -21,5 +23,6 @@ const LastNewsCard: React.FC<LastNewsCardProps> =
                 {title}
             </Link>
         );
+    }
 
 export default LastNewsCard;

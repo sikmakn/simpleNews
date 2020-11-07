@@ -5,6 +5,7 @@ import Tag from '../tag';
 import Date from '../date';
 import {TagEnum} from '../../types/tag';
 import HorizontalStatistic from '../horizontalStatistic';
+import {oneNewsPagePath} from '../../paths';
 
 export interface BigNewsCardProps {
     id: string
@@ -20,21 +21,24 @@ export interface BigNewsCardProps {
 }
 
 const BigNewsCard: React.FC<BigNewsCardProps> =
-    ({id, img, tag, date, title, description, statistic}) => (
-        <div className={styles.bigNewsContainer}>
-            <Link to={`news/${id}`} className={styles.newsLink}>
-                <img src={img} alt=""/>
-            </Link>
-            <div className={styles.infoContainer}>
-                <Tag type={tag as TagEnum}/>
-                <Date date={date}/>
-                <HorizontalStatistic {...statistic}/>
+    ({id, img, tag, date, title, description, statistic}) => {
+        const oneNewsPath = oneNewsPagePath(id);
+        return (
+            <div className={styles.bigNewsContainer}>
+                <Link to={oneNewsPath} className={styles.newsLink}>
+                    <img src={img} alt=""/>
+                </Link>
+                <div className={styles.infoContainer}>
+                    <Tag type={tag as TagEnum}/>
+                    <Date date={date}/>
+                    <HorizontalStatistic {...statistic}/>
+                </div>
+                <Link to={oneNewsPath} className={styles.newsLink}>
+                    <h1>{title}</h1>
+                    <p>{description}</p>
+                </Link>
             </div>
-            <Link to={`news/${id}`} className={styles.newsLink}>
-                <h1>{title}</h1>
-                <p>{description}</p>
-            </Link>
-        </div>
-    );
+        );
+    }
 
 export default BigNewsCard;

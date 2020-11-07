@@ -1,0 +1,23 @@
+@import '../../commonCss/colors';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0;
+
+  input {
+    margin-top: 19px;
+    margin-bottom: 36px;
+    border: none;
+    height: 42px;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 120%;
+
+    &::placeholder {
+      color: $dark_text_color;
+    }
+
+  }
+
+}

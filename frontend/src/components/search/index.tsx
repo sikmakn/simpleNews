@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import classes from './search.module.scss';
+import searchImg from '../../assets/search.svg';
 
 const Search: React.FC = () => {
     const [isActive, setIsActive] = useState(false);
-    console.log('aaa');
+
     return (
         <div className={classes.searchContainer}>
             <input type="search" className={isActive ? classes.active : classes.unActive}/>
             <img
-                src={process.env.PUBLIC_URL +'/search.svg'} alt="поиск"
+                src={searchImg} alt="поиск"
                 className={classes.activateIcon}
                 onClick={() => setIsActive(!isActive)}
             />
