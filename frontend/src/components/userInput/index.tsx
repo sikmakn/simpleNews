@@ -1,4 +1,4 @@
-import React, {LegacyRef} from 'react';
+import React, {ChangeEventHandler, LegacyRef} from 'react';
 import styles from './userInput.module.scss';
 
 export interface UserInput {
@@ -7,7 +7,8 @@ export interface UserInput {
     type?: string
     className?: string
     disabled?: boolean
-    value?:string | ReadonlyArray<string> | number
+    value?: string | ReadonlyArray<string> | number
+    onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 const UserInput: React.FC<UserInput> =
@@ -17,10 +18,12 @@ const UserInput: React.FC<UserInput> =
          type = 'text',
          className = '',
          disabled = false,
-         value
+         value,
+         onChange
      }) =>
         (<input
             ref={inputRef}
+            onChange={onChange}
             className={`${styles.input} ${className}`}
             type={type}
             placeholder={placeholder}

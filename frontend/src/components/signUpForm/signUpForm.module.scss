@@ -1,0 +1,22 @@
+@import '../../commonCss/colors';
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  .error {
+    color: $brandcolor;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 11px;
+  }
+}
+
+.login {
+  margin-top: 27px;
+  margin-bottom: 18px;
+}
+
+.firstName, .lastName, .password {
+  margin-bottom: 18px;
+}

@@ -9,7 +9,7 @@ import logoImg from '../../assets/logo.svg';
 import addImg from '../../assets/add.svg';
 import SignButton from '../signButton';
 
-let isSignedIn = true;
+let isSignedIn = false;
 
 const Header: React.FC = () => {
     return (<header className={styles.header}>
