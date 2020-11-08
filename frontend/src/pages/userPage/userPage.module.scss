@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 29px;
+
+  .userForm {
+    width: 330px;
+  }
+}

@@ -2,20 +2,21 @@ import React, {useRef} from 'react';
 import styles from './signIn.module.scss';
 
 import UserFormButton from '../userFormButton';
+import UserInput from "../userInput";
 
 const SignInForm: React.FC = () => {
     const loginInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     return (
         <div className={styles.form}>
-            <input
+            <UserInput
                 className={styles.login}
-                ref={loginInputRef}
-                type="text" placeholder="Логин"
+                placeholder="Логин"
+                inputRef={loginInputRef}
             />
-            <input
+            <UserInput
                 className={styles.password}
-                ref={passwordInputRef}
+                inputRef={passwordInputRef}
                 type="password" placeholder="Пароль"
             />
             <UserFormButton title={'Войти'} onClick={() => {

@@ -1,0 +1,13 @@
+.input {
+  width: 100%;
+  border: 1px solid #F0F0F0;
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 9px;
+  padding-bottom: 12px;
+  padding-left: 19px;
+
+  &::placeholder {
+    color: #8B8B8B;
+  }
+}

@@ -1,35 +1,32 @@
 import React, {useRef} from 'react';
-import style from './addNewsImage.module.scss';
-import addImg from '../../assets/add.svg';
+import styles from './addUserImage.module.scss';
 
-export interface AddNewsImageProps {
+export interface AddUserImageProps {
     img?: File
     setImg: (x: File) => void
 }
 
-const AddNewsImage: React.FC<AddNewsImageProps> =
-    ({img, setImg}) => {
-        const fileInputRef = useRef<HTMLInputElement>(null);
-        return (
+const AddUserImage: React.FC<AddUserImageProps> = ({img, setImg}) => {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    return (
+        <label htmlFor="file">
             <div
-                className={style.imageContainer}
+                className={styles.imageContainer}
                 style={{backgroundImage: `url(${img && URL.createObjectURL(img)})`}}
             >
-                <label htmlFor="file">
-                    <img src={addImg} alt=""/>
-                </label>
                 <input
                     ref={fileInputRef}
                     type="file"
                     name="file" id="file"
-                    accept=".jpg, .jpeg, .png, .svg, .gif"
+                    accept=".jpg, .jpeg, .png, .svg"
                     onChange={() => {
                         if (!fileInputRef?.current?.files) return;
                         setImg(fileInputRef.current.files[0]);
                     }}
                 />
             </div>
-        );
-    }
+        </label>
+    );
+};
 
-export default AddNewsImage;
+export default AddUserImage;
