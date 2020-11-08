@@ -6,11 +6,19 @@
   font-size: 24px;
   line-height: 29px;
 
-  .active {
-    color: $dark_text_color;
-  }
+  display: flex;
+  justify-content: space-around;
 
-  .unActive {
-    color: $light_text_color;
+  span {
+    cursor: pointer;
+
+    &.active {
+      color: $dark_text_color;
+    }
+
+    &.unActive {
+      color: #E7E7E9;
+    }
+
   }
 }
