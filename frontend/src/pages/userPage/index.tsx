@@ -1,8 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './userPage.module.scss';
 import Header from '../../components/header';
 import UserFormButton from '../../components/userFormButton';
-import defaultUserImg from '../../assets/no-image.png';
 import LogOutButton from "../../components/logoutButton";
 import UserInput from "../../components/userInput";
 import AddUserImage from "../../components/addUserImage";
@@ -18,6 +17,13 @@ const user = {
 const UserPage: React.FC = () => {
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
+    const [selectedImg, setSelectedImg] = useState<File>();
+
+    useEffect(() => {
+        if (user.imgSrc)
+            fetch(user.imgSrc).then(e => e.blob())
+                .then(b => setSelectedImg(b as File));
+    }, [])
 
     useEffect(() => {
         if (!firstNameRef?.current) return;
@@ -34,13 +40,24 @@ const UserPage: React.FC = () => {
             <Header/>
             <main className={styles.main}>
                 <div className={styles.userForm}>
-                    {/*todo*/}
-                    {/*<AddUserImage setImg={} img={}/>*/}
-                    {/*<UserImage src={user.imgSrc || defaultUserImg} size={163}/>*/}
-                    <UserInput disabled placeholder="Логин" value={user.username}/>
-                    <UserInput inputRef={firstNameRef} placeholder="Имя"/>
-                    <UserInput inputRef={lastNameRef} placeholder="Фамилия"/>
-                    <UserFormButton title={'Сохранить изменения'}/>
+                    <h2>Изменение личной информации</h2>
+                    <AddUserImage setImg={setSelectedImg} img={selectedImg}/>
+                    <UserInput
+                        disabled placeholder="Логин"
+                        value={user.username}
+                        className={styles.username}
+                    />
+                    <UserInput
+                        inputRef={firstNameRef}
+                        placeholder="Имя"
+                        className={styles.firstName}
+                    />
+                    <UserInput
+                        inputRef={lastNameRef}
+                        placeholder="Фамилия"
+                        className={styles.lastName}
+                    />
+                    <UserFormButton title="Сохранить изменения"/>
                     <LogOutButton/>
                 </div>
             </main>

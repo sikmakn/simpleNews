@@ -17,7 +17,16 @@ export const PAGE_PATHS = {
     ONE_NEWS: '/news/:id',
     ADD_ONE_NEWS: '/addOneNews',
     EDIT_ONE_NEWS: '/editOneNews/:id?',
+    USER: '/user',
 };
+
+export function addOneNewsPagePath() {
+    return '/addOneNews';
+}
+
+export function userPagePath() {
+    return '/user';
+}
 
 export function mainPagePath(tag: string = '') {
     return `/${tag}`;

@@ -3,13 +3,13 @@ import {Link} from 'react-router-dom';
 import styles from './header.module.scss';
 import TagsFilter from '../tagsFIlter';
 import Search from '../search';
-import {mainPagePath, PAGE_PATHS} from '../../paths';
+import {addOneNewsPagePath, mainPagePath, userPagePath} from '../../paths';
 import UserImage from '../userImage';
 import logoImg from '../../assets/logo.svg';
 import addImg from '../../assets/add.svg';
 import SignButton from '../signButton';
 
-let isSignedIn = false;
+let isSignedIn = true;
 
 const Header: React.FC = () => {
     return (<header className={styles.header}>
@@ -22,12 +22,14 @@ const Header: React.FC = () => {
                     <Search/>
                     {
                         isSignedIn ?
-                            <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
+                            <Link to={userPagePath()}>
+                                <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
+                            </Link>
                             :
                             <SignButton/>
                     }
 
-                    <Link to={PAGE_PATHS.ADD_ONE_NEWS}>
+                    <Link to={addOneNewsPagePath()}>
                         <img src={addImg} alt="добавить новость"/>
                     </Link>
                 </div>

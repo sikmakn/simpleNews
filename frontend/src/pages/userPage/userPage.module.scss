@@ -6,5 +6,30 @@
 
   .userForm {
     width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 25px;
+      width: 248px;
+      text-align: center;
+      margin-bottom: 21px;
+    }
+
+    .username {
+      margin-top: 25px;
+      margin-bottom: 18px;
+    }
+
+    .firstName {
+      margin-bottom: 18px;
+    }
+
+    .lastName {
+      margin-bottom: 33px;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import styles from './addUserImage.module.scss';
+import defaultUserImg from '../../assets/no-image.png';
 
 export interface AddUserImageProps {
     img?: File
@@ -12,7 +13,7 @@ const AddUserImage: React.FC<AddUserImageProps> = ({img, setImg}) => {
         <label htmlFor="file">
             <div
                 className={styles.imageContainer}
-                style={{backgroundImage: `url(${img && URL.createObjectURL(img)})`}}
+                style={{backgroundImage: `url(${img && URL.createObjectURL(img) || defaultUserImg})`}}
             >
                 <input
                     ref={fileInputRef}
