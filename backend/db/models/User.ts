@@ -8,7 +8,7 @@ interface UserAttr {
     id: string;
     username: string;
     password: string;
-    dynamicSalt: string;
+    salt: string;
     firstName: string;
     lastName: string;
     imgSrc?: string;
@@ -45,7 +45,7 @@ class User extends Model implements UserAttr {
         allowNull: false,
         type: DataType.STRING,
     })
-    dynamicSalt!: string;
+    salt!: string;
 
     @Column({
         allowNull: false,
