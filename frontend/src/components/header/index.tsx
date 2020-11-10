@@ -9,9 +9,14 @@ import logoImg from '../../assets/logo.svg';
 import addImg from '../../assets/add.svg';
 import SignButton from '../signButton';
 
-let isSignedIn = false;
+export interface HeaderProps {
+    user?: {
+        username: string
+        imgSrc: string
+    }
+}
 
-const Header: React.FC = () => {
+const Header: React.FC<HeaderProps> = ({user}) => {
     return (<header className={styles.header}>
             <div className={styles.headerContainer}>
                 <Link to={mainPagePath()}>
@@ -21,17 +26,18 @@ const Header: React.FC = () => {
                 <div>
                     <Search/>
                     {
-                        isSignedIn ?
-                            <Link to={userPagePath()}>
-                                <UserImage src={process.env.PUBLIC_URL + '/user_logo.svg'} size={24}/>
-                            </Link>
+                        user ?
+                            <>
+                                <Link to={userPagePath()}>
+                                    <UserImage src={user.imgSrc} size={24}/>
+                                </Link>
+                                <Link to={addOneNewsPagePath()}>
+                                    <img src={addImg} alt="добавить новость"/>
+                                </Link>
+                            </>
                             :
                             <SignButton/>
                     }
-
-                    <Link to={addOneNewsPagePath()}>
-                        <img src={addImg} alt="добавить новость"/>
-                    </Link>
                 </div>
             </div>
         </header>

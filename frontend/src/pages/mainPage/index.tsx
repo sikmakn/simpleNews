@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import Header from '../../components/header';
 import MainLayout from '../../components/mainLayout';
 import styles from './news.module.scss';
 import BigNewsCard, {BigNewsCardProps} from '../../components/bigNewsCard';
 import SmallNewsCard, {SmallNewsCardProps} from '../../components/smallNewsCard';
 import LastNewsCard, {LastNewsCardProps} from '../../components/lastNewsCard';
 import NewsColumnLayout from '../../components/newsColumnLayout';
+import HeaderHOC from '../../components/headerHOC';
 
 export interface MainPageMatchProps {
     tag: string
@@ -18,15 +18,23 @@ export interface MainPageMatchProps {
 }
 
 const MainPage: React.FC<MainPageMatchProps> =
-    ({tag, bigNews, smallNews, lastNews, loadLastNews, loadSmallNews, loadBigNews}) => {
+    ({
+         tag,
+         bigNews,
+         smallNews,
+         lastNews,
+         loadLastNews,
+         loadSmallNews,
+         loadBigNews
+     }) => {
         if (!bigNews) loadBigNews(tag);
         if (!smallNews) loadSmallNews();
         if (!lastNews) loadLastNews();
 
-        useEffect(()=>loadBigNews(tag),[tag]);
+        useEffect(() => loadBigNews(tag), [tag]);
         return (
             <>
-                <Header/>
+                <HeaderHOC/>
                 <MainLayout>
                     <div className={styles.mainNewsContainer}>
                         {bigNews?.map(n => <BigNewsCard key={n.id} {...n}/>)}
