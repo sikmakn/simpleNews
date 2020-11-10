@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from './signForm.module.scss';
 import SignInForm from '../sigInForm';
 import SignSwitcher from '../signSwitcher';
-import SignUpFormHOC from '../signUpFormHOC';
+import SignUpFormHOC from '../signUpForm/hoc';
 
 export interface SignFormProps {
     hide: () => void;

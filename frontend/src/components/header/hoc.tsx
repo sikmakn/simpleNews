@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../header';
+import Header from './index';
 import {connect} from 'react-redux';
 
 interface HeaderHOCProps {
@@ -12,7 +12,7 @@ interface HeaderHOCProps {
 const HeaderHOC: React.FC<HeaderHOCProps> =
     ({user}) => (<Header user={user}/>);
 
-const mapStateToProps = ({signUpForm: {user}}: any) => ({user});
+const mapStateToProps = ({user}: any) => ({user: Object.keys(user).length && user});
 
 
 export default connect(mapStateToProps)(HeaderHOC);

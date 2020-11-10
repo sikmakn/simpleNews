@@ -1,7 +1,7 @@
 import React from 'react';
-import SignUpForm from '../signUpForm';
+import SignUpForm from './index';
 import {connect} from 'react-redux';
-import {registerNewUser} from '../../store/signUpForm/actions';
+import {registerNewUser} from '../../store/user/actions';
 
 interface SignUpFormHOCProps {
     registerNewUser: (user: any) => void

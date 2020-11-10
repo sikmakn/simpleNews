@@ -15,7 +15,7 @@ import OneNewsPage from './pages/oneNewsPage';
 import AddOneNewsPage from './pages/addOneNewsPage';
 import EditOneNewsPage from './pages/editOneNewsPages';
 import UserPage from './pages/userPage';
-import MainPageHOC from './pages/mainPageHOC';
+import MainPageHOC from './pages/mainPage/hoc';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

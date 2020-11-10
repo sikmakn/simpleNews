@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import mainPage from './mainPage/reducers';
-import signUpForm from './signUpForm/reducers';
+import user from './user/reducers';
 
 export default combineReducers({
     mainPage,
-    signUpForm,
+    user,
 });

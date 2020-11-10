@@ -5,7 +5,7 @@ import NewsColumnLayout from '../../components/newsColumnLayout';
 import LastNewsCard from '../../components/lastNewsCard';
 import VerticalStatistic from '../../components/verticalStatistic';
 import FullNews from '../../components/fullNews';
-import HeaderHOC from '../../components/headerHOC';
+import HeaderHOC from '../../components/header/hoc';
 
 const oneNews = {
     id: '1',

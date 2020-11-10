@@ -4,7 +4,7 @@ import UserFormButton from '../../components/userFormButton';
 import LogOutButton from '../../components/logoutButton';
 import UserInput from '../../components/userInput';
 import AddUserImage from '../../components/addUserImage';
-import HeaderHOC from '../../components/headerHOC';
+import HeaderHOC from '../../components/header/hoc';
 
 const user = {
     id: '',

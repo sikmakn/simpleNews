@@ -5,7 +5,7 @@ import BigNewsCard, {BigNewsCardProps} from '../../components/bigNewsCard';
 import SmallNewsCard, {SmallNewsCardProps} from '../../components/smallNewsCard';
 import LastNewsCard, {LastNewsCardProps} from '../../components/lastNewsCard';
 import NewsColumnLayout from '../../components/newsColumnLayout';
-import HeaderHOC from '../../components/headerHOC';
+import HeaderHOC from '../../components/header/hoc';
 
 export interface MainPageMatchProps {
     tag: string

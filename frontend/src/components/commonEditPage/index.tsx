@@ -5,7 +5,7 @@ import ButtonContainer from '../buttonContainer';
 import TagSelect from '../tagSelect';
 import AddNewsImage from '../addNewsImage';
 import EditableDiv from '../editableDiv';
-import HeaderHOC from '../headerHOC';
+import HeaderHOC from '../header/hoc';
 
 export interface CommonEditPageProps {
     oneNews?: {
