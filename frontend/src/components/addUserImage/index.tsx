@@ -13,7 +13,7 @@ const AddUserImage: React.FC<AddUserImageProps> = ({img, setImg}) => {
         <label htmlFor="file">
             <div
                 className={styles.imageContainer}
-                style={{backgroundImage: `url(${img && URL.createObjectURL(img) || defaultUserImg})`}}
+                style={{backgroundImage: `url(${(img && URL.createObjectURL(img)) || defaultUserImg})`}}
             >
                 <input
                     ref={fileInputRef}
