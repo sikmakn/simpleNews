@@ -7,17 +7,18 @@ import {addOneNewsPagePath, mainPagePath, userPagePath} from '../../paths';
 import UserImage from '../userImage';
 import logoImg from '../../assets/logo.svg';
 import addImg from '../../assets/add.svg';
+import noImage from '../../assets/no-image.png';
 import SignButton from '../signButton';
 
 export interface HeaderProps {
     user?: {
         username: string
-        imgSrc: string
+        imgSrc?: string
     }
 }
 
-const Header: React.FC<HeaderProps> = ({user}) => {
-    return (<header className={styles.header}>
+const Header: React.FC<HeaderProps> = ({user}) =>
+    (<header className={styles.header}>
             <div className={styles.headerContainer}>
                 <Link to={mainPagePath()}>
                     <img src={logoImg} alt="LIVE"/>
@@ -29,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({user}) => {
                         user ?
                             <>
                                 <Link to={userPagePath()}>
-                                    <UserImage src={user.imgSrc} size={24}/>
+                                    <UserImage src={user.imgSrc || noImage} size={24}/>
                                 </Link>
                                 <Link to={addOneNewsPagePath()}>
                                     <img src={addImg} alt="добавить новость"/>
@@ -42,6 +43,5 @@ const Header: React.FC<HeaderProps> = ({user}) => {
             </div>
         </header>
     );
-};
 
 export default Header;

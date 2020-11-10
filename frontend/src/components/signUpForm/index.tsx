@@ -7,7 +7,16 @@ const USERNAME_REGEX = /^[a-zA-Z0-9]{4,20}$/;
 const NAME_REGEX = /^[а-яА-Я]{3,20}$/;
 const PASSWORD_REGEX = /^.{6,20}$/;
 
-const SignUpForm: React.FC = () => {
+export interface SignUpFormProps {
+    registerNewUser: (user: {
+        username: string,
+        password: string,
+        firstName: string,
+        lastName: string
+    }) => void
+}
+
+const SignUpForm: React.FC<SignUpFormProps> = ({registerNewUser}) => {
     const [usernameValueObj, setUsernameValueObj] = useState<ValueObj>();
     const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>();
     const [lastNameValueObj, setLastNameValueObj] = useState<ValueObj>();
@@ -76,7 +85,19 @@ const SignUpForm: React.FC = () => {
             <UserFormButton
                 title="Зарегестрироваться"
                 onClick={() => {
-
+                    if (
+                        !usernameValueObj?.errors ||
+                        !firstNameValueObj?.errors ||
+                        !lastNameValueObj?.errors ||
+                        !passwordValueObj?.errors
+                    ) {
+                        registerNewUser({
+                            username: usernameValueObj!.value,
+                            password: passwordValueObj!.value,
+                            firstName: firstNameValueObj!.value,
+                            lastName: lastNameValueObj!.value
+                        })
+                    }
                 }}
             />
         </>

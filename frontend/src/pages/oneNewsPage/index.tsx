@@ -1,11 +1,11 @@
 import React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
-import Header from '../../components/header';
 import MainLayout from '../../components/mainLayout';
 import NewsColumnLayout from '../../components/newsColumnLayout';
 import LastNewsCard from '../../components/lastNewsCard';
 import VerticalStatistic from '../../components/verticalStatistic';
 import FullNews from '../../components/fullNews';
+import HeaderHOC from '../../components/headerHOC';
 
 const oneNews = {
     id: '1',
@@ -53,7 +53,7 @@ const OneNewsPage: React.FC<RouteComponentProps<OneNewsPageMatchParams>> =
         const {id} = match.params;
         return (
             <>
-                <Header/>
+                <HeaderHOC/>
                 <MainLayout>
                     <VerticalStatistic id={id} {...oneNews.statistic}/>
                     <FullNews {...oneNews}/>

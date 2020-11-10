@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './userPage.module.scss';
-import Header from '../../components/header';
 import UserFormButton from '../../components/userFormButton';
-import LogOutButton from "../../components/logoutButton";
-import UserInput from "../../components/userInput";
-import AddUserImage from "../../components/addUserImage";
+import LogOutButton from '../../components/logoutButton';
+import UserInput from '../../components/userInput';
+import AddUserImage from '../../components/addUserImage';
+import HeaderHOC from '../../components/headerHOC';
 
 const user = {
     id: '',
@@ -37,7 +37,7 @@ const UserPage: React.FC = () => {
 
     return (
         <>
-            <Header/>
+            <HeaderHOC/>
             <main className={styles.main}>
                 <div className={styles.userForm}>
                     <h2>Изменение личной информации</h2>

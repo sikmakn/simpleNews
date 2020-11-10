@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import styles from './commonEditPage.module.scss';
-import Header from '../header';
 import {TagEnum} from '../../types/tag';
 import ButtonContainer from '../buttonContainer';
 import TagSelect from '../tagSelect';
 import AddNewsImage from '../addNewsImage';
-import EditableDiv from "../editableDiv";
+import EditableDiv from '../editableDiv';
+import HeaderHOC from '../headerHOC';
 
 export interface CommonEditPageProps {
     oneNews?: {
@@ -28,11 +28,11 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
             if (img)
                 fetch(img).then(e => e.blob())
                     .then(b => setSelectedImg(b as File));
-        },[])
+        }, [])
 
         return (
             <>
-                <Header/>
+                <HeaderHOC/>
                 <main className={styles.main}>
                     <TagSelect selected={selectedTag} setSelected={setSelectedTag}/>
                     <input type="text" value={title} placeholder={'Текст заголовка'}/>
