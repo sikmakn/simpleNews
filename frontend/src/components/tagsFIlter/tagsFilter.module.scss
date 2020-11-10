@@ -1,6 +1,6 @@
 @import '../../commonCss/colors';
 
-nav {
+.navContainer {
   display: flex;
   color: $light_text_color;
   width: 980px;
@@ -8,12 +8,17 @@ nav {
   font-weight: 600;
   font-size: 16px;
 
-  > a {
+  .nav {
     color: $light_text_color;
+    cursor: pointer;
 
     &:hover {
       color: $midgrey;
-      cursor: pointer;
+
     }
   }
+}
+
+.active {
+  color: $midgrey;
 }

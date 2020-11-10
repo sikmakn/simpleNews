@@ -30,5 +30,5 @@ export async function updateRefreshToken(token: string) {
     const {username} = jwt.decode(token) as { [key: string]: any };
     return jwt.sign({username},
         JWT_REFRESH_SECRET as string,
-        {expiresIn: JWT_REFRESH_EXPIRES_HOURS})
+        {expiresIn: JWT_REFRESH_EXPIRES_HOURS});
 }

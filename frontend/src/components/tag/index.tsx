@@ -17,4 +17,5 @@ const Tag: React.FC<TagProps> = ({type}) =>
         {TAGS[type].name.toUpperCase()}
     </Link>);
 
+
 export default Tag;
