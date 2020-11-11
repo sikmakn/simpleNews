@@ -14,7 +14,7 @@ const EditableDiv: React.FC<EditableDivProps> =
         useEffect(() => {
             if (divRef?.current)
                 divRef.current.innerText = text || placeholder;
-        }, [divRef]);
+        }, [divRef, text, placeholder]);
 
         return (
             <div

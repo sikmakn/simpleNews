@@ -1,7 +1,7 @@
 import React, {ChangeEventHandler, LegacyRef} from 'react';
 import styles from './userInput.module.scss';
 
-export interface UserInput {
+export interface UserInputProps {
     placeholder: string
     inputRef?: LegacyRef<HTMLInputElement>
     type?: string
@@ -11,7 +11,7 @@ export interface UserInput {
     onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-const UserInput: React.FC<UserInput> =
+const UserInput: React.FC<UserInputProps> =
     ({
          placeholder,
          inputRef,
