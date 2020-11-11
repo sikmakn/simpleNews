@@ -5,7 +5,7 @@ import HeaderHOC from '../../components/header/hoc';
 import LastNewsLayoutHOC from '../../components/lastNewsLayout/hoc';
 import FullNewsHOC from '../../components/fullNews/hoc';
 import VerticalStatisticHOC from '../../components/verticalStatistic/hoc';
-import OneNewsCommentsContainer from '../../components/oneNewsCommentsContainer';
+import OneNewsCommentsContainerHOC from '../../components/oneNewsCommentsContainer/hoc';
 
 export interface OneNewsPageProps {
 }
@@ -18,7 +18,7 @@ const OneNewsPage: React.FC<OneNewsPageProps> = () => {
                 <VerticalStatisticHOC/>
                 <div className={styles.fullNewsContainer}>
                     <FullNewsHOC/>
-                    <OneNewsCommentsContainer/>
+                    <OneNewsCommentsContainerHOC/>
                 </div>
                 <LastNewsLayoutHOC/>
             </MainLayout>

@@ -5,6 +5,7 @@ import oneNews from './oneNews/reducers';
 import lastNews from './lastNews/reducers';
 import hotNews from './hotNews/reducers';
 import tag from './tag/reducers';
+import comments from './comments/reducers';
 
 export default combineReducers({
     bigNews,
@@ -13,4 +14,5 @@ export default combineReducers({
     lastNews,
     hotNews,
     tag,
+    comments,
 });
