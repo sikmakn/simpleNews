@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './userPage.module.scss';
 import UserFormButton from '../../components/userFormButton';
-import LogOutButton from '../../components/logoutButton';
 import UserInput from '../../components/userInput';
 import AddUserImage from '../../components/addUserImage';
 import HeaderHOC from '../../components/header/hoc';
@@ -11,6 +10,7 @@ import FirstNameInput from '../../components/firstNameInput';
 import LastNameInput from '../../components/lastNameInput';
 import FormCheckErrorLayout from '../../components/formCheckErrorsLayout';
 import FormCheckErrors from '../../components/formCheckErrors';
+import LogOutButtonHOC from '../../components/logoutButton/hoc';
 
 export interface UserPageProps {
     username: string
@@ -76,7 +76,7 @@ const UserPage: React.FC<UserPageProps> =
                             }
                         </FormCheckErrorLayout>
                         <UserFormButton title="Сохранить изменения"/>
-                        <LogOutButton/>
+                        <LogOutButtonHOC/>
                     </div>
                 </main>
             </>

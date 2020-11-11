@@ -1,5 +1,6 @@
-export const REGISTER_USER = 'REGISTER_USER';
+export const SET_NEW_USER = 'REGISTER_USER';
 export const SET_USER = 'SET_USER';
+export const CLEAR_USER = 'CLEAR_USER';
 
 export const setNewUser =
     (user:
@@ -7,7 +8,7 @@ export const setNewUser =
              username: string,
              firstName: string,
              lastName: string
-         }) => ({type: REGISTER_USER, payload: user});
+         }) => ({type: SET_NEW_USER, payload: user});
 
 export const setUser =
     (user:
@@ -17,6 +18,10 @@ export const setUser =
              lastName: string,
              imgSrc?: string
          }) => ({type: SET_USER, payload: user});
+
+export const clearUser = () => ({type: CLEAR_USER});
+
+//async actions
 
 export const registerNewUser = (
     {
@@ -39,3 +44,5 @@ export const signInUser = (user: { username: string, password: string }) =>
         firstName: 'Никита',
         lastName: 'Разработчик'
     }));
+
+export const logOutUser = () => (dispatch: any) => dispatch(clearUser())

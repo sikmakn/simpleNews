@@ -9,7 +9,7 @@ import LastNameInput from '../lastNameInput';
 import FormCheckErrors from '../formCheckErrors';
 import UsernameInput from '../usernameInput';
 import FormCheckErrorLayout from '../formCheckErrorsLayout';
-import {checkManyValue} from "../../helpers/valueObj";
+import {checkManyValue} from '../../helpers/valueObj';
 
 export interface SignUpFormProps {
     registerNewUser: (user: {

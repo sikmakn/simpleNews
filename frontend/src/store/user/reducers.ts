@@ -1,10 +1,12 @@
-import {REGISTER_USER, SET_USER} from './actions';
+import {CLEAR_USER, SET_NEW_USER, SET_USER} from './actions';
 
 const userReducer = (state = {}, action: { type: string, payload: any }) => {
     switch (action.type) {
-        case REGISTER_USER:
+        case SET_NEW_USER:
         case SET_USER:
             return {value: action.payload};
+        case CLEAR_USER:
+            return {};
     }
     return state;
 };
