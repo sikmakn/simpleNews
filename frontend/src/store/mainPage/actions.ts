@@ -1,19 +1,19 @@
-export const MAIN_PAGE_FETCH_BIG_NEWS = 'MAIN_PAGE_FETCH_BIG_NEWS';
-export const MAIN_PAGE_FETCH_SMALL_NEWS = 'MAIN_PAGE_FETCH_SMALL_NEWS';
-export const MAIN_PAGE_FETCH_LAST_NEWS = 'MAIN_PAGE_FETCH_LAST_NEWS';
+export const FETCH_BIG_NEWS = 'FETCH_BIG_NEWS';
+export const FETCH_SMALL_NEWS = 'FETCH_SMALL_NEWS';
+export const FETCH_LAST_NEWS = 'FETCH_LAST_NEWS';
 
 export const setBigNews = (bigNews: any[]) => ({
-    type: MAIN_PAGE_FETCH_BIG_NEWS,
+    type: FETCH_BIG_NEWS,
     payload: bigNews,
 });
 
 export const setSmallNews = (smallNews: any[]) => ({
-    type: MAIN_PAGE_FETCH_SMALL_NEWS,
+    type: FETCH_SMALL_NEWS,
     payload: smallNews,
 });
 
 export const setLastNews = (lastNews: any) => ({
-    type: MAIN_PAGE_FETCH_LAST_NEWS,
+    type: FETCH_LAST_NEWS,
     payload: lastNews,
 });
 

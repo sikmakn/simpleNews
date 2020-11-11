@@ -13,9 +13,8 @@ interface MainPageHOCProps {
     lastNews?: any[]
 }
 
-const MainPageHOC: React.FC<MainPageHOCProps> = (props) => {
-    return <MainPage {...props}/>;
-}
+const MainPageHOC: React.FC<MainPageHOCProps> = (props) => <MainPage {...props}/>;
+
 
 const mapStateToProps = ({mainPage}: any, ownProps: any) => {
     const {tag} = ownProps.match.params;
