@@ -7,22 +7,29 @@ import {editOneNewsPagePath} from '../../paths';
 
 export interface VerticalStatisticProps {
     id?: string
+    authorUsername: string
     likesCount?: number
     commentsCount?: number
+    user: {
+        username: string
+    }
 }
 
-const VerticalStatistic: React.FC<VerticalStatisticProps> = (props) => (
-    <div className={styles.statisticsContainer}>
-        <Statistic {...props}/>
-        {/*todo add check user*/}
-        {props.id && <Link to={editOneNewsPagePath(props.id)}>
-            <img
-                src={editImg}
-                className={styles.edit}
-                alt=""
-            />
-        </Link>}
-    </div>
-);
+const VerticalStatistic: React.FC<VerticalStatisticProps> =
+    ({id, user, authorUsername, ...statistic}) => (
+        <div className={styles.statisticsContainer}>
+            <Statistic {...statistic}/>
+            {
+                user && authorUsername === user.username &&
+                <Link to={editOneNewsPagePath(id!)}>
+                    <img
+                        src={editImg}
+                        className={styles.edit}
+                        alt=""
+                    />
+                </Link>
+            }
+        </div>
+    );
 
 export default VerticalStatistic;

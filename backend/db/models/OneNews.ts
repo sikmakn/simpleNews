@@ -20,8 +20,8 @@ interface OneNewsAttr {
     date: Date;
     title: string;
     text: string;
-    userId: string;
-    user?: User;
+    authorId: string;
+    author?: User;
     tagId: string;
     tag?: Tag;
     likes: [Like];
@@ -64,10 +64,10 @@ class OneNews extends Model implements OneNewsAttr {
 
 
     @ForeignKey(() => User)
-    userId!: string;
+    authorId!: string;
 
     @BelongsTo(() => User)
-    user!: User;
+    author!: User;
 
 
     @ForeignKey(() => Tag)

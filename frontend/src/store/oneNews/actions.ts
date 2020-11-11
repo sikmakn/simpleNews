@@ -11,6 +11,7 @@ export const setOneNews = (oneNews: {
         likesCount: number
         commentsCount: number
     }
+    authorUsername: string
 }) => ({
     type: SET_ONE_NEWS,
     payload: oneNews,
@@ -29,7 +30,8 @@ const oneNews = {
     statistic: {
         likesCount: 1500,
         commentsCount: 11500,
-    }
+    },
+    authorUsername: 'username'
 };
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {
