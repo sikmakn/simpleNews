@@ -3,7 +3,6 @@ import styles from './fullNews.module.scss';
 import Date from '../date';
 import Tag from '../tag';
 import {TagEnum} from '../../types/tag';
-import OneNewsCommentsContainer from '../oneNewsCommentsContainer';
 
 export interface FullNewsProps {
     content?: {
@@ -30,7 +29,6 @@ const FullNews: React.FC<FullNewsProps> =
                     <div className={styles.fullText}>{content.text}</div>
                 </>
             }
-            <OneNewsCommentsContainer/>
         </div>);
 
 export default FullNews;
