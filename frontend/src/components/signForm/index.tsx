@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './signForm.module.scss';
-import SignInForm from '../sigInForm';
+import SignInFormHOC from '../sigInForm/hoc';
 import SignSwitcher from '../signSwitcher';
 import SignUpFormHOC from '../signUpForm/hoc';
 
@@ -20,7 +20,7 @@ const SignForm: React.FC<SignFormProps> = ({hide}) => {
                 onClick={e => e.stopPropagation()}
             >
                 <SignSwitcher isSignUp={isSignUp} setIsSignUp={setSignUp}/>
-                {isSignUp ? <SignUpFormHOC/> : <SignInForm/>}
+                {isSignUp ? <SignUpFormHOC/> : <SignInFormHOC/>}
             </div>
         </div>
     );

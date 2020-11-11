@@ -3,7 +3,11 @@ import styles from './signIn.module.scss';
 import UserFormButton from '../userFormButton';
 import UserInput from '../userInput';
 
-const SignInForm: React.FC = () => {
+export interface SignInFormProps {
+    signInUser: (user: { username: string, password: string }) => void
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({signInUser}) => {
     const loginInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     return (
@@ -21,10 +25,10 @@ const SignInForm: React.FC = () => {
             <UserFormButton title="Войти" onClick={() => {
                 if (!loginInputRef?.current || !passwordInputRef?.current) return;
 
-                const login = loginInputRef.current.value;
-                const password = passwordInputRef.current.value;
-
-
+                signInUser({
+                    username: loginInputRef.current.value,
+                    password: passwordInputRef.current.value
+                });
             }}/>
         </div>
     );
