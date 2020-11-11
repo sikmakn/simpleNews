@@ -30,7 +30,7 @@ const UserPage: React.FC<UserPageProps> =
             if (imgSrc)
                 fetch(imgSrc).then(e => e.blob())
                     .then(b => setSelectedImg(b as File));
-        }, [])
+        }, [imgSrc])
 
 
         return (

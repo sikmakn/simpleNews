@@ -19,7 +19,7 @@ export interface CommonEditPageProps {
 
 const CommonEditPage: React.FC<CommonEditPageProps> =
     ({oneNews = {id: '', img: '', tag: TagEnum.FINANCE, title: '', text: ''}}) => {
-        const {id, img, tag, text, title} = oneNews;
+        const {img, tag, text, title} = oneNews;
         const [selectedTag, setSelectedTag] = useState(tag as TagEnum);
         const [selectedImg, setSelectedImg] = useState<File>();
         const [currentText, setCurrentText] = useState(text);

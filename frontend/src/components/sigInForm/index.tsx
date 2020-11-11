@@ -1,33 +1,44 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import styles from './signIn.module.scss';
 import UserFormButton from '../userFormButton';
-import UserInput from '../userInput';
+import UsernameInput from '../usernameInput';
+import {ValueObj} from '../checkInput';
+import PasswordInput from '../passwordInput';
+import FormCheckErrorLayout from '../formCheckErrorsLayout';
+import FormCheckErrors from '../formCheckErrors';
+import checkValue from "../../helpers/valueObj";
 
 export interface SignInFormProps {
     signInUser: (user: { username: string, password: string }) => void
 }
 
 const SignInForm: React.FC<SignInFormProps> = ({signInUser}) => {
-    const loginInputRef = useRef<HTMLInputElement>(null);
-    const passwordInputRef = useRef<HTMLInputElement>(null);
+    const [usernameValueObj, setUsernameValueObj] = useState<ValueObj>();
+    const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
+
     return (
         <div className={styles.form}>
-            <UserInput
-                className={styles.login}
-                placeholder="Логин"
-                inputRef={loginInputRef}
+            <UsernameInput
+                valueObj={usernameValueObj}
+                setValueObj={setUsernameValueObj}
+                className={styles.username}
             />
-            <UserInput
+            <PasswordInput
+                valueObj={passwordValueObj}
+                setValueObj={setPasswordValueObj}
                 className={styles.password}
-                inputRef={passwordInputRef}
-                type="password" placeholder="Пароль"
             />
+            <FormCheckErrorLayout>
+                <FormCheckErrors valueObj={usernameValueObj}/>
+                <FormCheckErrors valueObj={passwordValueObj}/>
+            </FormCheckErrorLayout>
+
             <UserFormButton title="Войти" onClick={() => {
-                if (!loginInputRef?.current || !passwordInputRef?.current) return;
+                if (!checkValue(usernameValueObj) || !checkValue(passwordValueObj)) return;
 
                 signInUser({
-                    username: loginInputRef.current.value,
-                    password: passwordInputRef.current.value
+                    username: usernameValueObj!.value,
+                    password: passwordValueObj!.value
                 });
             }}/>
         </div>

@@ -8,6 +8,8 @@ import FirstNameInput from '../firstNameInput';
 import LastNameInput from '../lastNameInput';
 import FormCheckErrors from '../formCheckErrors';
 import UsernameInput from '../usernameInput';
+import FormCheckErrorLayout from '../formCheckErrorsLayout';
+import {checkManyValue} from "../../helpers/valueObj";
 
 export interface SignUpFormProps {
     registerNewUser: (user: {
@@ -46,28 +48,27 @@ const SignUpForm: React.FC<SignUpFormProps> = ({registerNewUser}) => {
                 setValueObj={setPasswordValueObj}
                 className={styles.password}
             />
-            <span className={styles.errorContainer}>
+            <FormCheckErrorLayout>
                 <FormCheckErrors valueObj={usernameValueObj}/>
                 <FormCheckErrors valueObj={firstNameValueObj}/>
                 <FormCheckErrors valueObj={lastNameValueObj}/>
                 <FormCheckErrors valueObj={passwordValueObj}/>
-            </span>
+            </FormCheckErrorLayout>
             <UserFormButton
                 title="Зарегестрироваться"
                 onClick={() => {
-                    if (
-                        !usernameValueObj?.errors ||
-                        !firstNameValueObj?.errors ||
-                        !lastNameValueObj?.errors ||
-                        !passwordValueObj?.errors
-                    ) {
+                    if (checkManyValue([
+                        usernameValueObj,
+                        firstNameValueObj,
+                        lastNameValueObj,
+                        passwordValueObj,
+                    ]))
                         registerNewUser({
                             username: usernameValueObj!.value,
                             password: passwordValueObj!.value,
                             firstName: firstNameValueObj!.value,
                             lastName: lastNameValueObj!.value
-                        })
-                    }
+                        });
                 }}
             />
         </>
