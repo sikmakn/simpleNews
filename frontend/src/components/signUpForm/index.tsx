@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import styles from './signUpForm.module.scss';
-import CheckInput, {ValueObj} from '../checkInput';
-import UserFormButton from '../userFormButton';
 
-const USERNAME_REGEX = /^[a-zA-Z0-9]{4,20}$/;
-const NAME_REGEX = /^[а-яА-Я]{3,20}$/;
-const PASSWORD_REGEX = /^.{6,20}$/;
+import {ValueObj} from '../checkInput';
+import UserFormButton from '../userFormButton';
+import PasswordInput from '../passwordInput';
+import FirstNameInput from '../firstNameInput';
+import LastNameInput from '../lastNameInput';
+import FormCheckErrors from '../formCheckErrors';
+import UsernameInput from '../usernameInput';
 
 export interface SignUpFormProps {
     registerNewUser: (user: {
@@ -24,63 +26,31 @@ const SignUpForm: React.FC<SignUpFormProps> = ({registerNewUser}) => {
 
     return (
         <>
-            <CheckInput
-                className={styles.login}
-                placeholder="Логин"
+            <UsernameInput
                 valueObj={usernameValueObj}
-                regExp={USERNAME_REGEX}
-                errorsText={[
-                    'Логин должен от 4 до 20 символов',
-                    'Логин содержать только латинские буквы и цифры'
-                ]}
                 setValueObj={setUsernameValueObj}
+                className={styles.username}
             />
-            <CheckInput
-                placeholder="Имя"
-                className={styles.firstName}
-                setValueObj={setFirstNameValueObj}
+            <FirstNameInput
                 valueObj={firstNameValueObj}
-                regExp={NAME_REGEX}
-                errorsText={[
-                    'Имя может содержать от 3 до 20 символов',
-                    'Имя может состоять только из букв кирилицы'
-                ]}
+                setValueObj={setFirstNameValueObj}
+                className={styles.firstName}
             />
-            <CheckInput
-                placeholder="Фамилия"
-                errorsText={[
-                    'Фамилия может содержать от 3 до 20 символов',
-                    'Фамилия может состоять только из букв кирилицы'
-                ]}
+            <LastNameInput
                 setValueObj={setLastNameValueObj}
                 valueObj={lastNameValueObj}
                 className={styles.lastName}
-                regExp={NAME_REGEX}
             />
-            <CheckInput
-                placeholder="Пароль"
-                errorsText={[
-                    'Пароль должен быть длиннее 6 и короче 20 символов'
-                ]}
-                type="password"
-                setValueObj={setPasswordValueObj}
+            <PasswordInput
                 valueObj={passwordValueObj}
+                setValueObj={setPasswordValueObj}
                 className={styles.password}
-                regExp={PASSWORD_REGEX}
             />
             <span className={styles.errorContainer}>
-                {usernameValueObj?.errors?.map((err, i) =>
-                    <span key={i} className={styles.error}>{err}</span>
-                )}
-                {firstNameValueObj?.errors?.map((err, i) =>
-                    <span key={i} className={styles.error}>{err}</span>
-                )}
-                {lastNameValueObj?.errors?.map((err, i) =>
-                    <span key={i} className={styles.error}>{err}</span>
-                )}
-                {passwordValueObj?.errors?.map((err, i) =>
-                    <span key={i} className={styles.error}>{err}</span>
-                )}
+                <FormCheckErrors valueObj={usernameValueObj}/>
+                <FormCheckErrors valueObj={firstNameValueObj}/>
+                <FormCheckErrors valueObj={lastNameValueObj}/>
+                <FormCheckErrors valueObj={passwordValueObj}/>
             </span>
             <UserFormButton
                 title="Зарегестрироваться"

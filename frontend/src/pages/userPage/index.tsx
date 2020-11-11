@@ -1,10 +1,14 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './userPage.module.scss';
 import UserFormButton from '../../components/userFormButton';
 import LogOutButton from '../../components/logoutButton';
 import UserInput from '../../components/userInput';
 import AddUserImage from '../../components/addUserImage';
 import HeaderHOC from '../../components/header/hoc';
+import {ValueObj} from '../../components/checkInput';
+import PasswordInput from '../../components/passwordInput';
+import FirstNameInput from '../../components/firstNameInput';
+import LastNameInput from '../../components/lastNameInput';
 
 export interface UserPageProps {
     username: string
@@ -15,9 +19,12 @@ export interface UserPageProps {
 
 const UserPage: React.FC<UserPageProps> =
     ({username, firstName, lastName, imgSrc}) => {
-        const firstNameRef = useRef<HTMLInputElement>(null);
-        const lastNameRef = useRef<HTMLInputElement>(null);
         const [selectedImg, setSelectedImg] = useState<File>();
+
+        const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>({value: firstName});
+        const [lastNameValueObj, setLastNameValueObj] = useState<ValueObj>({value: lastName});
+        const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
+        const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
 
         useEffect(() => {
             if (imgSrc)
@@ -25,15 +32,6 @@ const UserPage: React.FC<UserPageProps> =
                     .then(b => setSelectedImg(b as File));
         }, [])
 
-        useEffect(() => {
-            if (!firstNameRef?.current) return;
-            firstNameRef.current.value = firstName;
-        }, [firstNameRef]);
-
-        useEffect(() => {
-            if (!lastNameRef?.current) return;
-            lastNameRef.current.value = lastName;
-        })
 
         return (
             <>
@@ -47,15 +45,24 @@ const UserPage: React.FC<UserPageProps> =
                             value={username}
                             className={styles.username}
                         />
-                        <UserInput
-                            inputRef={firstNameRef}
-                            placeholder="Имя"
+                        <FirstNameInput
+                            valueObj={firstNameValueObj}
+                            setValueObj={setFirstNameValueObj}
                             className={styles.firstName}
                         />
-                        <UserInput
-                            inputRef={lastNameRef}
-                            placeholder="Фамилия"
+                        <LastNameInput
+                            setValueObj={setLastNameValueObj}
+                            valueObj={lastNameValueObj}
                             className={styles.lastName}
+                        />
+                        <PasswordInput
+                            placeholder="Новый пароль"
+                            valueObj={newPasswordValueObj}
+                            setValueObj={setNewPasswordValueObj}
+                        />
+                        <PasswordInput
+                            valueObj={passwordValueObj}
+                            setValueObj={setPasswordValueObj}
                         />
                         <UserFormButton title="Сохранить изменения"/>
                         <LogOutButton/>
