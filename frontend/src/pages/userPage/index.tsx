@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './userPage.module.scss';
 import UserFormButton from '../../components/userFormButton';
 import UserInput from '../../components/userInput';
@@ -12,6 +12,7 @@ import FormCheckErrorLayout from '../../components/formCheckErrorsLayout';
 import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
 import {checkManyValue} from '../../helpers/valueObj';
+import imgToString from '../../helpers/imgToString';
 
 export interface UserPageProps {
     user: {
@@ -25,7 +26,7 @@ export interface UserPageProps {
         username: string
         firstName: string
         lastName: string
-        img: File
+        img?: File
         password: string
         newPassword?: string
     }) => void
@@ -40,12 +41,6 @@ const UserPage: React.FC<UserPageProps> =
         const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
         const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
 
-        useEffect(() => {
-            if (imgSrc)
-                fetch(imgSrc).then(e => e.blob())
-                    .then(b => setSelectedImg(b as File));
-        }, [imgSrc])
-
 
         return (
             <>
@@ -53,7 +48,7 @@ const UserPage: React.FC<UserPageProps> =
                 <main className={styles.main}>
                     <div className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
-                        <AddUserImage setImg={setSelectedImg} img={selectedImg}/>
+                        <AddUserImage setImg={setSelectedImg} img={imgToString(selectedImg) || imgSrc}/>
                         <UserInput
                             disabled placeholder="Логин"
                             value={username}
@@ -103,7 +98,7 @@ const UserPage: React.FC<UserPageProps> =
                                     lastName: lastNameValueObj!.value,
                                     password: passwordValueObj!.value,
                                     newPassword: newPasswordValueObj?.value,
-                                    img: selectedImg!
+                                    img: selectedImg
                                 })
                             }}
                         />

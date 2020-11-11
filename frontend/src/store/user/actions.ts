@@ -26,7 +26,7 @@ export const updateUser = (user: {
     username: string
     firstName: string
     lastName: string
-    imgSrc: string
+    imgSrc?: string
 }) => ({type: UPDATE_USER, payload: user});
 
 //async actions
@@ -59,10 +59,10 @@ export const updateUserData = (user: {
     username: string
     firstName: string
     lastName: string
-    img: File
+    img?: File
     password: string
     newPassword?: string
 }) => (dispatch: any) => {
-    const imgSrc = URL.createObjectURL(user.img);
-    dispatch(updateUser({...user, imgSrc}));
+    const {img} = user;
+    dispatch(updateUser({...user, imgSrc: img && URL.createObjectURL(img)}));
 }

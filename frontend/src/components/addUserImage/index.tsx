@@ -3,7 +3,7 @@ import styles from './addUserImage.module.scss';
 import defaultUserImg from '../../assets/no-image.png';
 
 export interface AddUserImageProps {
-    img?: File
+    img?: string
     setImg: (x: File) => void
 }
 
@@ -13,7 +13,7 @@ const AddUserImage: React.FC<AddUserImageProps> = ({img, setImg}) => {
         <label htmlFor="file">
             <div
                 className={styles.imageContainer}
-                style={{backgroundImage: `url(${(img && URL.createObjectURL(img)) || defaultUserImg})`}}
+                style={{backgroundImage: `url(${img || defaultUserImg})`}}
             >
                 <input
                     ref={fileInputRef}
