@@ -11,16 +11,28 @@ import LastNameInput from '../../components/lastNameInput';
 import FormCheckErrorLayout from '../../components/formCheckErrorsLayout';
 import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
+import {checkManyValue} from '../../helpers/valueObj';
 
 export interface UserPageProps {
-    username: string
-    firstName: string
-    lastName: string
-    imgSrc: string
+    user: {
+        username: string
+        firstName: string
+        lastName: string
+        imgSrc: string
+    }
+
+    updateUserData: (user: {
+        username: string
+        firstName: string
+        lastName: string
+        img: File
+        password: string
+        newPassword?: string
+    }) => void
 }
 
 const UserPage: React.FC<UserPageProps> =
-    ({username, firstName, lastName, imgSrc}) => {
+    ({user: {username, firstName, lastName, imgSrc}, updateUserData}) => {
         const [selectedImg, setSelectedImg] = useState<File>();
 
         const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>({value: firstName});
@@ -75,7 +87,26 @@ const UserPage: React.FC<UserPageProps> =
                                 <FormCheckErrors valueObj={newPasswordValueObj}/>
                             }
                         </FormCheckErrorLayout>
-                        <UserFormButton title="Сохранить изменения"/>
+                        <UserFormButton
+                            title="Сохранить изменения"
+                            onClick={() => {
+                                if (!checkManyValue([
+                                    firstNameValueObj,
+                                    lastNameValueObj,
+                                    passwordValueObj
+                                ])) return;
+                                if (newPasswordValueObj?.value && newPasswordValueObj.errors) return;
+
+                                updateUserData({
+                                    username,
+                                    firstName: firstNameValueObj!.value,
+                                    lastName: lastNameValueObj!.value,
+                                    password: passwordValueObj!.value,
+                                    newPassword: newPasswordValueObj?.value,
+                                    img: selectedImg!
+                                })
+                            }}
+                        />
                         <LogOutButtonHOC/>
                     </div>
                 </main>

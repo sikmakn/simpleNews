@@ -9,7 +9,7 @@ interface LogOutButtonHOCProps extends LogOutButtonProps {
 const LogOutButtonHOC: React.FC<LogOutButtonHOCProps> = ({logOutUser}) =>
     <LogOutButton logOutUser={logOutUser}/>;
 
-const mapStateToProps = ({}: any) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {logOutUser};
 

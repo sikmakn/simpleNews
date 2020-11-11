@@ -3,16 +3,16 @@ import UserPage, {UserPageProps} from './index';
 import {mainPagePath} from '../../paths';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {updateUserData} from '../../store/user/actions';
 
-interface UserPageHOCProps {
-    user: UserPageProps
+interface UserPageHOCProps extends UserPageProps{
 }
 
-const UserPageHOC: React.FC<UserPageHOCProps> = ({user}) =>
-    user ? <UserPage {...user}/> : <Redirect to={mainPagePath()}/>;
+const UserPageHOC: React.FC<UserPageHOCProps> = (props) =>
+    props.user ? <UserPage {...props}/> : <Redirect to={mainPagePath()}/>;
 
 const mapStateToProps = ({user}: any) => ({user: user.value});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {updateUserData};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPageHOC);
