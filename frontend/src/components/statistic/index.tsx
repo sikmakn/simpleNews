@@ -6,14 +6,14 @@ import commentImg from '../../assets/comment.svg';
 import activeCommentImg from '../../assets/comment_active.svg';
 
 export interface StatisticProps {
-    likesCount: number
+    likesCount?: number
     isLiked?: boolean
-    commentsCount: number
+    commentsCount?: number
     isCommented?: boolean
 }
 
 const Statistic: React.FC<StatisticProps> =
-    ({likesCount, commentsCount, isLiked = false, isCommented = false}) =>
+    ({likesCount = 0, commentsCount = 0, isLiked = false, isCommented = false}) =>
         (<>
             <div>
                 <img src={isLiked ? activeHeartImg : heartImg} alt=""/>

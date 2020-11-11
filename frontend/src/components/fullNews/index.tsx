@@ -3,27 +3,33 @@ import styles from './fullNews.module.scss';
 import Date from '../date';
 import Tag from '../tag';
 import {TagEnum} from '../../types/tag';
-import OneNewsCommentsContainer from "../oneNewsCommentsContainer";
+import OneNewsCommentsContainer from '../oneNewsCommentsContainer';
 
 export interface FullNewsProps {
-    id: string
-    title: string
-    text: string
-    date: Date
-    tag: string
-    img: string
+    content?: {
+        title: string
+        text: string
+        date: Date
+        tag: string
+        imgSrc: string
+    }
 }
 
 const FullNews: React.FC<FullNewsProps> =
-    ({id, title, text, date, tag, img}) =>
+    ({content}) =>
         (<div className={styles.fullNewsContainer}>
-            <div className={styles.infoContainer}>
-                <Tag type={tag as TagEnum}/>
-                <Date date={date}/>
-            </div>
-            <h1>{title}</h1>
-            <img src={img} alt=""/>
-            <div className={styles.fullText}>{text}</div>
+            {
+                content &&
+                <>
+                    <div className={styles.infoContainer}>
+                        <Tag type={content.tag as TagEnum}/>
+                        <Date date={content.date}/>
+                    </div>
+                    <h1>{content.title}</h1>
+                    <img src={content.imgSrc} alt=""/>
+                    <div className={styles.fullText}>{content.text}</div>
+                </>
+            }
             <OneNewsCommentsContainer/>
         </div>);
 

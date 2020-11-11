@@ -5,23 +5,23 @@ import editImg from '../../assets/edit.svg';
 import {Link} from 'react-router-dom';
 import {editOneNewsPagePath} from '../../paths';
 
-
 export interface VerticalStatisticProps {
-    id: string
-    likesCount: number
-    commentsCount: number
+    id?: string
+    likesCount?: number
+    commentsCount?: number
 }
 
 const VerticalStatistic: React.FC<VerticalStatisticProps> = (props) => (
     <div className={styles.statisticsContainer}>
         <Statistic {...props}/>
-        <Link to={editOneNewsPagePath(props.id)}>
+        {/*todo add check user*/}
+        {props.id && <Link to={editOneNewsPagePath(props.id)}>
             <img
                 src={editImg}
                 className={styles.edit}
                 alt=""
             />
-        </Link>
+        </Link>}
     </div>
 );
 

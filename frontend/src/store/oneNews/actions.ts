@@ -32,4 +32,6 @@ const oneNews = {
     }
 };
 export const loadOneNews = (id: string) =>
-    (dispatch: any) => dispatch(setOneNews({...oneNews, id}));
+    (dispatch: any) => {
+        setTimeout(() => dispatch(setOneNews({...oneNews, id})), 2000);
+    }

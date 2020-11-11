@@ -28,7 +28,7 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
             if (img)
                 fetch(img).then(e => e.blob())
                     .then(b => setSelectedImg(b as File));
-        }, [])
+        }, [img])
 
         return (
             <>
