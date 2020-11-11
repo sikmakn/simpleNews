@@ -1,12 +1,16 @@
 import {combineReducers} from 'redux';
-import mainPage from './mainPage/reducers';
+import bigNews from './bigNews/reducers';
 import user from './user/reducers';
 import oneNews from './oneNews/reducers';
 import lastNews from './lastNews/reducers';
+import hotNews from './hotNews/reducers';
+import tag from './tag/reducers';
 
 export default combineReducers({
-    mainPage,
+    bigNews,
     user,
     oneNews,
-    lastNews
+    lastNews,
+    hotNews,
+    tag,
 });

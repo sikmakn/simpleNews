@@ -1,18 +1,9 @@
-export const FETCH_BIG_NEWS = 'FETCH_BIG_NEWS';
-export const FETCH_SMALL_NEWS = 'FETCH_SMALL_NEWS';
-
+export const SET_BIG_NEWS = 'SET_BIG_NEWS';
 
 export const setBigNews = (bigNews: any[]) => ({
-    type: FETCH_BIG_NEWS,
+    type: SET_BIG_NEWS,
     payload: bigNews,
 });
-
-export const setSmallNews = (smallNews: any[]) => ({
-    type: FETCH_SMALL_NEWS,
-    payload: smallNews,
-});
-
-
 
 const bigNews = [
     {
@@ -63,41 +54,3 @@ const bigNews = [
 ];
 export const loadBigNews = (tag: string) => (dispatch: any) =>
     dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews))
-
-
-export const loadSmallNews = () => (dispatch: any) =>
-    dispatch(setSmallNews([
-        {
-            id: '1',
-            img: 'news1.jpg',
-            tag: 'finance',
-            title: 'Требониан Галл происходил из старинного этрусского рода. ' +
-                'В конце правления императора Деция Траяна он занимал должность легата',
-            statistic: {
-                likesCount: 1500,
-                commentsCount: 11500,
-            }
-        },
-        {
-            id: '2',
-            img: 'news1.jpg',
-            tag: 'sport',
-            title: 'Требониан Галл происходил из старинного этрусского рода. ' +
-                'В конце правления императора Деция Траяна он занимал должность легата',
-            statistic: {
-                likesCount: 1500,
-                commentsCount: 11500,
-            }
-        },
-        {
-            id: '3',
-            img: 'news1.jpg',
-            tag: 'tv',
-            title: 'Требониан Галл происходил из старинного этрусского рода. ' +
-                'В конце правления императора Деция Траяна он занимал должность легата',
-            statistic: {
-                likesCount: 1500,
-                commentsCount: 11500,
-            }
-        }
-    ]));

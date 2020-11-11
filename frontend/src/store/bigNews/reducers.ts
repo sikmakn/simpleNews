@@ -1,18 +1,13 @@
-import {FETCH_BIG_NEWS, FETCH_SMALL_NEWS} from './actions';
+import {SET_BIG_NEWS} from './actions';
 
 const defaultState = {};
 
 const mainPageReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
-        case FETCH_BIG_NEWS:
+        case SET_BIG_NEWS:
             return {
                 ...state,
-                bigNews: action.payload,
-            };
-        case FETCH_SMALL_NEWS:
-            return {
-                ...state,
-                smallNews: action.payload,
+                value: action.payload,
             };
     }
 

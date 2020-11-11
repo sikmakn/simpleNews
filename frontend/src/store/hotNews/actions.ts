@@ -1,29 +1,43 @@
-export const SET_LAST_NEWS = 'SET_LAST_NEWS';
+export const SET_HOT_NEWS = 'SET_HOT_NEWS';
 
-export const setLastNews = (lastNews: any) => ({
-    type: SET_LAST_NEWS,
-    payload: lastNews,
+export const setHotNews = (hotNews: any[]) => ({
+    type: SET_HOT_NEWS,
+    payload: hotNews,
 });
 
-export const loadLastNews = () => (dispatch: any) => {
-    setTimeout(() => dispatch(setLastNews([
+export const loadHotNews = () => (dispatch: any) =>
+    dispatch(setHotNews([
         {
             id: '1',
-            date: new Date(2020, 5, 22, 10, 22),
+            img: 'news1.jpg',
+            tag: 'finance',
             title: 'Требониан Галл происходил из старинного этрусского рода. ' +
                 'В конце правления императора Деция Траяна он занимал должность легата',
+            statistic: {
+                likesCount: 1500,
+                commentsCount: 11500,
+            }
         },
         {
             id: '2',
-            date: new Date(2020, 5, 22, 10, 22),
+            img: 'news1.jpg',
+            tag: 'sport',
             title: 'Требониан Галл происходил из старинного этрусского рода. ' +
                 'В конце правления императора Деция Траяна он занимал должность легата',
+            statistic: {
+                likesCount: 1500,
+                commentsCount: 11500,
+            }
         },
         {
             id: '3',
-            date: new Date(2020, 5, 22, 10, 22),
+            img: 'news1.jpg',
+            tag: 'tv',
             title: 'Требониан Галл происходил из старинного этрусского рода. ' +
                 'В конце правления императора Деция Траяна он занимал должность легата',
+            statistic: {
+                likesCount: 1500,
+                commentsCount: 11500,
+            }
         }
-    ])), 2000);
-}
+    ]));

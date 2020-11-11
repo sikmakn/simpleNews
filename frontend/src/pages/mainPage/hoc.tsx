@@ -1,27 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {loadBigNews, loadSmallNews} from '../../store/mainPage/actions';
 import MainPage, {MainPageProps} from './index';
+import {setTag} from '../../store/tag/actions';
 
-interface MainPageHOCProps extends MainPageProps{
-    tag: string
-    loadBigNews: any
-    loadSmallNews: any
-    bigNews?: any[]
-    smallNews?: any[]
+interface MainPageHOCProps extends MainPageProps {
+    tag?: string
+    setTag: (tag?: string) => void
 }
 
-const MainPageHOC: React.FC<MainPageHOCProps> = (props) => <MainPage {...props}/>;
-
-
-const mapStateToProps = ({mainPage}: any, ownProps: any) => {
-    const {tag} = ownProps.match.params;
-    return {tag, ...mainPage};
+const MainPageHOC: React.FC<MainPageHOCProps> = ({tag, setTag}) => {
+    useEffect(() => setTag(tag), [tag]);
+    return <MainPage/>;
 }
 
-const mapDispatchToProps = {
-    loadBigNews,
-    loadSmallNews,
-};
+const mapStateToProps = (state: any, ownProps: any) =>
+    ({tag: ownProps.match.params.tag});
+
+
+const mapDispatchToProps = {setTag};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPageHOC);
