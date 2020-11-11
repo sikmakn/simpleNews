@@ -34,7 +34,7 @@ export function userPagePath() {
 }
 
 export function mainPagePath(tag?: string) {
-    return tag ? `?tag=${tag}` : '/';
+    return tag ? `/?tag=${tag}` : '/';
 }
 
 export function oneNewsPagePath(id: string) {
