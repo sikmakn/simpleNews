@@ -19,17 +19,17 @@
       margin-bottom: 21px;
     }
 
-    .username {
-      margin-top: 25px;
+    input{
       margin-bottom: 18px;
+
+      &.username{
+        margin-top: 25px;
+      }
+
+      &.newPassword{
+        margin-bottom: 33px;
+      }
     }
 
-    .firstName {
-      margin-bottom: 18px;
-    }
-
-    .lastName {
-      margin-bottom: 33px;
-    }
   }
 }

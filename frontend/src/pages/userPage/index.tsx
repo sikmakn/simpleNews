@@ -41,14 +41,16 @@ const UserPage: React.FC<UserPageProps> =
         const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
         const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
 
-
         return (
             <>
                 <HeaderHOC/>
                 <main className={styles.main}>
                     <div className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
-                        <AddUserImage setImg={setSelectedImg} img={imgToString(selectedImg) || imgSrc}/>
+                        <AddUserImage
+                            setImg={setSelectedImg}
+                            img={imgToString(selectedImg) || imgSrc}
+                        />
                         <UserInput
                             disabled placeholder="Логин"
                             value={username}
@@ -57,12 +59,10 @@ const UserPage: React.FC<UserPageProps> =
                         <FirstNameInput
                             valueObj={firstNameValueObj}
                             setValueObj={setFirstNameValueObj}
-                            className={styles.firstName}
                         />
                         <LastNameInput
                             setValueObj={setLastNameValueObj}
                             valueObj={lastNameValueObj}
-                            className={styles.lastName}
                         />
                         <PasswordInput
                             placeholder="Новый пароль"
@@ -72,6 +72,7 @@ const UserPage: React.FC<UserPageProps> =
                         <PasswordInput
                             valueObj={passwordValueObj}
                             setValueObj={setPasswordValueObj}
+                            className={styles.newPassword}
                         />
                         <FormCheckErrorLayout>
                             <FormCheckErrors valueObj={firstNameValueObj}/>
