@@ -1,4 +1,4 @@
-import {FETCH_BIG_NEWS, FETCH_LAST_NEWS, FETCH_SMALL_NEWS} from './actions';
+import {FETCH_BIG_NEWS, FETCH_SMALL_NEWS} from './actions';
 
 const defaultState = {};
 
@@ -13,11 +13,6 @@ const mainPageReducer = (state = defaultState, action: { type: string, payload: 
             return {
                 ...state,
                 smallNews: action.payload,
-            };
-        case FETCH_LAST_NEWS:
-            return {
-                ...state,
-                lastNews: action.payload,
             };
     }
 

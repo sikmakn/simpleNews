@@ -1,15 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import OneNewsPage from './index';
-import {loadLastNews} from '../../store/mainPage/actions';
+import OneNewsPage, {OneNewsPageProps} from './index';
 import {loadOneNews} from '../../store/oneNews/actions';
 
-interface OneNewsPageHOCProps {
-    id: string
-    lastNews?: any[]
-    loadLastNews: () => void
-    oneNews?: any
-    loadOneNews: (id: string) => void
+interface OneNewsPageHOCProps extends OneNewsPageProps {
 }
 
 const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
@@ -24,9 +18,6 @@ const mapStateToProps = ({oneNews, mainPage}: any, ownProps: any) => {
     };
 };
 
-const mapDispatchToProps = {
-    loadOneNews,
-    loadLastNews,
-};
+const mapDispatchToProps = {loadOneNews};
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneNewsPageHOC)

@@ -3,33 +3,28 @@ import MainLayout from '../../components/mainLayout';
 import styles from './news.module.scss';
 import BigNewsCard, {BigNewsCardProps} from '../../components/bigNewsCard';
 import SmallNewsCard, {SmallNewsCardProps} from '../../components/smallNewsCard';
-import LastNewsCard, {LastNewsCardProps} from '../../components/lastNewsCard';
 import NewsColumnLayout from '../../components/newsColumnLayout';
 import HeaderHOC from '../../components/header/hoc';
+import LastNewsLayoutHOC from '../../components/lastNewsLayout/hoc';
 
-export interface MainPageMatchProps {
+export interface MainPageProps {
     tag: string
     bigNews?: BigNewsCardProps[]
     smallNews?: SmallNewsCardProps[]
-    lastNews?: LastNewsCardProps[]
     loadBigNews: (tag: string) => void
     loadSmallNews: () => void
-    loadLastNews: () => void
 }
 
-const MainPage: React.FC<MainPageMatchProps> =
+const MainPage: React.FC<MainPageProps> =
     ({
          tag,
          bigNews,
          smallNews,
-         lastNews,
-         loadLastNews,
          loadSmallNews,
          loadBigNews
      }) => {
         if (!bigNews) loadBigNews(tag);
         if (!smallNews) loadSmallNews();
-        if (!lastNews) loadLastNews();
 
         useEffect(() => loadBigNews(tag), [tag]);
         return (
@@ -42,9 +37,7 @@ const MainPage: React.FC<MainPageMatchProps> =
                     <NewsColumnLayout columnTitle={'Горячее'}>
                         {smallNews?.map(n => <SmallNewsCard key={n.id} {...n}/>)}
                     </NewsColumnLayout>
-                    <NewsColumnLayout columnTitle={'Последние новости'}>
-                        {lastNews?.map(n => <LastNewsCard key={n.id} {...n}/>)}
-                    </NewsColumnLayout>
+                    <LastNewsLayoutHOC/>
                 </MainLayout>
             </>
         );
