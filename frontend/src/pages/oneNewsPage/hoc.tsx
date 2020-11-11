@@ -14,7 +14,7 @@ const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
         return <OneNewsPage {...props}/>;
     }
 
-const mapStateToProps = ({oneNews, lastNews}: any, ownProps: any) =>
+const mapStateToProps = (state: any, ownProps: any) =>
     ({id: ownProps.match.params.id});
 
 

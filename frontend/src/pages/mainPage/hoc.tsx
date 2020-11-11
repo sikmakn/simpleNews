@@ -14,7 +14,7 @@ const MainPageHOC: React.FC<MainPageHOCProps> = ({tag, setTag}) => {
 }
 
 const mapStateToProps = (state: any, ownProps: any) =>
-    ({tag: ownProps.match.params.tag});
+    ({tag: (new URLSearchParams(ownProps?.location?.search)).get('tag') ?? undefined});
 
 
 const mapDispatchToProps = {setTag};

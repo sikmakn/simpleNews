@@ -13,7 +13,7 @@ export const TAG_PATHS = {
 }
 
 export const PAGE_PATHS = {
-    MAIN: '/:tag?',
+    MAIN: '/',
     ONE_NEWS: '/news/:id',
     ADD_ONE_NEWS: '/addOneNews',
     EDIT_ONE_NEWS: '/editOneNews/:id?',
@@ -28,8 +28,8 @@ export function userPagePath() {
     return '/user';
 }
 
-export function mainPagePath(tag: string = '') {
-    return `/${tag}`;
+export function mainPagePath(tag?: string) {
+    return tag ? `?tag=${tag}` : '/';
 }
 
 export function oneNewsPagePath(id: string) {
