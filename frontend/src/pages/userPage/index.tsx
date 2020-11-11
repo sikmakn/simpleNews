@@ -9,6 +9,8 @@ import {ValueObj} from '../../components/checkInput';
 import PasswordInput from '../../components/passwordInput';
 import FirstNameInput from '../../components/firstNameInput';
 import LastNameInput from '../../components/lastNameInput';
+import FormCheckErrorLayout from '../../components/formCheckErrorsLayout';
+import FormCheckErrors from '../../components/formCheckErrors';
 
 export interface UserPageProps {
     username: string
@@ -64,6 +66,15 @@ const UserPage: React.FC<UserPageProps> =
                             valueObj={passwordValueObj}
                             setValueObj={setPasswordValueObj}
                         />
+                        <FormCheckErrorLayout>
+                            <FormCheckErrors valueObj={firstNameValueObj}/>
+                            <FormCheckErrors valueObj={lastNameValueObj}/>
+                            <FormCheckErrors valueObj={passwordValueObj}/>
+                            {
+                                newPasswordValueObj?.value &&
+                                <FormCheckErrors valueObj={newPasswordValueObj}/>
+                            }
+                        </FormCheckErrorLayout>
                         <UserFormButton title="Сохранить изменения"/>
                         <LogOutButton/>
                     </div>
