@@ -18,7 +18,12 @@ export const PAGE_PATHS = {
     ADD_ONE_NEWS: '/addOneNews',
     EDIT_ONE_NEWS: '/editOneNews/:id?',
     USER: '/user',
+    NO_MATCH: '*',
 };
+
+export function noMatchPagePath() {
+    return '/404';
+}
 
 export function addOneNewsPagePath() {
     return '/addOneNews';

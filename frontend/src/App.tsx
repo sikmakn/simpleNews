@@ -29,7 +29,7 @@ function App() {
                     <Route path={PAGE_PATHS.ADD_ONE_NEWS} exact component={AddOneNewsPageHOC}/>
                     <Route path={PAGE_PATHS.EDIT_ONE_NEWS} exact component={EditOneNewsPage}/>
                     <Route path={PAGE_PATHS.MAIN} exact component={MainPageHOC}/>
-                    <Route path="*" exact component={NoMatchPage}/>
+                    <Route path={PAGE_PATHS.NO_MATCH} exact component={NoMatchPage}/>
                 </Switch>
             </BrowserRouter>
         </Provider>
