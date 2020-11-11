@@ -4,7 +4,7 @@ const userReducer = (state = {}, action: { type: string, payload: any }) => {
     switch (action.type) {
         case REGISTER_USER:
         case SET_USER:
-            return action.payload;
+            return {value: action.payload};
     }
     return state;
 };

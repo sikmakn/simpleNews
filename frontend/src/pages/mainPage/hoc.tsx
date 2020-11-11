@@ -9,7 +9,7 @@ interface MainPageHOCProps extends MainPageProps {
 }
 
 const MainPageHOC: React.FC<MainPageHOCProps> = ({tag, setTag}) => {
-    useEffect(() => setTag(tag), [tag]);
+    useEffect(() => setTag(tag), [tag, setTag]);
     return <MainPage/>;
 }
 

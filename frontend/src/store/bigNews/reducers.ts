@@ -6,7 +6,6 @@ const mainPageReducer = (state = defaultState, action: { type: string, payload: 
     switch (action.type) {
         case SET_BIG_NEWS:
             return {
-                ...state,
                 value: action.payload,
             };
     }

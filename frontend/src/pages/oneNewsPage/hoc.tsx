@@ -14,7 +14,7 @@ const mapStateToProps = ({oneNews, lastNews}: any, ownProps: any) => {
     return {
         id,
         lastNews: lastNews.value,
-        oneNews: Object.keys(oneNews).length && oneNews
+        oneNews: oneNews.value
     };
 };
 

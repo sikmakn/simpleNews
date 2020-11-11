@@ -12,7 +12,7 @@ interface HeaderHOCProps {
 const HeaderHOC: React.FC<HeaderHOCProps> =
     ({user}) => (<Header user={user}/>);
 
-const mapStateToProps = ({user}: any) => ({user: Object.keys(user).length && user});
+const mapStateToProps = ({user}: any) => ({user: user.value});
 
 
 export default connect(mapStateToProps)(HeaderHOC);

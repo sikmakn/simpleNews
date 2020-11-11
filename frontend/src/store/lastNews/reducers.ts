@@ -5,9 +5,7 @@ const defaultState = {};
 const lastNewsReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
         case SET_LAST_NEWS:
-            return {
-                value: action.payload
-            };
+            return {value: action.payload};
     }
 
     return state;

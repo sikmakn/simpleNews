@@ -12,8 +12,6 @@ const SignUpFormHOC: React.FC<SignUpFormHOCProps> =
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {
-    registerNewUser,
-};
+const mapDispatchToProps = {registerNewUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpFormHOC);

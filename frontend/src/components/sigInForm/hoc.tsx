@@ -12,8 +12,6 @@ const SigInFormHOC: React.FC<SignInFormHOCProps> =
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {
-    signInUser
-};
+const mapDispatchToProps = {signInUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SigInFormHOC);
