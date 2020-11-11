@@ -9,11 +9,11 @@ interface OneNewsPageHOCProps extends OneNewsPageProps {
 const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
     (props) => <OneNewsPage {...props}/>;
 
-const mapStateToProps = ({oneNews, mainPage}: any, ownProps: any) => {
+const mapStateToProps = ({oneNews, lastNews}: any, ownProps: any) => {
     const {id} = ownProps.match.params;
     return {
         id,
-        lastNews: mainPage.lastNews,
+        lastNews: lastNews.value,
         oneNews: Object.keys(oneNews).length && oneNews
     };
 };
