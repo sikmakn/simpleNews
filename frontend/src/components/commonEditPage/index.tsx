@@ -35,13 +35,19 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                 <HeaderHOC/>
                 <main className={styles.main}>
                     <TagSelect selected={selectedTag} setSelected={setSelectedTag}/>
-                    <input type="text" value={title} placeholder={'Текст заголовка'}/>
+                    <input type="text" value={title} placeholder="Текст заголовка"/>
                     <AddNewsImage img={selectedImg} setImg={setSelectedImg}/>
                     <EditableDiv
                         text={currentText} setText={setCurrentText}
-                        placeholder={'Основной текст новости'}
+                        placeholder="Основной текст новости"
                     />
-                    <ButtonContainer addButtonName={'Сохранить новость'}/>
+                    <ButtonContainer
+                        addButtonName="Сохранить новость"
+                        onClickToCancel={() => {
+                        }}
+                        onClickToAdd={() => {
+                        }}
+                    />
                 </main>
             </>
         );

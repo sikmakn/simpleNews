@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import styles from './comment.module.scss';
 import CommonComment from '../commonComment';
-import HideShowSubCommentsButton from "../hideShowSubCommentsButton";
+import HideShowSubCommentsButton from '../hideShowSubCommentsButton';
 
 interface CommentCommonType {
     id: string
     text: string
-    user: {
-        id: string
+    author: {
+        username: string
         img: string
         fullName: string
     }
@@ -15,7 +15,7 @@ interface CommentCommonType {
 
 interface SubCommentType extends CommentCommonType {
     answerTo: {
-        id: string,
+        username: string,
         fullName: string
     }
 }

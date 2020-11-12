@@ -7,11 +7,11 @@ export interface CommonCommentProps {
         id: string
         text: string
         answerTo?: {
-            id: string
+            username: string
             fullName: string
         }
-        user: {
-            id: string
+        author: {
+            username: string
             img: string
             fullName: string
         }
@@ -20,7 +20,7 @@ export interface CommonCommentProps {
 }
 
 const CommonComment: React.FC<CommonCommentProps> =
-    ({comment: {text, user: {img, fullName}, answerTo}, subComment = false}) =>
+    ({comment: {text, author: {img, fullName}, answerTo}, subComment = false}) =>
         (<div className={styles.commentContainer}>
             <UserImage src={img} size={subComment ? 36 : 70}/>
             <div>

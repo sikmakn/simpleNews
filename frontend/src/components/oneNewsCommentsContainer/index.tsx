@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './oneNewsCommentsContainer.module.scss';
 import makeFriendlyNumber from '../../helpers/makeFriendlyNumber';
-import AddComment from '../addComment';
-import CommentsContainer from '../commentsContainer';
+import AddCommentContainerHOC from '../addCommentContainer/hoc';
+import CommentsContainerHOC from '../commentsContainer/hoc';
 
 export interface OneNewsCommentsContainerProps {
     commentCount?: number
@@ -20,8 +20,8 @@ const OneNewsCommentsContainer: React.FC<OneNewsCommentsContainerProps> =
                     <span>{makeFriendlyNumber(commentCount)}</span>
                 }
                 </div>
-                <AddComment/>
-                <CommentsContainer/>
+                <AddCommentContainerHOC/>
+                <CommentsContainerHOC/>
             </div>
         );
     }
