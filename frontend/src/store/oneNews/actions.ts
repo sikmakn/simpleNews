@@ -31,7 +31,8 @@ const oneNews = {
         likesCount: 1500,
         commentsCount: 11500,
     },
-    authorUsername: 'username'
+    authorUsername: 'username',
+    userStatistic:{}
 };
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {

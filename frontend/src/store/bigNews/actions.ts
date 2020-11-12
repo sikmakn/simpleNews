@@ -19,6 +19,9 @@ const bigNews = [
         statistic: {
             likesCount: 1500,
             commentsCount: 11500,
+        },
+        userStatistic: {
+            isLiked: true
         }
     },
     {
@@ -34,6 +37,9 @@ const bigNews = [
         statistic: {
             likesCount: 1500,
             commentsCount: 11500,
+        },
+        userStatistic: {
+            isCommented: true,
         }
     },
     {
@@ -49,10 +55,14 @@ const bigNews = [
         statistic: {
             likesCount: 1500,
             commentsCount: 11500,
+        },
+        userStatistic: {
+            isLiked: true,
+            isCommented: true,
         }
     }
 ];
 export const loadBigNews = (tag: string) => (dispatch: any) =>
-    setTimeout(()=>
-    dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews)),
+    setTimeout(() =>
+            dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews)),
         2000);

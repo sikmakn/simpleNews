@@ -18,10 +18,22 @@ export interface BigNewsCardProps {
         likesCount: number
         commentsCount: number
     }
+    userStatistic?: {
+        isLiked?: boolean
+        isCommented?: boolean
+    }
 }
 
 const BigNewsCard: React.FC<BigNewsCardProps> =
-    ({id, img, tag, date, title, description, statistic}) => {
+    ({
+         id,
+         img,
+         tag,
+         date,
+         title,
+         description,
+         ...statisticFull
+     }) => {
         const oneNewsPath = oneNewsPagePath(id);
         return (
             <div className={styles.bigNewsContainer}>
@@ -31,7 +43,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
                 <div className={styles.infoContainer}>
                     <Tag type={tag as TagEnum}/>
                     <Date date={date}/>
-                    <HorizontalStatistic {...statistic}/>
+                    <HorizontalStatistic {...statisticFull}/>
                 </div>
                 <Link to={oneNewsPath} className={styles.newsLink}>
                     <h1>{title}</h1>

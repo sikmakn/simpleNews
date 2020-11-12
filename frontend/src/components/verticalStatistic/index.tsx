@@ -14,8 +14,12 @@ export interface VerticalStatisticProps {
             likesCount: number
             commentsCount: number
         }
+        userStatistic?: {
+            isLiked?: boolean
+            isCommented?: boolean
+        }
     }
-    user: {
+    user?: {
         username: string
     }
 }
@@ -25,7 +29,10 @@ const VerticalStatistic: React.FC<VerticalStatisticProps> =
         if (!oneNews) return <Loader size={50}/>;
         return (
             <div className={styles.statisticsContainer}>
-                <Statistic {...oneNews.statistic}/>
+                <Statistic
+                    statistic={oneNews.statistic}
+                    userStatistic={oneNews.userStatistic}
+                />
                 {
                     user && oneNews.authorUsername === user.username &&
                     <Link to={editOneNewsPagePath(oneNews.id!)}>

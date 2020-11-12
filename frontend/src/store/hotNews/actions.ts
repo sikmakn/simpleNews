@@ -16,6 +16,9 @@ export const loadHotNews = () => (dispatch: any) =>
             statistic: {
                 likesCount: 1500,
                 commentsCount: 11500,
+            },
+            userStatistic: {
+                isLiked: true
             }
         },
         {
@@ -27,6 +30,10 @@ export const loadHotNews = () => (dispatch: any) =>
             statistic: {
                 likesCount: 1500,
                 commentsCount: 11500,
+            },
+            userStatistic: {
+                isLiked: true,
+                isCommented: true,
             }
         },
         {
@@ -38,6 +45,7 @@ export const loadHotNews = () => (dispatch: any) =>
             statistic: {
                 likesCount: 1500,
                 commentsCount: 11500,
-            }
+            },
+            userStatistic: {}
         }
     ])), 2000);
