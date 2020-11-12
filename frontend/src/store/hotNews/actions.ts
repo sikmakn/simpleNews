@@ -6,7 +6,7 @@ export const setHotNews = (hotNews: any[]) => ({
 });
 
 export const loadHotNews = () => (dispatch: any) =>
-    dispatch(setHotNews([
+    setTimeout(() => dispatch(setHotNews([
         {
             id: '1',
             img: 'news1.jpg',
@@ -40,4 +40,4 @@ export const loadHotNews = () => (dispatch: any) =>
                 commentsCount: 11500,
             }
         }
-    ]));
+    ])), 2000);

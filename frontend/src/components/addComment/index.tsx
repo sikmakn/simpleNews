@@ -3,6 +3,7 @@ import styles from './addComment.module.scss';
 import ButtonContainer from '../buttonContainer';
 import defaultUserImage from '../../assets/no-image.png';
 import UserImage from '../userImage';
+import Loader from "../loader";
 
 export interface AddCommentsProps {
     oneNewsId?: string
@@ -28,19 +29,19 @@ const AddComment: React.FC<AddCommentsProps> =
                     value={text}
                     onChange={event => setText(event.target.value)}
                 />
-                {oneNewsId &&
-                <ButtonContainer
-                    addButtonName="Оставить комментарий"
-                    onClickToCancel={() => setText('')}
-                    onClickToAdd={() => {
-                        createComment({
-                            text,
-                            oneNewsId,
-                            authorId: user?.username
-                        });
-                        setText('');
-                    }}
-                />}
+                {!oneNewsId ? <Loader size={50}/> :
+                    <ButtonContainer
+                        addButtonName="Оставить комментарий"
+                        onClickToCancel={() => setText('')}
+                        onClickToAdd={() => {
+                            createComment({
+                                text,
+                                oneNewsId,
+                                authorId: user?.username
+                            });
+                            setText('');
+                        }}
+                    />}
             </div>
         </div>);
     }

@@ -3,6 +3,7 @@ import styles from './fullNews.module.scss';
 import Date from '../date';
 import Tag from '../tag';
 import {TagEnum} from '../../types/tag';
+import Loader from '../loader';
 
 export interface FullNewsProps {
     content?: {
@@ -18,16 +19,16 @@ const FullNews: React.FC<FullNewsProps> =
     ({content}) =>
         (<div className={styles.fullNewsContainer}>
             {
-                content &&
-                <>
-                    <div className={styles.infoContainer}>
-                        <Tag type={content.tag as TagEnum}/>
-                        <Date date={content.date}/>
-                    </div>
-                    <h1>{content.title}</h1>
-                    <img src={content.imgSrc} alt=""/>
-                    <div className={styles.fullText}>{content.text}</div>
-                </>
+                !content ? <Loader size={400}/> :
+                    <>
+                        <div className={styles.infoContainer}>
+                            <Tag type={content.tag as TagEnum}/>
+                            <Date date={content.date}/>
+                        </div>
+                        <h1>{content.title}</h1>
+                        <img src={content.imgSrc} alt=""/>
+                        <div className={styles.fullText}>{content.text}</div>
+                    </>
             }
         </div>);
 

@@ -9,7 +9,7 @@ const NewsColumnLayout: React.FC<NewsColumnLayoutProps> =
     ({columnTitle, children}) =>
         (<div className={styles.hotContainer}>
             <h2>{columnTitle}</h2>
-            {children}
+            <div>{children}</div>
         </div>);
 
 export default NewsColumnLayout;

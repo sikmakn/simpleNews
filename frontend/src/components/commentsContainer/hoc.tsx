@@ -7,7 +7,7 @@ interface CommentsContainerHOCProps extends CommentsContainerProps {
 }
 
 const CommentsContainerHOC: React.FC<CommentsContainerHOCProps> = (props) =>
-    <CommentsContainer{...props}/>;
+    <CommentsContainer {...props}/>;
 
 const mapStateToProps = ({comments, oneNews}: any) =>
     ({

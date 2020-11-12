@@ -1,7 +1,7 @@
 import React from 'react';
 import LastNewsLayout, {LastNewsLayoutProps} from './index';
 import {connect} from 'react-redux';
-import {loadLastNews} from "../../store/lastNews/actions";
+import {loadLastNews} from '../../store/lastNews/actions';
 
 interface LastNewsLayoutHOCProps extends LastNewsLayoutProps {
 }

@@ -9,11 +9,12 @@ const VerticalStatisticHOC: React.FC<VerticalStatisticHOCProps> =
     (props) => <VerticalStatistic {...props}/>;
 
 const mapStateToProps = ({oneNews, user}: any) => ({
-    id: oneNews.value?.id,
+    oneNews: oneNews.value && {
+        id: oneNews.value.id,
+        authorUsername: oneNews.value.authorUsername,
+        statistic: oneNews.value?.statistic,
+    },
     user: user.value,
-    authorUsername: oneNews.value?.authorUsername,
-    likesCount: oneNews.value?.statistic?.likesCount,
-    commentsCount: oneNews.value?.statistic?.commentsCount
 });
 
 const mapDispatchToProps = {};

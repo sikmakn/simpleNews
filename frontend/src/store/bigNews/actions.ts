@@ -53,4 +53,6 @@ const bigNews = [
     }
 ];
 export const loadBigNews = (tag: string) => (dispatch: any) =>
-    dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews))
+    setTimeout(()=>
+    dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews)),
+        2000);
