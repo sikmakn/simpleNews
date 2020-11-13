@@ -1,6 +1,7 @@
 export const SET_COUNT_OF_COMMENTS = 'SET_COUNT_OF_COMMENTS';
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
 
 export const setCountOfComments = (count: number) =>
     ({type: SET_COUNT_OF_COMMENTS, payload: count});
@@ -11,6 +12,22 @@ export const addComment = (comment: {
     oneNewsId: string
     subComments: any[]
 }) => ({type: ADD_COMMENT, payload: comment});
+
+export const addSubComment = (subComment: {
+    id: string
+    author: {
+        username: string
+        fullName: string
+        imgSrc?: string
+    }
+    answerTo: {
+        username: string
+        fullName: string
+    }
+    text: string
+    commentId: string
+}) =>
+    ({type: ADD_SUB_COMMENT, payload: subComment});
 
 export const setComments = (comments: any) =>
     ({type: SET_COMMENTS, payload: comments});
@@ -38,7 +55,7 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) =>
                 'не согласен заставляет самому попитатся докопатся до истины. \n' +
                 'А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!',
             author: {
-                username: '1',
+                username: 'username',
                 img: process.env.PUBLIC_URL + '/user_logo.svg',
                 fullName: 'Андрей Свиридов',
             },
@@ -59,3 +76,23 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) =>
             }]
         }
     ]));
+
+export const createSubComment = (subComment: {
+    authorUsername: string
+    answerToUsername: string
+    text: string
+    commentId: string
+}) => (dispatch: any) =>
+    dispatch(addSubComment({
+        id: String(+subComment.commentId * 10),
+        answerTo: {
+            username: subComment.answerToUsername,
+            fullName: "Какой-то челик"
+        },
+        author: {
+            fullName: 'Z',
+            username: subComment.authorUsername
+        },
+        text: subComment.text,
+        commentId: subComment.commentId
+    }));

@@ -1,4 +1,4 @@
-import {ADD_COMMENT, SET_COMMENTS, SET_COUNT_OF_COMMENTS} from './actions';
+import {ADD_COMMENT, ADD_SUB_COMMENT, SET_COMMENTS, SET_COUNT_OF_COMMENTS} from './actions';
 
 interface CommentsState {
     count: {
@@ -30,7 +30,21 @@ const commentsReducers = (state = defaultState, action: { type: string, payload:
                     value: state.count.value + 1
                 } : state.count,
                 comments: {
-                    value: [action.payload, ...(state.comments?.value || [])]
+                    value: [action.payload, ...state.comments.value!]
+                }
+            };
+        case ADD_SUB_COMMENT:
+            const commentsCopy = [...state.comments.value!];
+            commentsCopy.find(c => c.id === action.payload.commentId)
+                .subComments.push(action.payload);
+            return {
+                ...state,
+                count: state.count.value ? {
+                    ...state.count,
+                    value: state.count.value + 1
+                } : state.count,
+                comments: {
+                    value: commentsCopy,
                 }
             };
         case SET_COMMENTS:

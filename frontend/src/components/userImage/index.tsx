@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './userImage.module.scss';
+import defaultImg from '../../assets/no-image.png';
 
 export interface UserImageProps {
-    src: string
+    src?: string
     size: number
 }
 
@@ -15,7 +16,7 @@ const UserImage: React.FC<UserImageProps> = ({src, size}) =>
             maxHeight: size,
             maxWidth: size,
         }}
-        src={src}
+        src={src || defaultImg}
         alt=""
     />);
 

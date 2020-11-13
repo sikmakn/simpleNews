@@ -16,11 +16,27 @@ export interface CommonCommentProps {
             fullName: string
         }
     }
+    makeAnswer: (to: {
+        username: string
+        fullName: string
+    }) => void
+    user?: {
+        username: string
+    }
     subComment?: boolean
 }
 
 const CommonComment: React.FC<CommonCommentProps> =
-    ({comment: {text, author: {img, fullName}, answerTo}, subComment = false}) =>
+    ({
+         comment: {
+             text,
+             author: {img, fullName, username},
+             answerTo
+         },
+         user,
+         makeAnswer,
+         subComment = false
+     }) =>
         (<div className={styles.commentContainer}>
             <UserImage src={img} size={subComment ? 36 : 70}/>
             <div>
@@ -32,9 +48,18 @@ const CommonComment: React.FC<CommonCommentProps> =
                         </span>}
                     {text}
                 </div>
-                <span className={styles.answer}>Ответить</span>
-                {/*todo if user comment change to 'Edit'*/}
-                {/*todo edit*/}
+                {
+                    user &&
+                    (user.username === username ?
+                            <span className={styles.answer}>Редактировать</span> :
+                            <span
+                                className={styles.answer}
+                                onClick={makeAnswer.bind(null, {fullName, username})}
+                            >
+                                Ответить
+                            </span>
+                    )
+                }
             </div>
         </div>);
 

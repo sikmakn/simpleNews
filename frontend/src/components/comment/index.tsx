@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styles from './comment.module.scss';
-import CommonComment from '../commonComment';
 import HideShowSubCommentsButton from '../hideShowSubCommentsButton';
+import AddSubCommentHOC from '../addSubComment/hoc';
+import CommonCommentHOC from '../commonComment/hoc';
 
 interface CommentCommonType {
     id: string
@@ -27,9 +28,17 @@ export interface CommentProps extends CommentCommonType {
 const Comment: React.FC<CommentProps> =
     ({subComments, ...comment}) => {
         const [visibleSubComments, setVisibleSubComments] = useState(false);
+        const [isAddAnswer, setIsAddAnswer] = useState(false);
+        const [answerTo, setAnswerTo] = useState<{ fullName: string, username: string }>();
+
+        const makeAnswer = (to: { fullName: string, username: string }) => {
+            setAnswerTo(to);
+            setIsAddAnswer(true);
+        };
+
         return (
             <div className={styles.commentContainer}>
-                <CommonComment comment={comment}/>
+                <CommonCommentHOC makeAnswer={makeAnswer} comment={comment}/>
                 <div className={styles.subCommentsContainer}>
                     <HideShowSubCommentsButton
                         visible={visibleSubComments}
@@ -37,7 +46,19 @@ const Comment: React.FC<CommentProps> =
                     />
                     {
                         visibleSubComments &&
-                        subComments.map(sc => <CommonComment comment={sc} subComment/>)
+                        subComments.map(sc =>
+                            <CommonCommentHOC
+                                key={sc.id} subComment
+                                makeAnswer={makeAnswer} comment={sc}
+                            />)
+                    }
+                    {
+                        isAddAnswer &&
+                        <AddSubCommentHOC
+                            answerTo={answerTo}
+                            commentId={comment.id}
+                            hide={() => setIsAddAnswer(false)}
+                        />
                     }
                 </div>
             </div>

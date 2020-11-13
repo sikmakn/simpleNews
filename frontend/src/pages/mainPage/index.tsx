@@ -8,8 +8,8 @@ import BigNewsLayoutHOC from '../../components/bigNewsLayout/hoc';
 export interface MainPageProps {
 }
 
-const MainPage: React.FC<MainPageProps> = () => {
-    return (
+const MainPage: React.FC<MainPageProps> = () =>
+    (
         <>
             <HeaderHOC/>
             <MainLayout>
@@ -19,6 +19,6 @@ const MainPage: React.FC<MainPageProps> = () => {
             </MainLayout>
         </>
     );
-};
+
 
 export default MainPage;

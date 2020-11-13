@@ -1,0 +1,38 @@
+@import '../../commonCss/colors';
+
+.commentContainer {
+  display: flex;
+  font-size: 16px;
+  line-height: 150%;
+
+  img {
+    margin-right: 22px;
+  }
+
+  > div {
+    width: 100%;
+    .username {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .commentText {
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .answerReference {
+        color: $brandcolor;
+      }
+      .textarea{
+        width: 100%;
+      }
+    }
+
+    .answer {
+      color: $darkgrey;
+      font-weight: 500;
+    }
+  }
+}

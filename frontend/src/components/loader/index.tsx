@@ -8,7 +8,7 @@ export interface LoaderProps {
 const Loader: React.FC<LoaderProps> = ({size}) => {
     const divs = [];
     for (let i = 1; i <= 12; i++)
-        divs.push(<div className={`sk-circle-${i} sk-child`}/>);
+        divs.push(<div key={i} className={`sk-circle-${i} sk-child`}/>);
 
     return (
         <section style={{width:size, height:size}}>
