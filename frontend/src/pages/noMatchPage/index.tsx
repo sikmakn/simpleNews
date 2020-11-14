@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './noMatch.module.scss';
-import Header from '../../components/header';
+import HeaderHOC from '../../components/header/hoc';
 
 const NoMatchPage: React.FC = () =>
     (
         <>
-            <Header/>
+            <HeaderHOC/>
             <main className={styles.moMatchPageContainer}>
                 <h1>404</h1>
                 <h2>Страница не найдена</h2>
-                <p>Возможно вы пытаетесь обратиться к странице, к которо й увас нет прав доступа, в таком случае
+                <p>Возможно вы пытаетесь обратиться к странице, к которой у вас нет прав доступа, в таком случае
                     попробуйте войти на сайт под своим акканутом.</p>
             </main>
         </>
