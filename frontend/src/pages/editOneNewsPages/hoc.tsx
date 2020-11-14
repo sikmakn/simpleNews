@@ -4,6 +4,7 @@ import {loadOneNews} from '../../store/oneNews/actions';
 import {Redirect} from 'react-router-dom';
 import {noMatchPagePath} from '../../paths';
 import {connect} from 'react-redux';
+import Loader from '../../components/loader';
 
 interface OneNewsPagePropsWithAuthor extends EditOneNewsPageProps {
     authorUsername: string
@@ -24,7 +25,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
             return <Redirect to={noMatchPagePath()}/>;
 
         if (!oneNews)
-            return (<div>Loading...</div>);
+            return (<Loader size={300}/>);
 
         if (oneNews.authorUsername !== username)
             return <Redirect to={noMatchPagePath()}/>;
