@@ -10,42 +10,62 @@ import HeaderHOC from '../header/hoc';
 export interface CommonEditPageProps {
     oneNews?: {
         id: string
-        img: string
+        imgSrc: string
         tag: string
         title: string
         text: string
     }
+    save: (oneNews: {
+        img: File
+        tag: string
+        title: string
+        text: string
+    }) => void,
+    cancel: () => void,
 }
 
 const CommonEditPage: React.FC<CommonEditPageProps> =
-    ({oneNews = {id: '', img: '', tag: TagEnum.FINANCE, title: '', text: ''}}) => {
-        const {img, tag, text, title} = oneNews;
-        const [selectedTag, setSelectedTag] = useState(tag as TagEnum);
-        const [selectedImg, setSelectedImg] = useState<File>();
-        const [currentText, setCurrentText] = useState(text);
+    ({
+         oneNews = {imgSrc: '', tag: TagEnum.FINANCE, title: '', text: ''},
+         save, cancel
+     }) => {
+        const {imgSrc: defaultImg, tag: defaultTag, text: defaultText, title: defaultTitle} = oneNews;
+        const [title, setTitle] = useState(defaultTitle)
+        const [tag, setTag] = useState(defaultTag as TagEnum);
+        const [img, setImg] = useState<File>();
+        const [text, setText] = useState(defaultText);
 
         useEffect(() => {
-            if (img)
-                fetch(img).then(e => e.blob())
-                    .then(b => setSelectedImg(b as File));
-        }, [img])
+            if (defaultImg)
+                fetch(defaultImg).then(e => e.blob())
+                    .then(b => setImg(b as File));
+        }, [defaultImg])
 
         return (
             <>
                 <HeaderHOC/>
                 <main className={styles.main}>
-                    <TagSelect selected={selectedTag} setSelected={setSelectedTag}/>
-                    <input type="text" value={title} placeholder="Текст заголовка"/>
-                    <AddNewsImage img={selectedImg} setImg={setSelectedImg}/>
+                    <TagSelect selected={tag} setSelected={setTag}/>
+                    <input
+                        type="text" placeholder="Текст заголовка"
+                        value={title}
+                        onChange={e => setTitle(e.currentTarget.value)}
+                    />
+                    <AddNewsImage img={img} setImg={setImg}/>
                     <EditableDiv
-                        text={currentText} setText={setCurrentText}
+                        text={text} setText={setText}
                         placeholder="Основной текст новости"
                     />
                     <ButtonContainer
                         addButtonName="Сохранить новость"
                         onClickToCancel={() => {
+                            setImg(undefined);
+                            setText('');
+                            cancel();
                         }}
                         onClickToAdd={() => {
+                            if (img)
+                                save({text, img, title, tag});
                         }}
                     />
                 </main>

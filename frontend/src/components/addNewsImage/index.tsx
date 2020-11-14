@@ -12,7 +12,7 @@ const AddNewsImage: React.FC<AddNewsImageProps> =
         const fileInputRef = useRef<HTMLInputElement>(null);
         return (
             <div
-                className={style.imageContainer}
+                className={`${style.imageContainer} ${!img && style.error}`}
                 style={{backgroundImage: `url(${img && URL.createObjectURL(img)})`}}
             >
                 <label htmlFor="file">

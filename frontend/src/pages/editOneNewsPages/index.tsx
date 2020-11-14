@@ -1,15 +1,10 @@
 import React from 'react';
-import CommonEditPage from '../../components/commonEditPage';
+import CommonEditPage, {CommonEditPageProps} from '../../components/commonEditPage';
 
-export interface EditOneNewsPageProps {
-    id: string
-    tag: string
-    img: string
-    title: string
-    text: string
+export interface EditOneNewsPageProps extends CommonEditPageProps {
 }
 
 const EditOneNewsPage: React.FC<EditOneNewsPageProps> =
-    (props) =>  <CommonEditPage oneNews={props}/>;
+    (props) => <CommonEditPage {...props}/>;
 
 export default EditOneNewsPage;

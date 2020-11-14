@@ -62,7 +62,24 @@ const bigNews = [
         }
     }
 ];
-export const loadBigNews = (tag: string) => (dispatch: any) =>
+export const loadBigNews = (tag: string) => (dispatch: any) => {
+    const news = [...(tag ? bigNews.filter(n => n.tag === tag) : bigNews)];
+    news.push({
+        id: String(Math.random()),
+        tag: 'finance',
+        title: Math.random() + 'title',
+        img: process.env.PUBLIC_URL + '/news1.jpg',
+        statistic: {
+            likesCount: 0,
+            commentsCount: 0
+        },
+        userStatistic: {
+            isCommented: true,
+        },
+        description: 'scascsacsacas',
+        date: new Date(Date.now())
+    })
     setTimeout(() =>
-            dispatch(setBigNews(tag ? bigNews.filter(n => n.tag === tag) : bigNews)),
+            dispatch(setBigNews(news)),
         2000);
+}
