@@ -3,6 +3,7 @@ import styles from './commonComment.module.scss';
 import UserImage from '../userImage';
 
 export interface CommonCommentProps {
+    edit: () => void
     comment: {
         id: string
         text: string
@@ -28,6 +29,7 @@ export interface CommonCommentProps {
 
 const CommonComment: React.FC<CommonCommentProps> =
     ({
+         edit,
          comment: {
              text,
              author: {img, fullName, username},
@@ -36,31 +38,32 @@ const CommonComment: React.FC<CommonCommentProps> =
          user,
          makeAnswer,
          subComment = false
-     }) =>
-        (<div className={styles.commentContainer}>
-            <UserImage src={img} size={subComment ? 36 : 70}/>
-            <div>
-                <span className={styles.username}>{fullName}</span>
-                <div className={styles.commentText}>
-                    {answerTo &&
-                    <span className={styles.answerReference}>
+     }) => (<div className={styles.commentContainer}>
+        <UserImage src={img} size={subComment ? 36 : 70}/>
+        <div>
+            <span className={styles.username}>{fullName}</span>
+            <div className={styles.commentText}>
+                {answerTo &&
+                <span className={styles.answerReference}>
                             @{answerTo.fullName}&nbsp;
                         </span>}
-                    {text}
-                </div>
-                {
-                    user &&
-                    (user.username === username ?
-                            <span className={styles.answer}>Редактировать</span> :
-                            <span
-                                className={styles.answer}
-                                onClick={makeAnswer.bind(null, {fullName, username})}
-                            >
-                                Ответить
-                            </span>
-                    )
-                }
+                {text}
             </div>
-        </div>);
+            {
+                user &&
+                (user.username === username ?
+                        <span
+                            className={styles.answer}
+                            onClick={edit}
+                        >Редактировать</span> :
+                        <span
+                            className={styles.answer}
+                            onClick={makeAnswer.bind(null, {fullName, username})}
+                        >Ответить</span>
+                )
+            }
+        </div>
+    </div>);
+
 
 export default CommonComment;

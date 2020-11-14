@@ -2,6 +2,8 @@ export const SET_COUNT_OF_COMMENTS = 'SET_COUNT_OF_COMMENTS';
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
+export const EDIT_SUB_COMMENT = 'EDIT_SUB_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 
 export const setCountOfComments = (count: number) =>
     ({type: SET_COUNT_OF_COMMENTS, payload: count});
@@ -20,7 +22,7 @@ export const addSubComment = (subComment: {
         fullName: string
         imgSrc?: string
     }
-    answerTo: {
+    answerTo?: {
         username: string
         fullName: string
     }
@@ -31,6 +33,19 @@ export const addSubComment = (subComment: {
 
 export const setComments = (comments: any) =>
     ({type: SET_COMMENTS, payload: comments});
+
+export const editSubComment = (subComment: any) =>
+    ({type: EDIT_SUB_COMMENT, payload: subComment});
+
+export const editComment = (comment: {
+    id: string
+    text: string
+    author: {
+        username: string
+        fullName: string
+    }
+    oneNewsId: string
+}) => ({type: EDIT_COMMENT, payload: comment})
 
 //async
 
@@ -79,20 +94,58 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) =>
 
 export const createSubComment = (subComment: {
     authorUsername: string
-    answerToUsername: string
+    answerToUsername?: string
     text: string
     commentId: string
 }) => (dispatch: any) =>
     dispatch(addSubComment({
-        id: String(+subComment.commentId * 10),
-        answerTo: {
+        id: String(Math.random()),
+        answerTo: subComment.answerToUsername ? {
             username: subComment.answerToUsername,
             fullName: "Какой-то челик"
+        } : undefined,
+        author: {
+            fullName: 'Z',
+            username: subComment.authorUsername
         },
+        text: subComment.text,
+        commentId: subComment.commentId,
+    }));
+
+
+export const updateSubComment = (subComment: {
+    authorUsername: string
+    answerToUsername?: string
+    text: string
+    subCommentId: string
+    commentId: string
+}) => (dispatch: any) =>
+    dispatch(editSubComment({
+        id: subComment.subCommentId,
+        answerTo: subComment.answerToUsername ? {
+            username: subComment.answerToUsername,
+            fullName: "Какой-то челик"
+        } : undefined,
         author: {
             fullName: 'Z',
             username: subComment.authorUsername
         },
         text: subComment.text,
         commentId: subComment.commentId
+    }));
+
+export const updateComment = (comment: {
+    commentId: string
+    text: string
+    authorUsername: string
+    oneNewsId: string
+}) => (dispatch: any) =>
+    dispatch(editComment({
+        id: comment.commentId,
+        text: comment.text,
+        author: {
+            username: comment.authorUsername,
+            fullName: 'Keker'
+        },
+        oneNewsId: comment.oneNewsId
     }));

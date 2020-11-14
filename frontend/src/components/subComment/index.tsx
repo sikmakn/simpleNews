@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
+import EditSubCommentHOC from '../editSubComment/hoc';
 import CommonCommentHOC from '../commonComment/hoc';
-import EditCommentHOC from '../editComment/hoc';
 
-export interface CommentProps {
-    comment: {
+export interface SubCommentProps {
+    commentId: string
+    subComment: {
         id: string
         text: string
         answerTo?: {
@@ -22,24 +23,26 @@ export interface CommentProps {
     }) => void
 }
 
-const Comment: React.FC<CommentProps> =
+const SubComment: React.FC<SubCommentProps> =
     ({
          makeAnswer,
-         comment
+         subComment,
+         commentId
      }) => {
         const [isEdit, setIsEdit] = useState(false);
         return isEdit ?
-            <EditCommentHOC
-                text={comment.text}
-                commentId={comment.id}
+            <EditSubCommentHOC
+                text={subComment.text}
+                commentId={commentId}
+                subCommentId={subComment.id}
                 hide={() => setIsEdit(false)}
             /> :
             <CommonCommentHOC
                 makeAnswer={makeAnswer}
                 edit={() => setIsEdit(true)}
-                comment={comment}
+                comment={subComment}
                 subComment
             />
     };
 
-export default Comment;
+export default SubComment;

@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import styles from './commentsContainer.module.scss';
-import Comment, {CommentProps} from '../comment';
+import FullComment, {FullCommentProps} from '../fullComment';
 import Loader from '../loader';
 
 export interface CommentsContainerProps {
     oneNewsId?: string
-    comments?: [CommentProps]
+    comments?: [FullCommentProps]
     loadComments: (oneNewsId: string) => void
 }
 
@@ -17,7 +17,7 @@ const CommentsContainer: React.FC<CommentsContainerProps> =
 
         return (<div className={styles.commentsContainer}>
             {!comments && <Loader size={150}/>}
-            {comments?.map(c => <Comment key={c.id} {...c}/>)}
+            {comments?.map(c => <FullComment key={c.id} {...c}/>)}
         </div>);
     }
 

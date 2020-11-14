@@ -1,38 +1,43 @@
 import React, {useState} from 'react';
-import styles from './addSubComment.module.scss';
+import styles from './commonEditComment.module.scss';
 import UserImage from '../userImage';
 import ButtonContainer from '../buttonContainer';
 
-export interface AddSubCommentProps {
+export interface CommonEditCommentProps {
     user: {
         username: string
         imgSrc: string
         firstName: string
         lastName: string
     }
-    answerTo: {
+    answerTo?: {
         fullName: string
         username: string
     }
+    text?: string
+    subCommentId?: string
     commentId: string
     hide: () => void
-    createSubComment: (subComment: {
+    saveComment: (subComment: {
         authorUsername: string
-        answerToUsername: string
+        answerToUsername?: string
         text: string
         commentId: string
+        subCommentId?: string
     }) => void
 }
 
-const AddSubComment: React.FC<AddSubCommentProps> =
+const CommonEditComment: React.FC<CommonEditCommentProps> =
     ({
          user,
          answerTo,
          commentId,
          hide,
-         createSubComment,
+         saveComment,
+         text: defaultText,
+         subCommentId
      }) => {
-        const [text, setText] = useState('');
+        const [text, setText] = useState(defaultText || '');
         return (
             <div className={styles.commentContainer}>
                 <UserImage src={user.imgSrc} size={36}/>
@@ -54,11 +59,12 @@ const AddSubComment: React.FC<AddSubCommentProps> =
                     <ButtonContainer
                         addButtonName="Сохранить"
                         onClickToAdd={() => {
-                            createSubComment({
+                            saveComment({
+                                subCommentId,
                                 text,
                                 commentId,
                                 authorUsername: user.username,
-                                answerToUsername: answerTo.username,
+                                answerToUsername: answerTo?.username,
                             });
                             hide();
                         }}
@@ -68,4 +74,4 @@ const AddSubComment: React.FC<AddSubCommentProps> =
             </div>);
     }
 
-export default AddSubComment;
+export default CommonEditComment;
