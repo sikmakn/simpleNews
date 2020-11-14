@@ -9,8 +9,12 @@ export const setCountOfComments = (count: number) =>
     ({type: SET_COUNT_OF_COMMENTS, payload: count});
 
 export const addComment = (comment: {
+    id: string
     text: string
-    authorId: string
+    author: {
+        username: string
+        fullName: string
+    }
     oneNewsId: string
     subComments: any[]
 }) => ({type: ADD_COMMENT, payload: comment});
@@ -54,10 +58,19 @@ export const loadCountOfComments = () => (dispatch: any) =>
 
 export const createComment = (comment: {
     text: string
-    authorId: string
+    authorUsername: string
     oneNewsId: string
 }) => (dispatch: any) =>
-    dispatch(addComment({...comment, subComments: []}));
+    dispatch(addComment({
+        id: String(Math.random()*10),
+        text: comment.text,
+        oneNewsId: comment.oneNewsId,
+        author: {
+            username: comment.authorUsername,
+            fullName: 'full name',
+        },
+        subComments: []
+    }));
 
 export const loadComments = (oneNewsId: string) => (dispatch: any) =>
     dispatch(setComments([

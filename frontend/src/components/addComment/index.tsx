@@ -3,7 +3,7 @@ import styles from './addComment.module.scss';
 import ButtonContainer from '../buttonContainer';
 import defaultUserImage from '../../assets/no-image.png';
 import UserImage from '../userImage';
-import Loader from "../loader";
+import Loader from '../loader';
 
 export interface AddCommentsProps {
     oneNewsId?: string
@@ -13,7 +13,7 @@ export interface AddCommentsProps {
     }
     createComment: (comment: {
         text: string
-        authorId: string
+        authorUsername: string
         oneNewsId: string
     }) => void
 }
@@ -37,7 +37,7 @@ const AddComment: React.FC<AddCommentsProps> =
                             createComment({
                                 text,
                                 oneNewsId,
-                                authorId: user?.username
+                                authorUsername: user.username
                             });
                             setText('');
                         }}

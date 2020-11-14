@@ -41,10 +41,13 @@ const FullComment: React.FC<FullCommentProps> =
             <div className={styles.commentContainer}>
                 <Comment makeAnswer={() => setIsAddAnswer(true)} comment={comment}/>
                 <div className={styles.subCommentsContainer}>
-                    <HideShowSubCommentsButton
-                        visible={visibleSubComments}
-                        setVisible={setVisibleSubComments}
-                    />
+                    {
+                        !!subComments.length &&
+                        <HideShowSubCommentsButton
+                            visible={visibleSubComments}
+                            setVisible={setVisibleSubComments}
+                        />
+                    }
                     {
                         visibleSubComments &&
                         subComments.map(sc =>
