@@ -1,8 +1,9 @@
-import {oneNewsPagePath} from "../../paths";
+import {oneNewsPagePath} from '../../paths';
 
 export const SET_ONE_NEWS = 'SET_ONE_NEWS';
 export const EDIT_ONE_NEWS = 'EDIT_ONE_NEWS';
 export const ADD_ONE_NEWS = 'ADD_ONE_NEWS';
+export const LIKE_ONE_NEWS = 'LIKE_ONE_NEWS';
 
 export const setOneNews = (oneNews: {
     id: string
@@ -27,7 +28,7 @@ export const addOneNews = (oneNews: {
     title: string
     date: Date
     tag: string
-    img: string
+    imgSrc: string
     statistic: {
         likesCount: number
         commentsCount: number
@@ -49,6 +50,9 @@ export const editOneNews = (oneNews: {
     authorUsername: string
 }) => ({type: EDIT_ONE_NEWS, payload: oneNews});
 
+export const likeOneNews = (params: {
+    value: boolean
+}) => ({type: LIKE_ONE_NEWS, payload: params});
 //async
 
 const oneNews = {
@@ -103,11 +107,19 @@ export const createOneNews = (oneNews: {
         ...oneNews,
         id,
         date: new Date(Date.now()),
-        img: URL.createObjectURL(oneNews.img),
+        imgSrc: URL.createObjectURL(oneNews.img),
         statistic: {
             commentsCount: 0,
             likesCount: 0,
         }
     }));
     oneNews.redirect(oneNewsPagePath(id))
+};
+
+export const updateLikeInOneNews = (params: {
+    id: string
+    username: string
+    value: boolean
+}) => (dispatch: any) => {
+    dispatch(likeOneNews({...params}));
 }

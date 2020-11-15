@@ -1,33 +1,25 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Tag from '../tag';
-import styles from './smallNewsCard.module.scss';
+import styles from './hotNewsCard.module.scss';
 import {TagEnum} from '../../types/tag';
-import HorizontalStatistic from '../horizontalStatistic';
 import {oneNewsPagePath} from '../../paths';
+import HotNewsStatisticHOC from '../hotNewsStatistic/hoc';
 
-export interface SmallNewsCardProps {
+export interface HotNewsCardProps {
     id: string
-    img: string
+    imgSrc: string
     tag: string
     title: string
-    statistic: {
-        likesCount: number
-        commentsCount: number
-    }
-    userStatistic?: {
-        isLiked?: boolean
-        isCommented?: boolean
-    }
 }
 
-const SmallNewsCard: React.FC<SmallNewsCardProps> =
-    ({id, img, tag, title, ...fullStatistic}) => {
+const HotNewsCard: React.FC<HotNewsCardProps> =
+    ({id, imgSrc, tag, title}) => {
         const oneNewsPath = oneNewsPagePath(id);
         return (
             <div className={styles.smallNewsContainer}>
                 <Link to={oneNewsPath}>
-                    <img src={img} alt=""/>
+                    <img src={imgSrc} alt=""/>
                 </Link>
                 <div className={styles.tagContainer}>
                     <Tag type={tag as TagEnum}/>
@@ -35,8 +27,8 @@ const SmallNewsCard: React.FC<SmallNewsCardProps> =
                 <Link to={oneNewsPath} className={styles.title}>
                     <h2>{title}</h2>
                 </Link>
-                <HorizontalStatistic {...fullStatistic}/>
+                <HotNewsStatisticHOC id={id}/>
             </div>);
     }
 
-export default SmallNewsCard;
+export default HotNewsCard;

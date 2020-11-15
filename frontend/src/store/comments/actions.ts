@@ -84,7 +84,7 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) =>
                 'А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!',
             author: {
                 username: 'username',
-                img: process.env.PUBLIC_URL + '/user_logo.svg',
+                imgSrc: process.env.PUBLIC_URL + '/user_logo.svg',
                 fullName: 'Андрей Свиридов',
             },
             subComments: [{
@@ -94,7 +94,7 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) =>
                     'Спасибо за работу.',
                 author: {
                     username: '2',
-                    img: process.env.PUBLIC_URL + '/user_logo.svg',
+                    imgSrc: process.env.PUBLIC_URL + '/user_logo.svg',
                     fullName: 'Максим Давыдов'
                 },
                 answerTo: {

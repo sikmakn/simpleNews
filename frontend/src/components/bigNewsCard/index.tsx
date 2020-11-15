@@ -4,46 +4,37 @@ import styles from './bigNewsCard.module.scss';
 import Tag from '../tag';
 import Date from '../date';
 import {TagEnum} from '../../types/tag';
-import HorizontalStatistic from '../horizontalStatistic';
 import {oneNewsPagePath} from '../../paths';
+import BigNewsStatisticHOC from '../bigNewsStatitstic/hoc';
 
 export interface BigNewsCardProps {
     id: string
-    img: string
+    imgSrc: string
     tag: string
     date: Date
     title: string
     description: string
-    statistic: {
-        likesCount: number
-        commentsCount: number
-    }
-    userStatistic?: {
-        isLiked?: boolean
-        isCommented?: boolean
-    }
 }
 
 const BigNewsCard: React.FC<BigNewsCardProps> =
     ({
          id,
-         img,
+         imgSrc,
          tag,
          date,
          title,
-         description,
-         ...statisticFull
+         description
      }) => {
         const oneNewsPath = oneNewsPagePath(id);
         return (
             <div className={styles.bigNewsContainer}>
                 <Link to={oneNewsPath} className={styles.newsLink}>
-                    <img src={img} alt=""/>
+                    <img src={imgSrc} alt=""/>
                 </Link>
                 <div className={styles.infoContainer}>
                     <Tag type={tag as TagEnum}/>
                     <Date date={date}/>
-                    <HorizontalStatistic {...statisticFull}/>
+                    <BigNewsStatisticHOC id={id}/>
                 </div>
                 <Link to={oneNewsPath} className={styles.newsLink}>
                     <h1>{title}</h1>

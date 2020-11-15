@@ -6,27 +6,48 @@ import commentImg from '../../assets/comment.svg';
 import activeCommentImg from '../../assets/comment_active.svg';
 
 export interface StatisticProps {
-    statistic: {
-        likesCount: number
-        commentsCount: number
+    id: string
+    fullStatistic: {
+        statistic: {
+            likesCount: number
+            commentsCount: number
+        }
+        userStatistic?: {
+            isLiked?: boolean
+            isCommented?: boolean
+        }
     }
-    userStatistic?: {
-        isLiked?: boolean
-        isCommented?: boolean
-    }
+    updateLike: (params: {
+        id: string
+        username: string
+        value: boolean
+    }) => void
+    username?: string
 }
 
 const Statistic: React.FC<StatisticProps> =
-    ({statistic: {likesCount, commentsCount}, userStatistic}) =>
-        (<>
-            <div>
-                <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
-                {makeFriendlyNumber(likesCount)}
-            </div>
-            <div>
-                <img src={userStatistic?.isCommented ? activeCommentImg : commentImg} alt=""/>
-                {makeFriendlyNumber(commentsCount)}
-            </div>
-        </>);
+    ({
+         id,
+         username,
+         updateLike,
+         fullStatistic: {userStatistic, statistic},
+     }) => (<>
+        <div onClick={() => {
+            if (username && userStatistic)
+                updateLike({
+                    username,
+                    id,
+                    value: !userStatistic.isLiked
+                });
+        }}>
+            <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
+            {makeFriendlyNumber(statistic.likesCount)}
+        </div>
+        <div>
+            <img src={userStatistic?.isCommented ? activeCommentImg : commentImg} alt=""/>
+            {makeFriendlyNumber(statistic.commentsCount)}
+        </div>
+    </>);
+
 
 export default Statistic;

@@ -1,14 +1,22 @@
 export const SET_BIG_NEWS = 'SET_BIG_NEWS';
+export const LIKE_BIG_NEWS = 'LIKE_BIG_NEWS';
+
+export const likeBigNews = (params: {
+    value: boolean
+    id: string
+}) => ({type: LIKE_BIG_NEWS, payload: params});
 
 export const setBigNews = (bigNews: any[]) => ({
     type: SET_BIG_NEWS,
     payload: bigNews,
 });
 
+//async
+
 const bigNews = [
     {
         id: '1',
-        img: 'news1.jpg',
+        imgSrc: 'news1.jpg',
         tag: 'finance',
         date: new Date(2020, 5, 22, 10, 22),
         title: 'Требониан Галл происходил из старинного этрусского рода. ' +
@@ -26,7 +34,7 @@ const bigNews = [
     },
     {
         id: '2',
-        img: 'news1.jpg',
+        imgSrc: 'news1.jpg',
         tag: 'sport',
         date: new Date(2020, 5, 22, 10, 22),
         title: 'Требониан Галл происходил из старинного этрусского рода. ' +
@@ -44,7 +52,7 @@ const bigNews = [
     },
     {
         id: '3',
-        img: 'news1.jpg',
+        imgSrc: 'news1.jpg',
         tag: 'tv',
         date: new Date(2020, 5, 22, 10, 22),
         title: 'Требониан Галл происходил из старинного этрусского рода. ' +
@@ -62,13 +70,16 @@ const bigNews = [
         }
     }
 ];
-export const loadBigNews = (tag: string) => (dispatch: any) => {
-    const news = [...(tag ? bigNews.filter(n => n.tag === tag) : bigNews)];
+export const loadBigNews = (params: {
+    tag: string
+    username?: string
+}) => (dispatch: any) => {
+    const news = [...(params.tag ? bigNews.filter(n => n.tag === params.tag) : bigNews)];
     news.push({
         id: String(Math.random()),
         tag: 'finance',
         title: Math.random() + 'title',
-        img: process.env.PUBLIC_URL + '/news1.jpg',
+        imgSrc: process.env.PUBLIC_URL + '/news1.jpg',
         statistic: {
             likesCount: 0,
             commentsCount: 0
@@ -82,4 +93,10 @@ export const loadBigNews = (tag: string) => (dispatch: any) => {
     setTimeout(() =>
             dispatch(setBigNews(news)),
         2000);
-}
+};
+
+export const updateLikeInBigNews = (params: {
+    id: string
+    username: string
+    value: boolean
+}) => (dispatch: any) => dispatch(likeBigNews({...params}));

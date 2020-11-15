@@ -1,10 +1,10 @@
 import React from 'react';
-import SmallNewsCard, {SmallNewsCardProps} from '../smallNewsCard';
+import HotNewsCard, {HotNewsCardProps} from '../hotNewsCard';
 import NewsColumnLayout from '../newsColumnLayout';
 import Loader from '../loader';
 
 export interface HotNewsLayoutProps {
-    hotNews?: SmallNewsCardProps[]
+    hotNews?: HotNewsCardProps[]
     loadHotNews: () => void
 }
 
@@ -14,7 +14,7 @@ const HotNewsLayout: React.FC<HotNewsLayoutProps> =
         return (
             <NewsColumnLayout columnTitle={'Горячее'}>
                 {!hotNews && <Loader size={100}/>}
-                {hotNews?.map(n => <SmallNewsCard key={n.id} {...n}/>)}
+                {hotNews?.map(n => <HotNewsCard key={n.id} {...n}/>)}
             </NewsColumnLayout>
         );
     };

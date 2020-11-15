@@ -14,6 +14,8 @@ const mapStateToProps = ({bigNews, tag}: any) => ({
     bigNews: bigNews.value,
 });
 
-const mapDispatchToProps = {loadBigNews};
+const mapDispatchToProps = {
+    loadBigNews,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(BigNewsLayoutHOC);

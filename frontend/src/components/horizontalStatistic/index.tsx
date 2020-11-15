@@ -1,16 +1,8 @@
 import React from 'react';
 import styles from './horizontalStatistic.module.scss';
-import Statistic from '../statistic';
+import Statistic, {StatisticProps} from '../statistic';
 
-export interface HorizontalStatisticProps {
-    statistic: {
-        likesCount: number
-        commentsCount: number
-    }
-    userStatistic?:{
-        isLiked?:boolean
-        isCommented?:boolean
-    }
+export interface HorizontalStatisticProps extends StatisticProps {
 }
 
 const HorizontalStatistic: React.FC<HorizontalStatisticProps> =

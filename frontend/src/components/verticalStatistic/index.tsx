@@ -1,46 +1,27 @@
 import React from 'react';
 import styles from './verticalStatistic.module.scss';
-import Statistic from '../statistic';
 import editImg from '../../assets/edit.svg';
 import {Link} from 'react-router-dom';
 import {editOneNewsPagePath} from '../../paths';
 import Loader from '../loader';
+import OneNewsStatisticHOC from '../oneNewsStatistic/hoc';
 
 export interface VerticalStatisticProps {
-    oneNews: {
-        id: string
-        authorUsername: string
-        statistic: {
-            likesCount: number
-            commentsCount: number
-        }
-        userStatistic?: {
-            isLiked?: boolean
-            isCommented?: boolean
-        }
-    }
-    user?: {
-        username: string
-    }
+    id?: string
+    authorUsername?: string
+    username?: string
 }
 
 const VerticalStatistic: React.FC<VerticalStatisticProps> =
-    ({user, oneNews}) => {
-        if (!oneNews) return <Loader size={50}/>;
+    ({id, authorUsername, username}) => {
+        if (!id) return <Loader size={50}/>;
         return (
             <div className={styles.statisticsContainer}>
-                <Statistic
-                    statistic={oneNews.statistic}
-                    userStatistic={oneNews.userStatistic}
-                />
+                <OneNewsStatisticHOC id={id}/>
                 {
-                    user && oneNews.authorUsername === user.username &&
-                    <Link to={editOneNewsPagePath(oneNews.id!)}>
-                        <img
-                            src={editImg}
-                            className={styles.edit}
-                            alt=""
-                        />
+                    id && authorUsername === username &&
+                    <Link to={editOneNewsPagePath(id)}>
+                        <img src={editImg} className={styles.edit} alt=""/>
                     </Link>
                 }
             </div>
