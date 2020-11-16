@@ -7,7 +7,9 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import {ResponseError} from './types';
-import createDb from "./db/createDb";
+import createDb from './db/createDb';
+import configControllers from './controllers';
+
 
 async function start() {
     await createDb;
@@ -15,11 +17,13 @@ async function start() {
 
     const app = express();
 
-    app.use(cors());
+    app.use(cors({exposedHeaders: ['Authorization']}));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(compression());
     app.use(helmet());
+
+    configControllers(app);
 
     app.use((err: ResponseError, req: Request, res: Response, next: NextFunction) => {
         if (err.name == 'ValidationError' || err.name === 'TypeError')

@@ -1,16 +1,18 @@
 import React from 'react';
-import SignUpForm from './index';
+import SignUpForm, {SignUpFormProps} from './index';
 import {connect} from 'react-redux';
 import {registerNewUser} from '../../store/user/actions';
 
-interface SignUpFormHOCProps {
-    registerNewUser: (user: any) => void
+interface SignUpFormHOCProps extends SignUpFormProps {
 }
 
 const SignUpFormHOC: React.FC<SignUpFormHOCProps> =
-    ({registerNewUser}) => (<SignUpForm registerNewUser={registerNewUser}/>);
+    (props) => <SignUpForm {...props}/>;
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({user}: any) => ({
+    status: user.registraionStatus,
+    errors: user.registrationErrors,
+});
 
 const mapDispatchToProps = {registerNewUser};
 

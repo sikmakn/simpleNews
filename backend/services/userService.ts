@@ -11,10 +11,14 @@ export async function create(
             username: string,
             password: string,
             firstName: string,
-            lastName: string
+            lastName: string,
         }) {
     const {hashedPassword, salt} = await createPassword(password);
     return userRepository.create({password: hashedPassword, salt, ...userBasic});
+}
+
+export async function find(username: string) {
+    return userRepository.findOne({where: {username}});
 }
 
 export async function validate({username, password}: { username: string, password: string }) {
@@ -36,7 +40,7 @@ export async function update(
             password: string,
             firstName: string,
             lastName: string,
-            img: File
+            img?: File
         }) {
     //todo made to fileStorage img
     const {hashedPassword, salt} = await createPassword(password);
@@ -44,7 +48,7 @@ export async function update(
             username,
             salt,
             password: hashedPassword,
-            ...name
+            ...name,
         },
         {where: {username}});
 }

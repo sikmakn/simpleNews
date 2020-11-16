@@ -17,18 +17,45 @@ export async function createToken(username: string) {
     return {accessToken, refreshToken};
 }
 
-export async function verifyAccessToken(token: string) {
-    return !!jwt.verify(token, JWT_ACCESS_SECRET as string);
+export function decode(token: string) {
+    return jwt.decode(token, {json: true, complete: true});
 }
 
-export async function updateRefreshToken(token: string) {
-    try {
-        jwt.verify(token, JWT_REFRESH_SECRET as string);
-    } catch (e) {
-        return null;
+export async function updateTokens(
+    {
+        refreshToken,
+        accessToken
+    }: {
+        refreshToken: string,
+        accessToken?: string
+    }) {
+    const {value: accessValue} = await validToken({token: accessToken, secret: JWT_ACCESS_SECRET!});
+    if (accessValue) return {
+        accessToken: jwt.sign({username: accessValue.username},
+            JWT_REFRESH_SECRET as string,
+            {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),
+        refreshToken,
+    };
+    const {value: refreshValue} = await validToken({token: refreshToken, secret: JWT_REFRESH_SECRET!});
+    if (refreshToken) return {
+        refreshToken: jwt.sign({username: refreshValue.username},
+            JWT_REFRESH_SECRET as string,
+            {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),
+        accessToken: jwt.sign({username: accessValue.username},
+            JWT_REFRESH_SECRET as string,
+            {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),
+    };
+
+    function validToken({token, secret}: { token?: string, secret: string }):
+        Promise<{ error?: Error, value?: any }> {
+        return new Promise(res => {
+            if (!token)
+                return res({error: new Error('token not exist')});
+            jwt.verify(token, secret as string, ((error, decoded) => {
+                if (error) return res({error});//todo проверяет ли время устаревания
+                res({value: decoded});
+            }));
+        });
     }
-    const {username} = jwt.decode(token) as { [key: string]: any };
-    return jwt.sign({username},
-        JWT_REFRESH_SECRET as string,
-        {expiresIn: JWT_REFRESH_EXPIRES_HOURS});
+
 }

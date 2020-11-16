@@ -10,6 +10,8 @@ import FormCheckErrors from '../formCheckErrors';
 import UsernameInput from '../usernameInput';
 import FormCheckErrorLayout from '../formCheckErrorsLayout';
 import {checkManyValue} from '../../helpers/valueObj';
+import fetchProcess from '../../types/fetching';
+import Loader from '../loader';
 
 export interface SignUpFormProps {
     registerNewUser: (user: {
@@ -18,61 +20,68 @@ export interface SignUpFormProps {
         firstName: string,
         lastName: string
     }) => void
+    status?: fetchProcess,
+    errors?: string[]
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({registerNewUser}) => {
-    const [usernameValueObj, setUsernameValueObj] = useState<ValueObj>();
-    const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>();
-    const [lastNameValueObj, setLastNameValueObj] = useState<ValueObj>();
-    const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>()
+const SignUpForm: React.FC<SignUpFormProps> =
+    ({registerNewUser, status, errors}) => {
+        const [usernameValueObj, setUsernameValueObj] = useState<ValueObj>();
+        const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>();
+        const [lastNameValueObj, setLastNameValueObj] = useState<ValueObj>();
+        const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>()
+        return (
+            <>
+                {
+                    status === fetchProcess.loading && <Loader size={20}/>
+                }
+                <UsernameInput
+                    valueObj={usernameValueObj}
+                    setValueObj={setUsernameValueObj}
+                    className={styles.username}
+                />
+                <FirstNameInput
+                    valueObj={firstNameValueObj}
+                    setValueObj={setFirstNameValueObj}
+                    className={styles.firstName}
+                />
+                <LastNameInput
+                    setValueObj={setLastNameValueObj}
+                    valueObj={lastNameValueObj}
+                    className={styles.lastName}
+                />
+                <PasswordInput
+                    valueObj={passwordValueObj}
+                    setValueObj={setPasswordValueObj}
+                    className={styles.password}
+                />
+                <FormCheckErrorLayout>
+                    <FormCheckErrors valueObj={{errors, value: ''}}/>
 
-    return (
-        <>
-            <UsernameInput
-                valueObj={usernameValueObj}
-                setValueObj={setUsernameValueObj}
-                className={styles.username}
-            />
-            <FirstNameInput
-                valueObj={firstNameValueObj}
-                setValueObj={setFirstNameValueObj}
-                className={styles.firstName}
-            />
-            <LastNameInput
-                setValueObj={setLastNameValueObj}
-                valueObj={lastNameValueObj}
-                className={styles.lastName}
-            />
-            <PasswordInput
-                valueObj={passwordValueObj}
-                setValueObj={setPasswordValueObj}
-                className={styles.password}
-            />
-            <FormCheckErrorLayout>
-                <FormCheckErrors valueObj={usernameValueObj}/>
-                <FormCheckErrors valueObj={firstNameValueObj}/>
-                <FormCheckErrors valueObj={lastNameValueObj}/>
-                <FormCheckErrors valueObj={passwordValueObj}/>
-            </FormCheckErrorLayout>
-            <UserFormButton
-                title="Зарегестрироваться"
-                onClick={() => {
-                    if (checkManyValue([
-                        usernameValueObj,
-                        firstNameValueObj,
-                        lastNameValueObj,
-                        passwordValueObj,
-                    ]))
-                        registerNewUser({
-                            username: usernameValueObj!.value,
-                            password: passwordValueObj!.value,
-                            firstName: firstNameValueObj!.value,
-                            lastName: lastNameValueObj!.value
-                        });
-                }}
-            />
-        </>
-    );
-};
+                    <FormCheckErrors valueObj={usernameValueObj}/>
+                    <FormCheckErrors valueObj={firstNameValueObj}/>
+                    <FormCheckErrors valueObj={lastNameValueObj}/>
+                    <FormCheckErrors valueObj={passwordValueObj}/>
+                </FormCheckErrorLayout>
+                <UserFormButton
+                    title="Зарегестрироваться"
+                    onClick={() => {
+                        if (checkManyValue([
+                            usernameValueObj,
+                            firstNameValueObj,
+                            lastNameValueObj,
+                            passwordValueObj,
+                        ]))
+                            registerNewUser({
+                                username: usernameValueObj!.value,
+                                password: passwordValueObj!.value,
+                                firstName: firstNameValueObj!.value,
+                                lastName: lastNameValueObj!.value
+                            });
+                    }}
+                />
+            </>
+        );
+    };
 
 export default SignUpForm;

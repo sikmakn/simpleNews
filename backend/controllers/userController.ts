@@ -1,0 +1,70 @@
+import {Router} from 'express';
+import * as userService from '../services/userService';
+import * as authService from '../services/authService';
+import authValidateMiddleware from '../helpers/authValidateMiddleware';
+import {getAccessToken, setTokens} from '../helpers/tokens';
+import {registerUserSchema} from '../validationSchemas/userSchema';
+
+import multer from 'multer';
+
+const upload = multer({storage: multer.memoryStorage()})
+
+const router = Router();
+
+router.post('/register', async (req, res) => {
+    const {value, error, errors} = registerUserSchema.validate(req.body);
+    if (error || errors)
+        return res.status(400).json({
+            errors: errors ?
+                errors.details.map(e => e.message) :
+                error?.details.map(e => e.message)
+        });
+
+    const {username, password, firstName, lastName} = value;
+    if (await userService.find(username))
+        return res.status(409)
+            .json({errors: ['user already exist']});
+
+    await userService.create({username, password, firstName, lastName});
+    res.status(201).send();
+});
+
+router.post('/login', async (req, res) => {
+    const {username, password} = req.body;
+    if (!await userService.validate({username, password}))
+        return res.status(401).json({errors: ['not valid data']});
+
+    const tokens = await authService.createToken(username);
+    setTokens({...tokens, res});
+
+    const user = await userService.find(username);
+    res.status(200).json({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        imgSrc: user.imgSrc,
+    });
+});
+
+router.put('/update',
+    upload.single('img'),
+    authValidateMiddleware,
+    async (req, res) => {
+        const accessToken = getAccessToken(req);
+        if (authService.decode(accessToken!)!.username !== req.body.username)
+            return res.status(403).json({error: 'forbidden'});
+        const updatedUser = await userService.update({...req.body, img: req.file});
+        res.status(201).json({
+            username: updatedUser.username,
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            imgSrc: updatedUser.imgSrc,
+        });
+    });
+
+router.get('/logout', async (req, res) => {
+    res.clearCookie('Authorization');
+    res.status(200).send();
+});
+
+export default router;

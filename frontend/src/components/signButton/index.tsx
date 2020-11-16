@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import signIcon from '../../assets/signIcon.svg';
 import styles from './signButton.module.scss';
-import SignForm from '../signForm';
+import SignFormHOC from '../signForm/hoc';
 
 const SignButton: React.FC = () => {
     const [isSignForm, setIsSignForm] = useState(false);
@@ -12,7 +12,7 @@ const SignButton: React.FC = () => {
                 className={styles.icon}
                 src={signIcon} alt="Войти"
             />
-            {isSignForm && <SignForm hide={() => setIsSignForm(false)}/>}
+            {isSignForm && <SignFormHOC hide={() => setIsSignForm(false)}/>}
         </>);
 }
 
