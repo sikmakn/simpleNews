@@ -2,7 +2,7 @@ import {Router} from 'express';
 import * as userService from '../services/userService';
 import * as authService from '../services/authService';
 import authValidateMiddleware from '../helpers/authValidateMiddleware';
-import {getAccessToken, setTokens} from '../helpers/tokens';
+import {getAccessTokenFromResponse, setTokens} from '../helpers/tokens';
 import {registerUserSchema} from '../validationSchemas/userSchema';
 
 import multer from 'multer';
@@ -50,9 +50,10 @@ router.put('/update',
     upload.single('img'),
     authValidateMiddleware,
     async (req, res) => {
-        const accessToken = getAccessToken(req);
-        if (authService.decode(accessToken!)!.username !== req.body.username)
+        const accessToken = getAccessTokenFromResponse(res);
+        if (authService.decode(accessToken!)!.payload.username !== req.body.username)
             return res.status(403).json({error: 'forbidden'});
+
         const updatedUser = await userService.update({...req.body, img: req.file});
         res.status(201).json({
             username: updatedUser.username,

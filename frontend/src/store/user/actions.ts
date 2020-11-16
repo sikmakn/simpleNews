@@ -1,14 +1,15 @@
-import {POST} from '../../server/actions';
-import {LOGIN_PATH, REGISTER_PATH} from '../../server/paths/user';
+import {POST, PUT} from '../../server/actions';
+import {LOGIN_PATH, REGISTER_PATH, UPDATE_PATH} from '../../server/paths/user';
 import fetchProcess from '../../types/fetching';
 
 export const SET_USER = 'SET_USER';
 export const CLEAR_USER = 'CLEAR_USER';
-export const UPDATE_USER = 'UPDATE_USER';
 export const SET_USER_REGISTER_ERRORS = 'SET_USER_REGISTER_ERRORS';
 export const SET_PROCESS_REGISTRATION_USER_STATUS = 'SET_PROCESS_REGISTRATION_USER_STATUS';
 export const SET_PROCESS_LOGIN_USER_STATUS = 'SET_PROCESS_LOGIN_USER_STATUS';
 export const SET_PROCESS_LOGIN_USER_ERRORS = 'SET_PROCESS_LOGIN_USER_ERRORS';
+export const SET_PROCESS_UPDATE_USER_STATUS = 'SET_PROCESS_UPDATE_USER_STATUS';
+export const SET_PROCESS_UPDATE_USER_ERROR = 'SET_PROCESS_UPDATE_USER_ERROR';
 
 export const setUser = (user: {
     username: string,
@@ -18,13 +19,6 @@ export const setUser = (user: {
 }) => ({type: SET_USER, payload: user});
 
 export const clearUser = () => ({type: CLEAR_USER});
-
-export const updateUser = (user: {
-    username: string
-    firstName: string
-    lastName: string
-    imgSrc?: string
-}) => ({type: UPDATE_USER, payload: user});
 
 export const setUserRegisterErrors = (errors: string[]) =>
     ({type: SET_USER_REGISTER_ERRORS, payload: errors});
@@ -38,6 +32,12 @@ export const setProcessLoginStatus = (status: fetchProcess) =>
 export const setProcessLoginErrors = (errors: string[]) =>
     ({type: SET_PROCESS_LOGIN_USER_ERRORS, payload: errors});
 
+export const setProcessUpdateUserStatus = (status: fetchProcess) =>
+    ({type: SET_PROCESS_UPDATE_USER_STATUS, payload: status});
+
+export const setProcessUpdateUserErrors = (error: string) =>
+    ({type: SET_PROCESS_UPDATE_USER_ERROR, payload: error});
+
 //async actions
 
 export const registerNewUser = (user: {
@@ -47,7 +47,7 @@ export const registerNewUser = (user: {
     lastName: string
 }) =>
     (dispatch: any) => {
-        setProcessRegistrationStatus(fetchProcess.loading)
+        dispatch(setProcessRegistrationStatus(fetchProcess.loading));
         POST(REGISTER_PATH, user)
             .then(() =>
                 dispatch(setProcessRegistrationStatus(fetchProcess.success)))
@@ -59,16 +59,17 @@ export const registerNewUser = (user: {
 
 export const signInUser = ({username, password}: { username: string, password: string }) =>
     (dispatch: any) => {
-        setProcessLoginStatus(fetchProcess.loading)
+        dispatch(setProcessLoginStatus(fetchProcess.loading));
         POST(LOGIN_PATH, {username, password})
-            .then(res => res.json())
-            .then(({username, firstName, lastName, imgSrc}) =>
+            .then(({username, firstName, lastName, imgSrc}) => {
+                dispatch(setProcessLoginStatus(fetchProcess.success));
                 dispatch(setUser({
                     username,
                     firstName,
                     lastName,
                     imgSrc: imgSrc || undefined,
-                })))
+                }))
+            })
             .catch(res => res.json().then((res: any) => {
                 dispatch(setProcessLoginErrors(res.errors));
                 dispatch(setProcessLoginStatus(fetchProcess.error));
@@ -85,6 +86,15 @@ export const updateUserData = (user: {
     password: string
     newPassword?: string
 }) => (dispatch: any) => {
-    const {img} = user;
-    dispatch(updateUser({...user, imgSrc: img && URL.createObjectURL(img)}));
+    console.log(user)
+    dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
+    PUT(UPDATE_PATH, user)
+        .then((updatedUser) => {
+            dispatch(setProcessUpdateUserStatus(fetchProcess.success));
+            dispatch(setUser(updatedUser));
+        })
+        .catch(res => res.json().then((res: any) => {
+            dispatch(setProcessUpdateUserErrors(res.error));
+            dispatch(setProcessUpdateUserStatus(fetchProcess.error));
+        }));
 }

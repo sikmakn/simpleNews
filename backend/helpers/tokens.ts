@@ -26,6 +26,11 @@ export function getTokens(req: Request) {
     };
 }
 
+export function getAccessTokenFromResponse(res: Response) {
+    const authHeader = res.getHeader('Authorization') as string;
+    return authHeader.split(' ')[1]
+}
+
 export function getRefreshToken(req: Request) {
     return req.cookies.Authorization?.split(' ')[1];
 }

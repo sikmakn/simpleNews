@@ -41,7 +41,7 @@ export async function updateTokens(
         refreshToken: jwt.sign({username: refreshValue.username},
             JWT_REFRESH_SECRET as string,
             {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),
-        accessToken: jwt.sign({username: accessValue.username},
+        accessToken: jwt.sign({username: refreshValue.username},
             JWT_REFRESH_SECRET as string,
             {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),
     };

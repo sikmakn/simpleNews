@@ -11,7 +11,11 @@ interface UserPageHOCProps extends UserPageProps{
 const UserPageHOC: React.FC<UserPageHOCProps> = (props) =>
     props.user ? <UserPage {...props}/> : <Redirect to={mainPagePath()}/>;
 
-const mapStateToProps = ({user}: any) => ({user: user.value});
+const mapStateToProps = ({user}: any) => ({
+    user: user.value,
+    status: user.updateProcessStatus,
+    error: user.updateError
+});
 
 const mapDispatchToProps = {updateUserData};
 

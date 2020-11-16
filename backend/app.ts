@@ -5,11 +5,11 @@ import express, {NextFunction, Request, Response} from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import {ResponseError} from './types';
 import createDb from './db/createDb';
 import configControllers from './controllers';
-
 
 async function start() {
     await createDb;
@@ -17,7 +17,12 @@ async function start() {
 
     const app = express();
 
-    app.use(cors({exposedHeaders: ['Authorization']}));
+    app.use(cors({
+        exposedHeaders: ['Authorization'],
+        credentials: true,
+        origin: process.env.ORIGIN,
+    }));
+    app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(compression());

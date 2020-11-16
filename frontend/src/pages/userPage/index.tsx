@@ -13,6 +13,8 @@ import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
 import {checkManyValue} from '../../helpers/valueObj';
 import imgToString from '../../helpers/imgToString';
+import fetchProcess from "../../types/fetching";
+import Loader from "../../components/loader";
 
 export interface UserPageProps {
     user: {
@@ -30,10 +32,18 @@ export interface UserPageProps {
         password: string
         newPassword?: string
     }) => void
+
+    status?: fetchProcess
+    error?: string
 }
 
 const UserPage: React.FC<UserPageProps> =
-    ({user: {username, firstName, lastName, imgSrc}, updateUserData}) => {
+    ({
+         user: {username, firstName, lastName, imgSrc},
+         updateUserData,
+         status,
+         error
+     }) => {
         const [selectedImg, setSelectedImg] = useState<File>();
 
         const [firstNameValueObj, setFirstNameValueObj] = useState<ValueObj>({value: firstName});
@@ -47,6 +57,9 @@ const UserPage: React.FC<UserPageProps> =
                 <main className={styles.main}>
                     <div className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
+                        {
+                            status === fetchProcess.loading && <Loader size={40}/>
+                        }
                         <AddUserImage
                             setImg={setSelectedImg}
                             img={imgToString(selectedImg) || imgSrc}
@@ -75,6 +88,7 @@ const UserPage: React.FC<UserPageProps> =
                             className={styles.newPassword}
                         />
                         <FormCheckErrorLayout>
+                            <FormCheckErrors valueObj={{value: '', errors: error ? [error] : undefined}}/>
                             <FormCheckErrors valueObj={firstNameValueObj}/>
                             <FormCheckErrors valueObj={lastNameValueObj}/>
                             <FormCheckErrors valueObj={passwordValueObj}/>
