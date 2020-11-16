@@ -1,16 +1,19 @@
 import React from 'react';
-import SignInForm from './index';
+import SignInForm, {SignInFormProps} from './index';
 import {connect} from 'react-redux';
 import {signInUser} from '../../store/user/actions';
 
-interface SignInFormHOCProps {
-    signInUser: (x: any) => void
+interface SignInFormHOCProps extends SignInFormProps {
 }
 
-const SigInFormHOC: React.FC<SignInFormHOCProps> =
-    ({signInUser}) => <SignInForm signInUser={signInUser}/>;
+const SigInFormHOC: React.FC<SignInFormHOCProps> = (props) =>
+    <SignInForm {...props}/>;
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({user}: any) =>
+    ({
+        status: user.loginProcessStatus,
+        errors: user.loginErrors
+    });
 
 const mapDispatchToProps = {signInUser};
 

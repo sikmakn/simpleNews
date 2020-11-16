@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const {username, password} = req.body;
     if (!await userService.validate({username, password}))
-        return res.status(401).json({errors: ['not valid data']});
+        return res.status(401).json({errors: ['not valid username or password']});
 
     const tokens = await authService.createToken(username);
     setTokens({...tokens, res});
