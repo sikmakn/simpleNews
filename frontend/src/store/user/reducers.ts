@@ -1,5 +1,6 @@
 import {
-    CLEAR_USER, SET_PROCESS_LOGIN_USER_ERRORS,
+    CLEAR_USER,
+    SET_PROCESS_LOGIN_USER_ERRORS,
     SET_PROCESS_LOGIN_USER_STATUS,
     SET_PROCESS_REGISTRATION_USER_STATUS,
     SET_USER,
@@ -13,11 +14,12 @@ const defaultState: {
     registrationStatus?: fetchProcess
     registrationErrors?: string[]
     loginProcessStatus?: fetchProcess
-} = {};
+} = {value: window.localStorage.getItem('user') ?? undefined};
 
 const userReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
         case SET_USER:
+            window.localStorage.setItem('user', JSON.stringify(action.payload));
             return {value: action.payload};
         case UPDATE_USER:
             return {
