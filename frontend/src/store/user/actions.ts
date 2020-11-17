@@ -62,6 +62,7 @@ export const signInUser = ({username, password}: { username: string, password: s
     (dispatch: any) => {
         dispatch(setProcessLoginStatus(fetchProcess.loading));
         POST(LOGIN_PATH, {username, password})
+            .then(res => res.json())
             .then(({username, firstName, lastName, imgSrc}) => {
                 dispatch(setProcessLoginStatus(fetchProcess.success));
                 dispatch(setUser({
@@ -89,10 +90,11 @@ export const updateUserData = (user: {
     password: string
     newPassword?: string
 }) => (dispatch: any) => {
-    console.log(user)
     dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
     PUT(UPDATE_PATH, user)
+        .then(res => res.json())
         .then((updatedUser) => {
+            console.log(updatedUser)
             dispatch(setProcessUpdateUserStatus(fetchProcess.success));
             dispatch(setUser(updatedUser));
         })

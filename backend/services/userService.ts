@@ -32,24 +32,35 @@ export async function update(
     {
         username,
         password,
+        newPassword,
         img,
         ...name
     }:
         {
             username: string,
             password: string,
+            newPassword:string,
             firstName: string,
             lastName: string,
             img?: File
         }) {
     //todo made to fileStorage img
-    const {hashedPassword, salt} = await createPassword(password);
-    return userRepository.update({
+    let newUser;
+    if(newPassword) {
+        const {hashedPassword, salt} = await createPassword(newPassword);
+        newUser = {
             username,
             salt,
             password: hashedPassword,
             ...name,
-        },
+        };
+    }else {
+        newUser = {
+            username,
+            ...name,
+        };
+    }
+    return userRepository.update(newUser,
         {where: {username}});
 }
 

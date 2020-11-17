@@ -18,7 +18,7 @@ export function GET(path: string) {
 
 export function request(method: 'POST' | 'PUT', path: string, body: any) {
     return fetch(process.env.REACT_APP_SERVER_URL + path, {
-        method: 'method',
+        method: method,
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
@@ -29,5 +29,5 @@ export function request(method: 'POST' | 'PUT', path: string, body: any) {
     }).then(res => {
         accessToken = res.headers.get('authorization') ?? '';
         return res.ok ? res : Promise.reject(res)
-    }).then(res => res.json());
+    });
 }

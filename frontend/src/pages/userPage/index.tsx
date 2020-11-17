@@ -50,6 +50,7 @@ const UserPage: React.FC<UserPageProps> =
         const [lastNameValueObj, setLastNameValueObj] = useState<ValueObj>({value: lastName});
         const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
         const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
+        const [usernameValue] = useState(username);
 
         return (
             <>
@@ -65,8 +66,8 @@ const UserPage: React.FC<UserPageProps> =
                             img={imgToString(selectedImg) || imgSrc}
                         />
                         <UserInput
-                            disabled placeholder="Логин"
-                            value={username}
+                            disabled placeholder={username}
+                            value={usernameValue}
                             className={styles.username}
                         />
                         <FirstNameInput

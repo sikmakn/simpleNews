@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
     setTokens({...tokens, res});
 
     const user = await userService.find(username);
-    res.status(200).json({
+    res.json({
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -54,8 +54,9 @@ router.put('/update',
         if (authService.decode(accessToken!)!.payload.username !== req.body.username)
             return res.status(403).json({error: 'forbidden'});
 
-        const updatedUser = await userService.update({...req.body, img: req.file});
-        res.status(201).json({
+        await userService.update({...req.body, img: req.file});
+        const updatedUser = await userService.find(req.body.username);
+        res.json({
             username: updatedUser.username,
             firstName: updatedUser.firstName,
             lastName: updatedUser.lastName,

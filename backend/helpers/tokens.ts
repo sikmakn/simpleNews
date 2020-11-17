@@ -3,7 +3,7 @@ import {Request, Response} from 'express';
 export function setRefreshToken({res, refreshToken}: { res: Response, refreshToken: string }) {
     res.cookie('Authorization', `Bearer ${refreshToken}`, {
         httpOnly: true,
-        // sameSite: true
+        sameSite: 'strict'
     });
 }
 
@@ -14,7 +14,7 @@ export function setAccessToken({res, accessToken}: { res: Response, accessToken:
 export function setTokens({res, accessToken, refreshToken}: { res: Response, accessToken: string, refreshToken: string }) {
     res.cookie('Authorization', `Bearer ${refreshToken}`, {
         httpOnly: true,
-        // sameSite: true
+        sameSite: 'strict'
     });
     res.set('Authorization', `Bearer ${accessToken}`);
 }
