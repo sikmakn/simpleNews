@@ -1,5 +1,5 @@
-import {POST, PUT} from '../../server/actions';
-import {LOGIN_PATH, REGISTER_PATH, UPDATE_PATH} from '../../server/paths/user';
+import {GET, POST, PUT} from '../../server/actions';
+import {LOGIN_PATH, LOGOUT_PATH, REGISTER_PATH, UPDATE_PATH} from '../../server/paths/user';
 import fetchProcess from '../../types/fetching';
 
 export const SET_USER = 'SET_USER';
@@ -48,6 +48,7 @@ export const registerNewUser = (user: {
 }) =>
     (dispatch: any) => {
         dispatch(setProcessRegistrationStatus(fetchProcess.loading));
+
         POST(REGISTER_PATH, user)
             .then(() =>
                 dispatch(setProcessRegistrationStatus(fetchProcess.success)))
@@ -76,7 +77,9 @@ export const signInUser = ({username, password}: { username: string, password: s
             }));
     }
 
-export const logOutUser = () => (dispatch: any) => dispatch(clearUser());
+export const logOutUser = () => (dispatch: any) => {
+    GET(LOGOUT_PATH).then(() => dispatch(clearUser()));
+}
 
 export const updateUserData = (user: {
     username: string

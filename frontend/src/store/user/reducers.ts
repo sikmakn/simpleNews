@@ -50,9 +50,14 @@ const userReducer = (state = defaultState, action: { type: string, payload: any 
             return setStatus({
                 state,
                 payload: action.payload,
+                statusName: 'loginProcessStatus',
                 errorsName: 'loginErrors',
-                statusName: 'loginProcessStatus'
             });
+        case SET_PROCESS_UPDATE_USER_ERROR:
+            return {
+                ...state,
+                updateError: action.payload,
+            };
         case SET_PROCESS_UPDATE_USER_STATUS:
             return setStatus({
                 state,
@@ -60,12 +65,8 @@ const userReducer = (state = defaultState, action: { type: string, payload: any 
                 statusName: 'updateProcessStatus',
                 errorsName: 'updateError',
             });
-        case SET_PROCESS_UPDATE_USER_ERROR:
-            return {
-                ...state,
-                updateError: action.payload,
-            };
         case CLEAR_USER:
+            window.localStorage.removeItem('user');
             return {};
     }
     return state;
