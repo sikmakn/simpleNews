@@ -4,21 +4,23 @@ import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {mainPagePath, noMatchPagePath} from '../../paths';
 import {createOneNews} from '../../store/oneNews/actions';
+import fetchProcess from '../../types/fetching';
 
 interface AddOneNewsPageHOCProps {
+    error?: string
+    status?: fetchProcess
     user?: any
     save: (oneNews: {
         img: File
         tag: string
         title: string
         text: string
-        authorUsername: string
         redirect: (path: string) => void,
     }) => void,
     history: any
 }
 
-const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> = ({user, save, history}) =>
+const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> = ({user, save, history, status }) =>
     user ?
         <AddOneNewsPage
             save={(oneNews: {
@@ -28,7 +30,6 @@ const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> = ({user, save, histor
                 text: string
             }) => {
                 save({
-                    authorUsername: user.username,
                     ...oneNews,
                     redirect:history.push
                 });
@@ -38,8 +39,10 @@ const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> = ({user, save, histor
         <Redirect to={noMatchPagePath()}/>;
 
 
-const mapStateToProps = ({user}: any, ownProps: any) => ({
+const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
     user: user.value,
+    status: oneNews.status,
+    error: oneNews.error,
     history: ownProps.history
 });
 

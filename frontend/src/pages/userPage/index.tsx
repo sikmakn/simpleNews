@@ -51,16 +51,13 @@ const UserPage: React.FC<UserPageProps> =
         const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
         const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
         const [usernameValue] = useState(username);
-
         return (
             <>
                 <HeaderHOC/>
                 <main className={styles.main}>
                     <div className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
-                        {
-                            status === fetchProcess.loading && <Loader size={40}/>
-                        }
+                        {status === fetchProcess.loading && <Loader size={40}/>}
                         <AddUserImage
                             setImg={setSelectedImg}
                             img={imgToString(selectedImg) || imgSrc}

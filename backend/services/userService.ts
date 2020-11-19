@@ -8,21 +8,21 @@ const userRepository = connection.getRepository(User);
 export async function create(
     {password, ...userBasic}:
         {
-            username: string,
-            password: string,
-            firstName: string,
-            lastName: string,
+            username: string
+            password: string
+            firstName: string
+            lastName: string
         }) {
     const {hashedPassword, salt} = await createPassword(password);
     return userRepository.create({password: hashedPassword, salt, ...userBasic});
 }
 
 export async function find(username: string) {
-    return userRepository.findOne({where: {username}});
+    return userRepository.findByPk(username);
 }
 
 export async function validate({username, password}: { username: string, password: string }) {
-    const user = await userRepository.findOne({where: {username}});
+    const user = await userRepository.findByPk(username);
     if (!user) return false;
     return await argon2.verify(user.password,
         `${password}.${process.env.STATIC_SALT}.${user.salt}`);
@@ -37,16 +37,16 @@ export async function update(
         ...name
     }:
         {
-            username: string,
-            password: string,
-            newPassword:string,
-            firstName: string,
-            lastName: string,
+            username: string
+            password: string
+            newPassword: string
+            firstName: string
+            lastName: string
             img?: File
         }) {
     //todo made to fileStorage img
     let newUser;
-    if(newPassword) {
+    if (newPassword) {
         const {hashedPassword, salt} = await createPassword(newPassword);
         newUser = {
             username,
@@ -54,7 +54,7 @@ export async function update(
             password: hashedPassword,
             ...name,
         };
-    }else {
+    } else {
         newUser = {
             username,
             ...name,

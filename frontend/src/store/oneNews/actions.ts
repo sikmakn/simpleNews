@@ -1,9 +1,19 @@
 import {oneNewsPagePath} from '../../paths';
+import fetchProcess from '../../types/fetching';
+import {GET, POST} from '../../server/actions';
+import {CREATE_PATH, FIND_ONE_PATH} from '../../server/paths/news';
 
 export const SET_ONE_NEWS = 'SET_ONE_NEWS';
 export const EDIT_ONE_NEWS = 'EDIT_ONE_NEWS';
-export const ADD_ONE_NEWS = 'ADD_ONE_NEWS';
 export const LIKE_ONE_NEWS = 'LIKE_ONE_NEWS';
+export const SET_CREATING_ONE_NEWS_STATUS = 'SET_CREATING_ONE_NEWS_STATUS';
+export const SET_ERROR_OF_ONE_NEWS = 'SET_ERROR_OF_ONE_NEWS';
+
+export const setCreationOneNewsStatus = (status: fetchProcess) =>
+    ({type: SET_CREATING_ONE_NEWS_STATUS, payload: status});
+
+export const setErrorOfOneNews = (error: string) =>
+    ({type: SET_ERROR_OF_ONE_NEWS, payload: error});
 
 export const setOneNews = (oneNews: {
     id: string
@@ -16,25 +26,15 @@ export const setOneNews = (oneNews: {
         likesCount: number
         commentsCount: number
     }
+    userStatistic?: {
+        isLiked?: boolean,
+        isCommented?: boolean
+    }
     authorUsername: string
 }) => ({
     type: SET_ONE_NEWS,
     payload: oneNews,
 });
-
-export const addOneNews = (oneNews: {
-    id: string
-    text: string
-    title: string
-    date: Date
-    tag: string
-    imgSrc: string
-    statistic: {
-        likesCount: number
-        commentsCount: number
-    }
-    authorUsername: string
-}) => ({type: ADD_ONE_NEWS, payload: oneNews});
 
 export const editOneNews = (oneNews: {
     id: string
@@ -55,26 +55,15 @@ export const likeOneNews = (params: {
 }) => ({type: LIKE_ONE_NEWS, payload: params});
 //async
 
-const oneNews = {
-    id: '1',
-    imgSrc: process.env.PUBLIC_URL + '/news1.jpg',
-    tag: 'finance',
-    date: new Date(2020, 5, 22, 10, 22),
-    title: 'Требониан Галл происходил из старинного этрусского рода. ' +
-        'В конце правления императора Деция Траяна он занимал должность легата',
-    text: 'Будущий император Гай Вибий Требониан Галл родился около 206 года. \n' +
-        'Эта датировка основана на сообщении Псевдо-Аврелия Виктора, который в своей ' +
-        '«Эпитоме» пишет, что на момент смерти Гаю было примерно сорок семь лет.',
-    statistic: {
-        likesCount: 1500,
-        commentsCount: 11500,
-    },
-    authorUsername: 'username',
-    userStatistic: {}
-};
 export const loadOneNews = (id: string) =>
-    (dispatch: any) =>
-        setTimeout(() => dispatch(setOneNews({...oneNews, id})), 2000);
+    (dispatch: any) => {
+    console.log(id)
+        GET(`${FIND_ONE_PATH}${id}`)
+            .then(res => res.json())
+            .then(oneNews => {
+                dispatch(setOneNews(oneNews));
+            });
+    }
 
 
 export const updateOneNews = (oneNews: {
@@ -83,9 +72,9 @@ export const updateOneNews = (oneNews: {
     tag: string
     title: string
     text: string
-    authorUsername: string
 }) => (dispatch: any) => dispatch(editOneNews({
     ...oneNews,
+    authorUsername: 'lol',
     date: new Date(Date.now()),
     imgSrc: URL.createObjectURL(oneNews.img),
     statistic: {
@@ -94,26 +83,32 @@ export const updateOneNews = (oneNews: {
     }
 }));
 
-export const createOneNews = (oneNews: {
-    img: File
-    tag: string
-    title: string
-    text: string
-    authorUsername: string,
-    redirect: (path: string) => void
-}) => (dispatch: any) => {
-    const id = String(Math.random());
-    dispatch(addOneNews({
-        ...oneNews,
-        id,
-        date: new Date(Date.now()),
-        imgSrc: URL.createObjectURL(oneNews.img),
-        statistic: {
-            commentsCount: 0,
-            likesCount: 0,
-        }
-    }));
-    oneNews.redirect(oneNewsPagePath(id))
+export const createOneNews = (
+    {
+        redirect,
+        ...oneNews
+    }: {
+        img: File
+        tag: string
+        title: string
+        text: string
+        redirect: (path: string) => void
+    }) => (dispatch: any) => {
+    dispatch(setCreationOneNewsStatus(fetchProcess.loading));
+    POST(CREATE_PATH, oneNews)
+        .then(res => res.json())
+        .then(oneNews => {
+            dispatch(setCreationOneNewsStatus(fetchProcess.success));
+            dispatch(setOneNews({
+                ...oneNews,
+                statistic: {
+                    commentsCount: 0,
+                    likesCount: 0,
+                },
+                userStatistic: {},
+            }));
+            redirect(oneNewsPagePath(oneNews.id));
+        });
 };
 
 export const updateLikeInOneNews = (params: {

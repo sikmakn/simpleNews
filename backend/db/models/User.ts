@@ -5,7 +5,6 @@ import Comment from './Comment';
 import SubComment from './SubComment';
 
 interface UserAttr {
-    id: string;
     username: string;
     password: string;
     salt: string;
@@ -21,13 +20,6 @@ interface UserAttr {
 @Table
 class User extends Model implements UserAttr {
     @PrimaryKey
-    @Column({
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-        allowNull: false,
-    })
-    id!: string;
-
     @Column({
         allowNull: false,
         type: DataType.STRING,
@@ -74,7 +66,7 @@ class User extends Model implements UserAttr {
     @HasMany(() => SubComment, {onDelete: 'cascade'})
     subComments!: [SubComment];
 
-    @BelongsToMany(() => OneNews, () => Like)
+    @HasMany(() => Like)
     likes!: [Like];
 }
 

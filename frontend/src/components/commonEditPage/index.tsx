@@ -6,6 +6,8 @@ import TagSelect from '../tagSelect';
 import AddNewsImage from '../addNewsImage';
 import EditableDiv from '../editableDiv';
 import HeaderHOC from '../header/hoc';
+import fetchProcess from '../../types/fetching';
+import Loader from '../loader';
 
 export interface CommonEditPageProps {
     oneNews?: {
@@ -22,12 +24,14 @@ export interface CommonEditPageProps {
         text: string
     }) => void,
     cancel: () => void,
+    error?: string
+    status?: fetchProcess
 }
 
 const CommonEditPage: React.FC<CommonEditPageProps> =
     ({
          oneNews = {imgSrc: '', tag: TagEnum.FINANCE, title: '', text: ''},
-         save, cancel
+         save, cancel, error, status
      }) => {
         const {imgSrc: defaultImg, tag: defaultTag, text: defaultText, title: defaultTitle} = oneNews;
         const [title, setTitle] = useState(defaultTitle)
@@ -46,6 +50,8 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                 <HeaderHOC/>
                 <main className={styles.main}>
                     <TagSelect selected={tag} setSelected={setTag}/>
+                    {status === fetchProcess.loading && <Loader size={40}/>}
+                    {error}
                     <input
                         type="text" placeholder="Текст заголовка"
                         value={title}

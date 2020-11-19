@@ -10,20 +10,19 @@ import {
     Table
 } from 'sequelize-typescript';
 import User from './User';
-import Tag from './Tag';
 import Like from './Like';
 import Comment from './Comment';
+import {Tag} from '../../types';
 
 interface OneNewsAttr {
     id: string;
-    imgSrc?: string;
+    imgSrc: string;
     date: Date;
     title: string;
     text: string;
     authorId: string;
     author?: User;
-    tagId: string;
-    tag?: Tag;
+    tag: Tag;
     likes: [Like];
     comments: [Comment];
 }
@@ -42,7 +41,7 @@ class OneNews extends Model implements OneNewsAttr {
     @Column({
         type: DataType.STRING
     })
-    imgSrc?: string;
+    imgSrc!: string;
 
     @Column({
         type: DataType.DATE,
@@ -69,14 +68,13 @@ class OneNews extends Model implements OneNewsAttr {
     @BelongsTo(() => User)
     author!: User;
 
-
-    @ForeignKey(() => Tag)
-    tagId!: string;
-
-    @BelongsTo(() => Tag)
+    @Column({
+        type: DataType.ENUM(...Object.values(Tag)),
+        allowNull:false,
+    })
     tag!: Tag;
 
-    @BelongsToMany(() => User, () => Like)
+    @HasMany(() => Like)
     likes!: [Like];
 
     @HasMany(() => Comment, {onDelete: 'cascade'})

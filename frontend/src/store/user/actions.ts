@@ -94,7 +94,6 @@ export const updateUserData = (user: {
     PUT(UPDATE_PATH, user)
         .then(res => res.json())
         .then((updatedUser) => {
-            console.log(updatedUser)
             dispatch(setProcessUpdateUserStatus(fetchProcess.success));
             dispatch(setUser(updatedUser));
         })

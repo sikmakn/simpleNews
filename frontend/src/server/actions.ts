@@ -9,7 +9,7 @@ export function PUT(path: string, body: any) {
 }
 
 export function GET(path: string) {
-    return fetch(path, {credentials: 'include'})
+    return fetch(process.env.REACT_APP_SERVER_URL + path, {credentials: 'include'})
         .then(res => {
             accessToken = res.headers.get('authorization') ?? '';
             return res.ok ? res : Promise.reject(res)
