@@ -34,18 +34,25 @@ router.get('/:id',
             imgSrc,
             date,
             tag,
-            userStatistic,
-            statistic,
-        } = await newsService.findOne({
-            id: req.params.id,
-            userId
-        });
-        console.log(userStatistic)
-        console.log(statistic)
+            commentsCount,
+            subCommentsCount,
+            userSubCommentsCount,
+            likesCount,
+            userLikesCount,
+            userCommentsCount,
+        } = await newsService.findOne({id: req.params.id, userId});
+
         res.json({
             id, title, text, imgSrc, date, tag,
-            userStatistic, statistic,
-        })
+            statistic: {
+                commentsCount: commentsCount + subCommentsCount,
+                likesCount
+            },
+            userStatistic: {
+                isLiked: !!userLikesCount,
+                isCommented: !!userCommentsCount && !!userSubCommentsCount,
+            },
+        });
     });
 
 export default router;

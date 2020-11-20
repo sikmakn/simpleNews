@@ -1,17 +1,9 @@
-import {
-    BelongsTo,
-    Column,
-    DataType,
-    ForeignKey,
-    HasMany,
-    Model,
-    PrimaryKey,
-    Table
-} from 'sequelize-typescript';
+import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table} from 'sequelize-typescript';
 import User from './User';
 import Like from './Like';
 import Comment from './Comment';
 import {Tag} from '../../types';
+import SubComment from "./SubComment";
 
 interface OneNewsAttr {
     id: string;
@@ -69,7 +61,7 @@ class OneNews extends Model implements OneNewsAttr {
 
     @Column({
         type: DataType.ENUM(...Object.values(Tag)),
-        allowNull:false,
+        allowNull: false,
     })
     tag!: Tag;
 
@@ -79,6 +71,8 @@ class OneNews extends Model implements OneNewsAttr {
     @HasMany(() => Comment, {onDelete: 'cascade'})
     comments!: [Comment];
 
+    @HasMany(() => SubComment, {onDelete: 'cascade'})
+    subComments!: [SubComment];
 }
 
 export default OneNews;

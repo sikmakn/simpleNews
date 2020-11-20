@@ -21,7 +21,10 @@ export async function find(username: string) {
     return userRepository.findByPk(username);
 }
 
-export async function validate({username, password}: { username: string, password: string }) {
+export async function validate({username, password}: {
+    username: string
+    password: string
+}) {
     const user = await userRepository.findByPk(username);
     if (!user) return false;
     return await argon2.verify(user.password,
