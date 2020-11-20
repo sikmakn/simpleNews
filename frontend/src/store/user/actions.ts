@@ -58,25 +58,27 @@ export const registerNewUser = (user: {
             }));
     };
 
-export const signInUser = ({username, password}: { username: string, password: string }) =>
-    (dispatch: any) => {
-        dispatch(setProcessLoginStatus(fetchProcess.loading));
-        POST(LOGIN_PATH, {username, password})
-            .then(res => res.json())
-            .then(({username, firstName, lastName, imgSrc}) => {
-                dispatch(setProcessLoginStatus(fetchProcess.success));
-                dispatch(setUser({
-                    username,
-                    firstName,
-                    lastName,
-                    imgSrc: imgSrc || undefined,
-                }))
-            })
-            .catch(res => res.json().then((res: any) => {
-                dispatch(setProcessLoginErrors(res.errors));
-                dispatch(setProcessLoginStatus(fetchProcess.error));
-            }));
-    }
+export const signInUser = ({username, password}: {
+    username: string
+    password: string
+}) => (dispatch: any) => {
+    dispatch(setProcessLoginStatus(fetchProcess.loading));
+    POST(LOGIN_PATH, {username, password})
+        .then(res => res.json())
+        .then(({username, firstName, lastName, imgSrc}) => {
+            dispatch(setProcessLoginStatus(fetchProcess.success));
+            dispatch(setUser({
+                username,
+                firstName,
+                lastName,
+                imgSrc: imgSrc || undefined,
+            }))
+        })
+        .catch(res => res.json().then((res: any) => {
+            dispatch(setProcessLoginErrors(res.errors));
+            dispatch(setProcessLoginStatus(fetchProcess.error));
+        }));
+};
 
 export const logOutUser = () => (dispatch: any) => {
     GET(LOGOUT_PATH).then(() => dispatch(clearUser()));
@@ -93,7 +95,7 @@ export const updateUserData = (user: {
     dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
     PUT(UPDATE_PATH, user)
         .then(res => res.json())
-        .then((updatedUser) => {
+        .then(updatedUser => {
             dispatch(setProcessUpdateUserStatus(fetchProcess.success));
             dispatch(setUser(updatedUser));
         })
@@ -101,4 +103,4 @@ export const updateUserData = (user: {
             dispatch(setProcessUpdateUserErrors(res.error));
             dispatch(setProcessUpdateUserStatus(fetchProcess.error));
         }));
-}
+};

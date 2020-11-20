@@ -1,13 +1,17 @@
 import {oneNewsPagePath} from '../../paths';
 import fetchProcess from '../../types/fetching';
 import {GET, POST} from '../../server/actions';
-import {CREATE_PATH, FIND_ONE_PATH} from '../../server/paths/news';
+import {CREATE_PATH, FIND_ONE_PATH, UPDATE_PATH} from '../../server/paths/news';
 
 export const SET_ONE_NEWS = 'SET_ONE_NEWS';
 export const EDIT_ONE_NEWS = 'EDIT_ONE_NEWS';
 export const LIKE_ONE_NEWS = 'LIKE_ONE_NEWS';
 export const SET_CREATING_ONE_NEWS_STATUS = 'SET_CREATING_ONE_NEWS_STATUS';
 export const SET_ERROR_OF_ONE_NEWS = 'SET_ERROR_OF_ONE_NEWS';
+export const SET_UPDATING_ONE_NEWS_STATUS = 'SET_UPDATING_ONE_NEWS_STATUS';
+
+export const setUpdatingOneNewsStatus = (status: fetchProcess) =>
+    ({type: SET_UPDATING_ONE_NEWS_STATUS, payload: status});
 
 export const setCreationOneNewsStatus = (status: fetchProcess) =>
     ({type: SET_CREATING_ONE_NEWS_STATUS, payload: status});
@@ -57,7 +61,6 @@ export const likeOneNews = (params: {
 
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {
-    console.log(id)
         GET(`${FIND_ONE_PATH}${id}`)
             .then(res => res.json())
             .then(oneNews => {
@@ -72,16 +75,19 @@ export const updateOneNews = (oneNews: {
     tag: string
     title: string
     text: string
-}) => (dispatch: any) => dispatch(editOneNews({
-    ...oneNews,
-    authorUsername: 'lol',
-    date: new Date(Date.now()),
-    imgSrc: URL.createObjectURL(oneNews.img),
-    statistic: {
-        commentsCount: 0,
-        likesCount: 0,
-    }
-}));
+}) => (dispatch: any) => {
+    dispatch(setUpdatingOneNewsStatus(fetchProcess.loading));
+    POST(UPDATE_PATH + oneNews.id, oneNews)
+        .then(res => res.json())
+        .then(oneNews => {
+            dispatch(setUpdatingOneNewsStatus(fetchProcess.success));
+            dispatch(setOneNews(oneNews));
+        })
+        .catch(res => res.json().then((err: string) => {
+            dispatch(setUpdatingOneNewsStatus(fetchProcess.error));
+            dispatch(setErrorOfOneNews(err));
+        }));
+};
 
 export const createOneNews = (
     {
