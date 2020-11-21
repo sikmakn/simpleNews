@@ -3,13 +3,14 @@ import AddOneNewsPage from './index';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {mainPagePath, noMatchPagePath} from '../../paths';
-import {createOneNews} from '../../store/oneNews/actions';
+import {cleanOneNewsStatus, createOneNews} from '../../store/oneNews/actions';
 import fetchProcess from '../../types/fetching';
 
 interface AddOneNewsPageHOCProps {
     error?: string
     status?: fetchProcess
     user?: any
+    cleanStatus: ()=>void
     save: (oneNews: {
         img: File
         tag: string
@@ -21,10 +22,11 @@ interface AddOneNewsPageHOCProps {
 }
 
 const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> =
-    ({user, save, history, status, error}) =>
+    ({user, save, history, status, error, cleanStatus}) =>
         user ?
             <AddOneNewsPage
                 error={error}
+                cleanStatus={cleanStatus}
                 status={status}
                 save={(oneNews: {
                     img: File
@@ -49,6 +51,6 @@ const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
     history: ownProps.history
 });
 
-const mapDispatchToProps = {save: createOneNews};
+const mapDispatchToProps = {save: createOneNews, cleanStatus: cleanOneNewsStatus};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddOneNewsPageHOC);

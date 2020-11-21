@@ -1,11 +1,12 @@
 import {
+    CLEAN_ONE_NEWS_STATUS,
     LIKE_ONE_NEWS,
+    SET_CREATING_ERROR_OF_ONE_NEWS,
     SET_CREATING_ONE_NEWS_STATUS,
     SET_ERROR_LOADING_OF_ONE_NEWS,
-    SET_UPDATE_ERROR_OF_ONE_NEWS,
     SET_LOADING_ONE_NEWS_STATUS,
     SET_ONE_NEWS,
-    SET_CREATING_ERROR_OF_ONE_NEWS
+    SET_UPDATE_ERROR_OF_ONE_NEWS
 } from './actions';
 
 const defaultState: { value?: any } = {};
@@ -39,6 +40,10 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
                 ...state,
                 loadingError: action.payload,
             };
+        case CLEAN_ONE_NEWS_STATUS:
+            return {
+                value: state.value,
+            }
         case LIKE_ONE_NEWS:
             return {
                 value: {

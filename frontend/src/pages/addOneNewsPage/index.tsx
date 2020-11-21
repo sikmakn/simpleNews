@@ -12,6 +12,7 @@ export interface AddOneNewsPageProps {
     cancel: () => void,
     error?: string
     status?: fetchProcess
+    cleanStatus: () => void
 }
 
 const AddOneNewsPage: React.FC<AddOneNewsPageProps> = (props) =>

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import EditOneNewsPage from './index';
-import {loadOneNews, updateOneNews} from '../../store/oneNews/actions';
+import {cleanOneNewsStatus, loadOneNews, updateOneNews} from '../../store/oneNews/actions';
 import {Redirect} from 'react-router-dom';
 import {noMatchPagePath, oneNewsPagePath} from '../../paths';
 import {connect} from 'react-redux';
@@ -29,6 +29,7 @@ interface EditOneNewsPageHOCProps {
         text: string
         authorUsername: string
     }) => void,
+    cleanStatus: () => void
     history: any
 }
 
@@ -38,6 +39,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
          id,
          oneNews,
          loadOneNews,
+         cleanStatus,
          save,
          history,
          status,
@@ -55,6 +57,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
             return <Redirect to={noMatchPagePath()}/>;
 
         return (<EditOneNewsPage
+            cleanStatus={cleanStatus}
             oneNews={oneNews}
             status={status}
             error={error}
@@ -87,6 +90,6 @@ const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
         error: oneNews.updatingError,
     });
 
-const mapDispatchToProps = {loadOneNews, save: updateOneNews};
+const mapDispatchToProps = {loadOneNews, save: updateOneNews, cleanStatus: cleanOneNewsStatus};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditOneNewsPageHOC);

@@ -26,12 +26,13 @@ export interface CommonEditPageProps {
     cancel: () => void,
     error?: string
     status?: fetchProcess
+    cleanStatus: () => void
 }
 
 const CommonEditPage: React.FC<CommonEditPageProps> =
     ({
          oneNews = {imgSrc: '', tag: TagEnum.FINANCE, title: '', text: ''},
-         save, cancel, error, status
+         save, cancel, error, status, cleanStatus
      }) => {
         const {imgSrc: defaultImg, tag: defaultTag, text: defaultText, title: defaultTitle} = oneNews;
         const [title, setTitle] = useState(defaultTitle)
@@ -43,8 +44,10 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
             if (defaultImg)
                 fetch(defaultImg).then(e => e.blob())
                     .then(b => setImg(b as File));
-        }, [defaultImg])
-        console.log(error)
+        }, [defaultImg]);
+
+        useEffect(() => cleanStatus, []);
+
         return (
             <>
                 <HeaderHOC/>

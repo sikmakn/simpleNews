@@ -30,7 +30,7 @@ router.put('/update/:id',
         if (username !== authorId)
             return res.status(403).json({error: 'you are not the author'});
         await newsService.update({...req.body, img: req.file});
-        const oneNews = await newsService.findOne({id, userId:username});
+        const oneNews = await newsService.findOne({id, userId: username});
         res.json(mapOneNewsToOut(oneNews));
     })
 
