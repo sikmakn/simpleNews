@@ -77,8 +77,9 @@ export async function findMany(
     return newsRepository.findAll({
         ...parameters,
         ...findAttributes(username),
-        // offset: from,
-        // limit: to,
+        subQuery: false,
+        offset: from,
+        limit: to,
     });
 }
 
@@ -111,7 +112,7 @@ function findAttributes(userId?: string) {
             ...userAttr
         ],
         include: [
-            {model: likeRepository, attributes:[]},
+            {model: likeRepository, attributes: []},
             {model: commentRepository, attributes: []},
             {model: subCommentRepository, attributes: []},
         ],
