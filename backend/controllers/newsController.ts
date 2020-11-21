@@ -59,7 +59,10 @@ router.get('/many',
         if (req.query.tag)
             findParams.tag = req.query.tag as Tag;
         const news = await newsService.findMany(findParams);
-        res.json(news.map((n: any) => mapOneNewsToOut(n.dataValues)));
+        res.json(news.map((n: any) => {
+            const {text, ...mappedNews} = mapOneNewsToOut(n.dataValues);
+            return {...mappedNews, description: text.substr(0, 100)};
+        }));
     });
 
 router.get('/one/:id',
