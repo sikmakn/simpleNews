@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import {noMatchPagePath, oneNewsPagePath} from '../../paths';
 import {connect} from 'react-redux';
 import Loader from '../../components/loader';
-import fetchProcess from "../../types/fetching";
+import fetchProcess from '../../types/fetching';
 
 interface EditOneNewsPageHOCProps {
     username?: string
@@ -27,7 +27,6 @@ interface EditOneNewsPageHOCProps {
         tag: string
         title: string
         text: string
-        authorUsername: string
     }) => void,
     cleanStatus: () => void
     history: any
@@ -68,11 +67,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
                     title: string
                     text: string
                 }) => {
-                    save({
-                        ...n,
-                        id: oneNews.id,
-                        authorUsername: oneNews?.authorId
-                    });
+                    save({...n, id});
                     history.push(oneNewsPagePath(oneNews.id))
                 }
             }
