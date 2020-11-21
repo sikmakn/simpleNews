@@ -46,7 +46,7 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                     .then(b => setImg(b as File));
         }, [defaultImg]);
 
-        useEffect(() => cleanStatus, []);
+        useEffect(() => cleanStatus, [cleanStatus]);
 
         return (
             <>

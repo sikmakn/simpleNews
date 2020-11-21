@@ -43,7 +43,8 @@ router.get('/manyBasic',
             sort: req.query.sort,
         };
         const news = await newsService.findManyBasic(findParams);
-        res.json(news.map(({id, title, text, date}: any) => ({id, title, text, date})));
+        res.json(news.map(({id, title, text, date}: any) =>
+            ({id, title, date, description: text.substr(0, 100)})));
     });
 
 router.get('/many',
