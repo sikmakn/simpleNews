@@ -11,7 +11,7 @@ const SigInFormHOC: React.FC<SignInFormHOCProps> = (props) =>
 
 const mapStateToProps = ({user}: any) =>
     ({
-        status: user.loginProcessStatus,
+        creatingStatus: user.loginProcessStatus,
         errors: user.loginErrors
     });
 

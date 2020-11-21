@@ -1,10 +1,10 @@
-import {BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table} from 'sequelize-typescript';
+import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from 'sequelize-typescript';
 import User from './User';
 import OneNews from './OneNews';
 
 interface LikeAttr {
-    userId: string;
-    user?: User;
+    authorId: string;
+    author?: User;
     oneNewsId: string;
     oneNews?: OneNews;
 }
@@ -14,14 +14,17 @@ class Like extends Model implements LikeAttr {
     @ForeignKey(() => User)
     @PrimaryKey
     @Column({allowNull: false})
-    userId!: string;
+    authorId!: string;
 
     @BelongsTo(() => User)
-    user!: User;
+    author!: User;
 
-    @ForeignKey(() => OneNews)
     @PrimaryKey
-    @Column({allowNull: false})
+    @ForeignKey(() => OneNews)
+    @Column({
+        allowNull: false,
+        type: DataType.UUID,
+    })
     oneNewsId!: string;
 
     @BelongsTo(() => OneNews)

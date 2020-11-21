@@ -10,7 +10,7 @@ const SignUpFormHOC: React.FC<SignUpFormHOCProps> =
     (props) => <SignUpForm {...props}/>;
 
 const mapStateToProps = ({user}: any) => ({
-    status: user.registraionStatus,
+    creatingStatus: user.registraionStatus,
     errors: user.registrationErrors,
 });
 

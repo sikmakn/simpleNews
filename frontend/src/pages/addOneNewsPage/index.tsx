@@ -1,6 +1,6 @@
 import React from 'react';
 import CommonEditPage from '../../components/commonEditPage';
-import fetchProcess from "../../types/fetching";
+import fetchProcess from '../../types/fetching';
 
 export interface AddOneNewsPageProps {
     save: (oneNews: {
@@ -14,7 +14,7 @@ export interface AddOneNewsPageProps {
     status?: fetchProcess
 }
 
-const AddOneNewsPage:React.FC<AddOneNewsPageProps> = (props) =>
+const AddOneNewsPage: React.FC<AddOneNewsPageProps> = (props) =>
     (<CommonEditPage {...props}/>);
 
 export default AddOneNewsPage;

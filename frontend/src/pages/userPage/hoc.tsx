@@ -13,7 +13,7 @@ const UserPageHOC: React.FC<UserPageHOCProps> = (props) =>
 
 const mapStateToProps = ({user}: any) => ({
     user: user.value,
-    status: user.updateProcessStatus,
+    creatingStatus: user.updateProcessStatus,
     error: user.updateError
 });
 

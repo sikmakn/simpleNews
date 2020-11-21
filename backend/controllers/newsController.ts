@@ -2,9 +2,10 @@ import multer from 'multer';
 import * as newsService from '../services/newsService';
 import {Router} from 'express';
 import authValidateMiddleware from '../helpers/authValidateMiddleware';
-import {getAccessTokenFromResponse} from '../helpers/tokens';
-import * as authService from '../services/authService';
 import authTokensUpdateMiddleware from '../helpers/authTokensUpdateMiddleware';
+import getUsernameFromResponse from '../helpers/getUsernameFromResponse';
+import {Tag} from '../types';
+import mapOneNewsToOut from '../helpers/mapOneNewsToOut';
 
 const upload = multer({storage: multer.memoryStorage()})
 
@@ -14,45 +15,59 @@ router.post('/create',
     upload.single('img'),
     authValidateMiddleware,
     async (req, res) => {
-        const accessToken = getAccessTokenFromResponse(res);
-        const {username: authorId} = authService.decode(accessToken!)!.payload;
+        const authorId = getUsernameFromResponse(res);
         const {id, title, text, imgSrc, date, tag} = await newsService.create({...req.body, authorId});
         res.json({id, title, text, imgSrc, authorId, date, tag});
     });
 
-router.get('/:id',
+router.put('/update/:id',
+    upload.single('img'),
+    authValidateMiddleware,
+    async (req, res) => {
+        const username = getUsernameFromResponse(res);
+        const {id} = req.params;
+        const {authorId} = await newsService.findBasicById(id);
+        if (username !== authorId)
+            return res.status(403).json({error: 'you are not the author'});
+        await newsService.update({...req.body, img: req.file});
+        const oneNews = await newsService.findOne({id, userId:username});
+        res.json(mapOneNewsToOut(oneNews));
+    })
+
+router.get('/manyBasic',
     authTokensUpdateMiddleware,
     async (req, res) => {
-        const accessToken = getAccessTokenFromResponse(res);
-        let userId: string | undefined;
-        if (accessToken)
-            ({username: userId} = authService.decode(accessToken!)!.payload);
-        const {
-            id,
-            title,
-            text,
-            imgSrc,
-            date,
-            tag,
-            commentsCount,
-            subCommentsCount,
-            userSubCommentsCount,
-            likesCount,
-            userLikesCount,
-            userCommentsCount,
-        } = await newsService.findOne({id: req.params.id, userId});
+        const findParams: any = {
+            from: req.query.from,
+            to: req.query.to,
+            sort: req.query.sort,
+        };
+        const news = await newsService.findManyBasic(findParams);
+        res.json(news.map(({id, title, text, date}: any) => ({id, title, text, date})));
+    });
 
-        res.json({
-            id, title, text, imgSrc, date, tag,
-            statistic: {
-                commentsCount: commentsCount + subCommentsCount,
-                likesCount
-            },
-            userStatistic: {
-                isLiked: !!userLikesCount,
-                isCommented: !!userCommentsCount && !!userSubCommentsCount,
-            },
-        });
+router.get('/many',
+    authTokensUpdateMiddleware,
+    async (req, res) => {
+        const username = getUsernameFromResponse(res);
+        const findParams: any = {
+            from: req.query.from,
+            to: req.query.to,
+            sort: req.query.sort,
+            username,
+        };
+        if (req.query.tag)
+            findParams.tag = req.query.tag as Tag;
+        const news = await newsService.findMany(findParams);
+        res.json(news.map((n: any) => mapOneNewsToOut(n.dataValues)));
+    });
+
+router.get('/one/:id',
+    authTokensUpdateMiddleware,
+    async (req, res) => {
+        const userId = getUsernameFromResponse(res);
+        const oneNews = await newsService.findOne({id: req.params.id, userId});
+        res.json(mapOneNewsToOut(oneNews));
     });
 
 export default router;

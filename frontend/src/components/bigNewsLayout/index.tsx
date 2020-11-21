@@ -5,20 +5,16 @@ import Loader from '../loader';
 
 export interface BigNewsLayoutProps {
     tag: string
-    username?: string
     bigNews?: BigNewsCardProps[]
-    loadBigNews: (params: {
-        tag: string
-        username?: string
-    }) => void
+    loadBigNews: (tag?: string) => void
 }
 
 const BigNewsLayout: React.FC<BigNewsLayoutProps> =
-    ({tag, bigNews, loadBigNews, username}) => {
-        if (!bigNews) loadBigNews({tag, username});
+    ({tag, bigNews, loadBigNews}) => {
+        if (!bigNews) loadBigNews(tag);
 
-        useEffect(() => loadBigNews({tag, username}),
-            [tag, loadBigNews, username]);
+        useEffect(() => loadBigNews(tag),
+            [tag, loadBigNews]);
 
         return (
             <div className={styles.mainNewsContainer}>

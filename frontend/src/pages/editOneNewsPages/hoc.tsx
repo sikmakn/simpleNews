@@ -5,18 +5,21 @@ import {Redirect} from 'react-router-dom';
 import {noMatchPagePath, oneNewsPagePath} from '../../paths';
 import {connect} from 'react-redux';
 import Loader from '../../components/loader';
+import fetchProcess from "../../types/fetching";
 
 interface EditOneNewsPageHOCProps {
     username?: string
     id: string
     loadOneNews: (id: string) => void
+    status?: fetchProcess
+    error?: string
     oneNews?: {
         id: string
         imgSrc: string
         tag: string
         title: string
         text: string
-        authorUsername: string
+        authorId: string
     }
     save: (oneNews: {
         id: string
@@ -30,7 +33,16 @@ interface EditOneNewsPageHOCProps {
 }
 
 const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
-    ({username, id, oneNews, loadOneNews, save, history}) => {
+    ({
+         username,
+         id,
+         oneNews,
+         loadOneNews,
+         save,
+         history,
+         status,
+         error,
+     }) => {
         useEffect(() => loadOneNews(id), [id, loadOneNews]);
 
         if (!username)
@@ -39,11 +51,13 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
         if (!oneNews)
             return (<Loader size={300}/>);
 
-        if (oneNews.authorUsername !== username)
+        if (oneNews.authorId !== username)
             return <Redirect to={noMatchPagePath()}/>;
 
         return (<EditOneNewsPage
             oneNews={oneNews}
+            status={status}
+            error={error}
             save={
                 (n: {
                     img: File
@@ -54,7 +68,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
                     save({
                         ...n,
                         id: oneNews.id,
-                        authorUsername: oneNews.authorUsername
+                        authorUsername: oneNews?.authorId
                     });
                     history.push(oneNewsPagePath(oneNews.id))
                 }
@@ -68,7 +82,9 @@ const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
         id: ownProps.match?.params?.id,
         username: user.value?.username,
         oneNews: oneNews.value,
-        history: ownProps.history
+        history: ownProps.history,
+        status: oneNews.updatingStatus,
+        error: oneNews.updatingError,
     });
 
 const mapDispatchToProps = {loadOneNews, save: updateOneNews};

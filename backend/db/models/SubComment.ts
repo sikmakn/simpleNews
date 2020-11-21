@@ -6,8 +6,8 @@ import Comment from './Comment';
 interface SubCommentAttr {
     id: string;
     text: string;
-    userId: string;
-    user: User;
+    authorId: string;
+    author: User;
     oneNewsId: string;
     oneNews?: OneNews;
     commentId: string;
@@ -34,10 +34,10 @@ class SubComment extends Model implements SubCommentAttr {
     text!: string;
 
     @ForeignKey(() => User)
-    userId!: string;
+    authorId!: string;
 
     @BelongsTo(() => User)
-    user!: User;
+    author!: User;
 
     @ForeignKey(() => OneNews)
     oneNewsId!: string;

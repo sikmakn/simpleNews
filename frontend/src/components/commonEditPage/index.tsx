@@ -44,7 +44,7 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                 fetch(defaultImg).then(e => e.blob())
                     .then(b => setImg(b as File));
         }, [defaultImg])
-
+        console.log(error)
         return (
             <>
                 <HeaderHOC/>

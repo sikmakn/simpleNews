@@ -9,7 +9,11 @@ const FullNewsHOC: React.FC<FullNewsHOCProps> = (props) =>
     <FullNews {...props}/>;
 
 const mapStateToProps = ({oneNews}: any): FullNewsProps =>
-    ({content: oneNews.value});
+    ({
+        content: oneNews.value,
+        status: oneNews.loadingStatus,
+        error: oneNews.loadingError,
+    });
 
 const mapDispatchToProps = {};
 

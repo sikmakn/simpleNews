@@ -1,4 +1,4 @@
-import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from 'sequelize-typescript';
+import {Column, DataType, HasMany, Model, PrimaryKey, Table} from 'sequelize-typescript';
 import OneNews from './OneNews';
 import Like from './Like';
 import Comment from './Comment';

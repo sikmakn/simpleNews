@@ -10,7 +10,7 @@ const VerticalStatisticHOC: React.FC<VerticalStatisticHOCProps> =
 
 const mapStateToProps = ({oneNews, user}: any) => ({
     id: oneNews.value?.id,
-    authorUsername: oneNews.value?.authorUsername,
+    authorUsername: oneNews.value?.authorId,
     username: user.value?.username,
 });
 
