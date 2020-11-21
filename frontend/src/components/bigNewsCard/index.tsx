@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import styles from './bigNewsCard.module.scss';
 import Tag from '../tag';
-import Date from '../date';
+import DateString from '../dateString';
 import {TagEnum} from '../../types/tag';
 import {oneNewsPagePath} from '../../paths';
 import BigNewsStatisticHOC from '../bigNewsStatitstic/hoc';
@@ -11,7 +11,7 @@ export interface BigNewsCardProps {
     id: string
     imgSrc: string
     tag: string
-    date: Date
+    date: string
     title: string
     description: string
 }
@@ -33,7 +33,7 @@ const BigNewsCard: React.FC<BigNewsCardProps> =
                 </Link>
                 <div className={styles.infoContainer}>
                     <Tag type={tag as TagEnum}/>
-                    <Date date={date}/>
+                    <DateString date={date}/>
                     <BigNewsStatisticHOC id={id}/>
                 </div>
                 <Link to={oneNewsPath} className={styles.newsLink}>

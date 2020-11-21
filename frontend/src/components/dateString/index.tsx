@@ -1,14 +1,14 @@
 import React from 'react';
-import styles from './date.module.scss';
+import styles from './dateString.module.scss';
 
 export interface DateProps {
-    date: Date
+    date: string
 }
 
-const Date: React.FC<DateProps> = ({date}) =>
+const DateString: React.FC<DateProps> = ({date}) =>
     (<span className={styles.date}>
         {
-            date.toLocaleString('ru', {
+            (new Date(date)).toLocaleString('ru', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -17,4 +17,4 @@ const Date: React.FC<DateProps> = ({date}) =>
             })}
     </span>)
 
-export default Date;
+export default DateString;

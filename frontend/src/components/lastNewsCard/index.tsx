@@ -5,7 +5,7 @@ import {oneNewsPagePath} from '../../paths';
 
 export interface LastNewsCardProps {
     id: string
-    date: Date
+    date: string
     title: string
 }
 
@@ -15,7 +15,7 @@ const LastNewsCard: React.FC<LastNewsCardProps> =
         return (
             <Link to={oneNewsPath} className={styles.newsDescription}>
                 <span>
-                    {date.toLocaleString('ru', {
+                    {new Date(date).toLocaleString('ru', {
                         hour: 'numeric',
                         minute: 'numeric'
                     })}
