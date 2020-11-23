@@ -30,9 +30,17 @@ export const cleanStatusOfHotNews = () =>
     (dispatch: any) => dispatch({type: CLEAN_STATUS_OF_HOT_NEWS});
 
 export const loadHotNews = () => (dispatch: any) => {
+    dispatch(setLoadingHotNewsStatus(fetchProcess.loading));
     GET(`${FIND_MANY_PATH}?sort=hot`)
         .then(res => res.json())
-        .then(news => dispatch(setHotNews(news)));
+        .then(news => {
+            dispatch(setLoadingHotNewsStatus(fetchProcess.success));
+            dispatch(setHotNews(news));
+        })
+        .catch(res => res.json().then(({error}: any) => {
+            dispatch(setLoadingHotNewsStatus(fetchProcess.error));
+            dispatch(setErrorOfHotNews(error));
+        }));
 };
 
 export const updateLikeInHotNews = (params: {
