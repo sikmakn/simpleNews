@@ -1,19 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import HotNewsCard, {HotNewsCardProps} from '../hotNewsCard';
 import NewsColumnLayout from '../newsColumnLayout';
 import Loader from '../loader';
+import fetchProcess from '../../types/fetching';
 
 export interface HotNewsLayoutProps {
     hotNews?: HotNewsCardProps[]
     loadHotNews: () => void
+    cleanStatus: () => void
+    status: fetchProcess
+    error: string
 }
 
 const HotNewsLayout: React.FC<HotNewsLayoutProps> =
-    ({hotNews, loadHotNews}) => {
-        if (!hotNews) loadHotNews();
+    ({
+         hotNews,
+         loadHotNews,
+         status,
+         error,
+         cleanStatus,
+     }) => {
+        useEffect(() => loadHotNews(), [loadHotNews])
+
+        useEffect(() => cleanStatus, [cleanStatus]);
+
         return (
             <NewsColumnLayout columnTitle={'Горячее'}>
-                {!hotNews && <Loader size={100}/>}
+                {error}
+                {status === fetchProcess.loading && <Loader size={100}/>}
                 {hotNews?.map(n => <HotNewsCard key={n.id} {...n}/>)}
             </NewsColumnLayout>
         );

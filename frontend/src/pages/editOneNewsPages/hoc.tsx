@@ -85,6 +85,10 @@ const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
         error: oneNews.updatingError,
     });
 
-const mapDispatchToProps = {loadOneNews, save: updateOneNews, cleanStatus: cleanOneNewsStatus};
+const mapDispatchToProps = {
+    loadOneNews,
+    save: updateOneNews,
+    cleanStatus: cleanOneNewsStatus,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditOneNewsPageHOC);

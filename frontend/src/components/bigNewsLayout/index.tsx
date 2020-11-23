@@ -2,23 +2,35 @@ import React, {useEffect} from 'react';
 import BigNewsCard, {BigNewsCardProps} from '../bigNewsCard';
 import styles from './bigNewsLayout.module.scss';
 import Loader from '../loader';
+import fetchProcess from '../../types/fetching';
 
 export interface BigNewsLayoutProps {
     tag: string
     bigNews?: BigNewsCardProps[]
     loadBigNews: (tag?: string) => void
+    status?: fetchProcess
+    error?: string
+    cleanStatus: () => void
 }
 
 const BigNewsLayout: React.FC<BigNewsLayoutProps> =
-    ({tag, bigNews, loadBigNews}) => {
-        if (!bigNews) loadBigNews(tag);
+    ({
+         tag,
+         bigNews,
+         loadBigNews,
+         status,
+         error,
+         cleanStatus,
+     }) => {
 
-        useEffect(() => loadBigNews(tag),
-            [tag, loadBigNews]);
+        useEffect(() => loadBigNews(tag), [tag, loadBigNews]);
+
+        useEffect(() => cleanStatus, [cleanStatus]);
 
         return (
             <div className={styles.mainNewsContainer}>
-                {!bigNews && <Loader size={200}/>}
+                {error}
+                {status === fetchProcess.loading && <Loader size={200}/>}
                 {bigNews?.map(n => <BigNewsCard key={n.id} {...n}/>)}
             </div>
         );

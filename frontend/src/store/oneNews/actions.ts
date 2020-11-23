@@ -13,8 +13,6 @@ export const SET_LOADING_ONE_NEWS_STATUS = 'SET_LOADING_ONE_NEWS_STATUS';
 export const SET_ERROR_LOADING_OF_ONE_NEWS = 'SET_ERROR_LOADING_OF_ONE_NEWS';
 export const CLEAN_ONE_NEWS_STATUS = 'CLEAN_ONE_NEWS_STATUS';
 
-export const cleanOneNewsStatus = ()=>({type:CLEAN_ONE_NEWS_STATUS});
-
 export const setCreatingErrorOfOneNews = (error: string) =>
     ({type: SET_CREATING_ERROR_OF_ONE_NEWS, payload: error});
 
@@ -57,7 +55,11 @@ export const setOneNews = (oneNews: {
 export const likeOneNews = (params: {
     value: boolean
 }) => ({type: LIKE_ONE_NEWS, payload: params});
+
 //async
+
+export const cleanOneNewsStatus = () =>
+    (dispatch: any) => dispatch({type: CLEAN_ONE_NEWS_STATUS});
 
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {
@@ -131,6 +133,5 @@ export const updateLikeInOneNews = (params: {
     id: string
     username: string
     value: boolean
-}) => (dispatch: any) => {
+}) => (dispatch: any) =>
     dispatch(likeOneNews({...params}));
-}

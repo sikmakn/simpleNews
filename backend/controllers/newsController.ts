@@ -7,7 +7,7 @@ import getUsernameFromResponse from '../helpers/getUsernameFromResponse';
 import {Tag} from '../types';
 import mapOneNewsToOut from '../helpers/mapOneNewsToOut';
 
-const upload = multer({storage: multer.memoryStorage()})
+const upload = multer({storage: multer.memoryStorage()});
 
 const router = Router();
 
@@ -16,7 +16,8 @@ router.post('/create',
     authValidateMiddleware,
     async (req, res) => {
         const authorId = getUsernameFromResponse(res);
-        const {id, title, text, imgSrc, date, tag} = await newsService.create({...req.body, authorId});
+        const {id, title, text, imgSrc, date, tag} =
+            await newsService.create({...req.body, authorId});
         res.json({id, title, text, imgSrc, authorId, date, tag});
     });
 
@@ -32,7 +33,7 @@ router.put('/update/:id',
         await newsService.update({...req.body, img: req.file});
         const oneNews = await newsService.findOne({id, userId: username});
         res.json(mapOneNewsToOut(oneNews));
-    })
+    });
 
 router.get('/manyBasic',
     authTokensUpdateMiddleware,
