@@ -1,30 +1,24 @@
 import React from 'react';
 import styles from './oneNewsCommentsContainer.module.scss';
-import makeFriendlyNumber from '../../helpers/makeFriendlyNumber';
 import AddCommentContainerHOC from '../addCommentContainer/hoc';
 import CommentsContainerHOC from '../commentsContainer/hoc';
-import Loader from '../loader';
+import CommentsCountHOC from '../commentsCount/hoc';
 
 export interface OneNewsCommentsContainerProps {
     commentCount?: number
     loadCountOfComments: () => void
+    oneNewsId: string
 }
 
 const OneNewsCommentsContainer: React.FC<OneNewsCommentsContainerProps> =
-    ({commentCount, loadCountOfComments}) => {
-        if (commentCount === undefined) loadCountOfComments();
-        return (
+    ({oneNewsId}) =>
+        (
             <div className={styles.commentsContainer}>
-                <div className={styles.name}>
-                    Комментарии: {
-                    commentCount === undefined ? <Loader size={20}/> :
-                        <span>{makeFriendlyNumber(commentCount)}</span>
-                }
-                </div>
+                <CommentsCountHOC/>
                 <AddCommentContainerHOC/>
-                <CommentsContainerHOC/>
+                <CommentsContainerHOC oneNewsId={oneNewsId}/>
             </div>
         );
-    }
+
 
 export default OneNewsCommentsContainer;

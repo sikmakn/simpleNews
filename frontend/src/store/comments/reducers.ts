@@ -1,82 +1,65 @@
 import {
     ADD_COMMENT,
-    ADD_SUB_COMMENT,
+    ADD_SUB_COMMENT, CLEAN_STATUS_OF_COMMENT,
     EDIT_COMMENT,
-    EDIT_SUB_COMMENT,
+    EDIT_SUB_COMMENT, LOADING_COMMENTS_ERROR, LOADING_COMMENTS_STATUS,
     SET_COMMENTS,
-    SET_COUNT_OF_COMMENTS
 } from './actions';
 
 interface CommentsState {
-    count: {
-        value?: number
-    },
-    comments: {
-        value?: any[]
-    }
+    value?: any[]
 }
 
-
-const defaultState: CommentsState = {
-    count: {},
-    comments: {}
-};
+const defaultState: CommentsState = {};
 
 const commentsReducers = (state = defaultState, {type, payload}: any) => {
     switch (type) {
-        case SET_COUNT_OF_COMMENTS:
-            return {
-                ...state,
-                count: {value: payload},
-            };
-        case ADD_COMMENT:
-            return {
-                ...state,
-                count: state.count.value ? {
-                    ...state.count,
-                    value: state.count.value + 1
-                } : state.count,
-                comments: {
-                    value: [payload, ...state.comments.value!]
-                }
-            };
-        case ADD_SUB_COMMENT:
-            const commentsCopyForAdd = [...state.comments.value!];
-            commentsCopyForAdd.find(c => c.id === payload.commentId)
-                .subComments.push(payload);
-            return {
-                ...state,
-                count: state.count.value ? {
-                    ...state.count,
-                    value: state.count.value + 1
-                } : state.count,
-                comments: {
-                    value: commentsCopyForAdd,
-                }
-            };
         case SET_COMMENTS:
             return {
                 ...state,
                 comments: {value: payload},
             };
+        case LOADING_COMMENTS_STATUS:
+            return {
+                ...state,
+                loadingStatus: payload
+            };
+        case LOADING_COMMENTS_ERROR:
+            return {
+                ...state,
+                loadingError: payload,
+            };
+        case CLEAN_STATUS_OF_COMMENT:
+            return {value: state.value};
+        case ADD_COMMENT:
+            return {
+                ...state,
+                value: [payload, ...state.value!]
+
+            };
+        case ADD_SUB_COMMENT:
+            const commentsCopyForAdd = [...state.value!];
+            commentsCopyForAdd.find(c => c.id === payload.commentId)
+                .subComments.push(payload);
+            return {
+                ...state,
+                value: commentsCopyForAdd,
+
+            };
         case EDIT_COMMENT:
             return {
                 ...state,
-                comments: {
-                    value: state.comments.value!.map(c => c.id === payload.id ?
-                        {...payload, subComments: c.subComments} : c)
-                }
+                value: state.value!.map(c => c.id === payload.id ?
+                    {...payload, subComments: c.subComments} : c)
             };
         case EDIT_SUB_COMMENT:
-            const commentsCopyForEdit = [...state.comments.value!];
+            const commentsCopyForEdit = [...state.value!];
             const commentCopy = commentsCopyForEdit.find(c => c.id === payload.commentId);
             commentCopy.subComments = commentCopy.subComments
                 .map((sc: any) => sc.id === payload.id ? payload : sc);
             return {
                 ...state,
-                comments: {
-                    value: commentsCopyForEdit,
-                }
+                value: commentsCopyForEdit,
             };
     }
     return state;

@@ -1,12 +1,21 @@
-export const SET_COUNT_OF_COMMENTS = 'SET_COUNT_OF_COMMENTS';
+import fetchProcess from '../../types/fetching';
+import {GET} from '../../server/actions';
+import {GET_MANY_PATH} from '../../server/paths/comment';
+
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
 export const EDIT_SUB_COMMENT = 'EDIT_SUB_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const LOADING_COMMENTS_STATUS = 'LOADING_COMMENTS_STATUS';
+export const LOADING_COMMENTS_ERROR = 'LOADING_COMMENTS_ERROR';
+export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
 
-export const setCountOfComments = (count: number) =>
-    ({type: SET_COUNT_OF_COMMENTS, payload: count});
+export const setLoadingCommentsStatus = (status: fetchProcess) =>
+    ({type: LOADING_COMMENTS_STATUS, payload: status});
+
+export const setLoadingCommentsError = (error: string) =>
+    ({type: LOADING_COMMENTS_ERROR, payload: error});
 
 export const addComment = (comment: {
     id: string
@@ -53,8 +62,8 @@ export const editComment = (comment: {
 
 //async
 
-export const loadCountOfComments = () => (dispatch: any) =>
-    setTimeout(() => dispatch(setCountOfComments(11500)), 1000);
+export const cleanStatusOfComments = () =>
+    (dispatch:any) => dispatch({type:CLEAN_STATUS_OF_COMMENT});
 
 export const createComment = (comment: {
     text: string
@@ -62,7 +71,7 @@ export const createComment = (comment: {
     oneNewsId: string
 }) => (dispatch: any) =>
     dispatch(addComment({
-        id: String(Math.random()*10),
+        id: String(Math.random() * 10),
         text: comment.text,
         oneNewsId: comment.oneNewsId,
         author: {
@@ -72,38 +81,19 @@ export const createComment = (comment: {
         subComments: []
     }));
 
-export const loadComments = (oneNewsId: string) => (dispatch: any) =>
-    dispatch(setComments([
-        {
-            id: '1',
-            text: 'На Максима подписан уже месяца три, все пересмотрел - ' +
-                'много в чем не согласен с ним но и много в чем разделяю его мнение.\n' +
-                'Спасибо за работу.\n' +
-                'Ваш канал лично меня заставляет задуматся и в тех моментах с которыми ' +
-                'не согласен заставляет самому попитатся докопатся до истины. \n' +
-                'А это саморазвитие уже. Лайк за постоянство !!! Лайк за оперативность !!!',
-            author: {
-                username: 'username',
-                imgSrc: process.env.PUBLIC_URL + '/user_logo.svg',
-                fullName: 'Андрей Свиридов',
-            },
-            subComments: [{
-                id: '1',
-                text: 'На Максима подписан уже месяца три, все пересмотрел - ' +
-                    'много в чем не согласен с ним но и много в чем разделяю его мнение.\n' +
-                    'Спасибо за работу.',
-                author: {
-                    username: '2',
-                    imgSrc: process.env.PUBLIC_URL + '/user_logo.svg',
-                    fullName: 'Максим Давыдов'
-                },
-                answerTo: {
-                    username: '1',
-                    fullName: 'Андрей Свиридов'
-                }
-            }]
-        }
-    ]));
+export const loadComments = (oneNewsId: string) => (dispatch: any) => {
+    dispatch(setLoadingCommentsStatus(fetchProcess.loading));
+    GET(GET_MANY_PATH + oneNewsId)
+        .then(res => res.json())
+        .then(comments => {
+            dispatch(setLoadingCommentsStatus(fetchProcess.success));
+            dispatch(setComments(comments));
+        })
+        .catch(res=> res.json().then(({error}:any)=>{
+            dispatch(setLoadingCommentsStatus(fetchProcess.error));
+            dispatch(setLoadingCommentsError(error));
+        }));
+};
 
 export const createSubComment = (subComment: {
     authorUsername: string

@@ -1,18 +1,3 @@
-@import '../../commonCss/colors';
-
 .commentsContainer {
   margin-top: 45px;
-
-  .name {
-    color: $midgrey;
-    font-size: 16px;
-    padding-bottom: 16px;
-    margin-bottom: 46px;
-    border-bottom: 1px solid $verylightgrey;
-    display: flex;
-
-    > span {
-      color: $dark_text_color;
-    }
-  }
 }

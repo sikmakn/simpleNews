@@ -1,7 +1,7 @@
 import React from 'react';
 import CommentsContainer, {CommentsContainerProps} from './index';
 import {connect} from 'react-redux';
-import {loadComments} from '../../store/comments/actions';
+import {cleanStatusOfComments, loadComments} from '../../store/comments/actions';
 
 interface CommentsContainerHOCProps extends CommentsContainerProps {
 }
@@ -9,12 +9,14 @@ interface CommentsContainerHOCProps extends CommentsContainerProps {
 const CommentsContainerHOC: React.FC<CommentsContainerHOCProps> = (props) =>
     <CommentsContainer {...props}/>;
 
-const mapStateToProps = ({comments, oneNews}: any) =>
+const mapStateToProps = ({comments, oneNews}: any, {oneNewsId}:any) =>
     ({
-        comments: comments.comments.value,
-        oneNewsId: oneNews.value?.id
+        comments: comments.value,
+        status: comments.loadingStatus,
+        error: comments.loadingError,
+        oneNewsId,
     });
 
-const mapDispatchToProps = {loadComments};
+const mapDispatchToProps = {loadComments, cleanStatus: cleanStatusOfComments};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentsContainerHOC);
