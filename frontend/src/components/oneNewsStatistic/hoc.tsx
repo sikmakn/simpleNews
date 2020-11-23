@@ -16,6 +16,6 @@ const mapStateToProps = ({user, oneNews}: any, {id}: any) =>
         fullStatistic: {...oneNews.value},
     });
 
-const mapDispatchToProps = {updateLike:updateLikeInOneNews};
+const mapDispatchToProps = {updateLike: updateLikeInOneNews};
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneNewsStatisticHOC);

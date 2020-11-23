@@ -8,6 +8,7 @@ import {
     SET_ONE_NEWS,
     SET_UPDATE_ERROR_OF_ONE_NEWS
 } from './actions';
+import {updateLikeInOneNews} from "../../helpers/updateLikesInNewsCards";
 
 const defaultState: { value?: any } = {};
 
@@ -46,13 +47,8 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
             }
         case LIKE_ONE_NEWS:
             return {
-                value: {
-                    ...state.value,
-                    userStatistic: {
-                        ...state.value.userStatistic,
-                        isLiked: action.payload.value
-                    }
-                }
+                ...state,
+                value: updateLikeInOneNews({value: action.payload, oneNews: {...state.value}})
             };
     }
     return state;
