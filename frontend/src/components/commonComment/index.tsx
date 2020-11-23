@@ -13,7 +13,7 @@ export interface CommonCommentProps {
         }
         author: {
             username: string
-            img: string
+            img?: string
             fullName: string
         }
     }

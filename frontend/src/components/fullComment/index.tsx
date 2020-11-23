@@ -10,7 +10,7 @@ interface CommentCommonType {
     text: string
     author: {
         username: string
-        img: string
+        imgSrc: string
         fullName: string
     }
 }

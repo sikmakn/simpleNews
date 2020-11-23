@@ -13,7 +13,7 @@ export interface SubCommentProps {
         }
         author: {
             username: string
-            img: string
+            imgSrc: string
             fullName: string
         }
     }

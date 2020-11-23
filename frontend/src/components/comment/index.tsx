@@ -12,7 +12,7 @@ export interface CommentProps {
         }
         author: {
             username: string
-            img: string
+            imgSrc?: string
             fullName: string
         }
     }

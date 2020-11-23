@@ -11,7 +11,7 @@ export function findMany(oneNewsId: string) {
         raw: true,
         include:[{
             model:userRepository,
-            attributes: ['username', 'firstName', 'lastName'],
+            attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
         }],
     });
 }
@@ -35,7 +35,7 @@ export function findById(id: string) {
     return commentRepository.findByPk(id, {
         include:[{
             model:userRepository,
-            attributes: ['username', 'firstName', 'lastName'],
+            attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
         }]
     });
 }
