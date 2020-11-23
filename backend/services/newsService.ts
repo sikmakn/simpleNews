@@ -83,16 +83,15 @@ export async function findMany(
     });
 }
 
-export async function findOne(
+export function findOne(
     {id, userId}: {
         id: string
         userId?: string
     }) {
-    const news = await newsRepository.findOne({
+    return newsRepository.findOne({
         where: {id},
         ...findAttributes(userId)
     });
-    return news.dataValues;
 }
 
 function findAttributes(userId?: string) {
@@ -104,6 +103,7 @@ function findAttributes(userId?: string) {
             [Sequelize.fn('count', Sequelize.literal(`subComments.id and subComments.authorId=\'${userId}\'`)), 'userSubCommentsCount'],
         );
     return {
+        raw:true,
         attributes: [
             'id', 'title', 'text', 'date', 'imgSrc', 'tag', 'authorId',
             [Sequelize.fn('count', Sequelize.col('likes.oneNewsId')), 'likesCount'],

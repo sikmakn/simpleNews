@@ -27,9 +27,12 @@ router.put('/update/:id',
     async (req, res) => {
         const username = getUsernameFromResponse(res);
         const {id} = req.params;
-        const {authorId} = await newsService.findBasicById(id);
-        if (username !== authorId)
+        const result = await newsService.findBasicById(id);
+        if (!result)
+            return res.status(404).json({error: 'OneNews not found'});
+        if (username !== result.authorId)
             return res.status(403).json({error: 'you are not the author'});
+
         await newsService.update({...req.body, img: req.file});
         const oneNews = await newsService.findOne({id, userId: username});
         res.json(mapOneNewsToOut(oneNews));
@@ -62,7 +65,7 @@ router.get('/many',
             findParams.tag = req.query.tag as Tag;
         const news = await newsService.findMany(findParams);
         res.json(news.map((n: any) => {
-            const {text, ...mappedNews} = mapOneNewsToOut(n.dataValues);
+            const {text, ...mappedNews} = mapOneNewsToOut(n);
             return {...mappedNews, description: text.substr(0, 100)};
         }));
     });

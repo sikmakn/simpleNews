@@ -32,8 +32,8 @@ async function start() {
 
     app.use((err: ResponseError, req: Request, res: Response, next: NextFunction) => {
         if (err.name == 'ValidationError' || err.name === 'TypeError')
-            return res.status(400).send({error: err.message});
-        res.status(err.status || 500).send({error: err.message});
+            return res.status(400).json({error: err.message});
+        res.status(err.status || 500).json({error: err.message});
     });
 
     app.listen(process.env.PORT);

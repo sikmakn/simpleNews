@@ -63,8 +63,7 @@ export async function update(
             ...name,
         };
     }
-    return userRepository.update(newUser,
-        {where: {username}});
+    return userRepository.update(newUser, {where: {username}});
 }
 
 async function createPassword(password: string) {

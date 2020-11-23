@@ -10,6 +10,7 @@ export const SET_PROCESS_LOGIN_USER_STATUS = 'SET_PROCESS_LOGIN_USER_STATUS';
 export const SET_PROCESS_LOGIN_USER_ERRORS = 'SET_PROCESS_LOGIN_USER_ERRORS';
 export const SET_PROCESS_UPDATE_USER_STATUS = 'SET_PROCESS_UPDATE_USER_STATUS';
 export const SET_PROCESS_UPDATE_USER_ERROR = 'SET_PROCESS_UPDATE_USER_ERROR';
+export const CLEAR_STATUS_OF_USER = 'CLEAR_STATUS_OF_USER';
 
 export const setUser = (user: {
     username: string,
@@ -38,7 +39,9 @@ export const setProcessUpdateUserStatus = (status: fetchProcess) =>
 export const setProcessUpdateUserErrors = (error: string) =>
     ({type: SET_PROCESS_UPDATE_USER_ERROR, payload: error});
 
-//async actions
+//async
+export const clearStatusOfUser = () => (dispatch: any) =>
+    dispatch({type: CLEAR_STATUS_OF_USER});
 
 export const registerNewUser = (user: {
     username: string,

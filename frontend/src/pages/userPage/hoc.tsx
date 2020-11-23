@@ -3,7 +3,7 @@ import UserPage, {UserPageProps} from './index';
 import {mainPagePath} from '../../paths';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {updateUserData} from '../../store/user/actions';
+import {clearStatusOfUser, updateUserData} from '../../store/user/actions';
 
 interface UserPageHOCProps extends UserPageProps{
 }
@@ -13,10 +13,10 @@ const UserPageHOC: React.FC<UserPageHOCProps> = (props) =>
 
 const mapStateToProps = ({user}: any) => ({
     user: user.value,
-    creatingStatus: user.updateProcessStatus,
+    status: user.updateProcessStatus,
     error: user.updateError
 });
 
-const mapDispatchToProps = {updateUserData};
+const mapDispatchToProps = {updateUserData, clearStatus: clearStatusOfUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPageHOC);

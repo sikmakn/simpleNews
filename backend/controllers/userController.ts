@@ -39,10 +39,10 @@ router.post('/login', async (req, res) => {
 
     const user = await userService.find(username);
     res.json({
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        imgSrc: user.imgSrc,
+        username: user?.username,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        imgSrc: user?.imgSrc,
     });
 });
 
@@ -53,14 +53,16 @@ router.put('/update',
         const accessToken = getAccessTokenFromResponse(res);
         if (authService.decode(accessToken!)!.payload.username !== req.body.username)
             return res.status(403).json({error: 'forbidden'});
+        if (!await userService.find(req.body.username))
+            return res.status(404).json({error: 'user not found'});
 
         await userService.update({...req.body, img: req.file});
         const updatedUser = await userService.find(req.body.username);
         res.json({
-            username: updatedUser.username,
-            firstName: updatedUser.firstName,
-            lastName: updatedUser.lastName,
-            imgSrc: updatedUser.imgSrc,
+            username: updatedUser?.username,
+            firstName: updatedUser?.firstName,
+            lastName: updatedUser?.lastName,
+            imgSrc: updatedUser?.imgSrc,
         });
     });
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './userPage.module.scss';
 import UserFormButton from '../../components/userFormButton';
 import UserInput from '../../components/userInput';
@@ -13,8 +13,8 @@ import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
 import {checkManyValue} from '../../helpers/valueObj';
 import imgToString from '../../helpers/imgToString';
-import fetchProcess from "../../types/fetching";
-import Loader from "../../components/loader";
+import fetchProcess from '../../types/fetching';
+import Loader from '../../components/loader';
 
 export interface UserPageProps {
     user: {
@@ -35,6 +35,8 @@ export interface UserPageProps {
 
     status?: fetchProcess
     error?: string
+
+    clearStatus: () => void
 }
 
 const UserPage: React.FC<UserPageProps> =
@@ -42,7 +44,8 @@ const UserPage: React.FC<UserPageProps> =
          user: {username, firstName, lastName, imgSrc},
          updateUserData,
          status,
-         error
+         error,
+         clearStatus,
      }) => {
         const [selectedImg, setSelectedImg] = useState<File>();
 
@@ -51,12 +54,16 @@ const UserPage: React.FC<UserPageProps> =
         const [passwordValueObj, setPasswordValueObj] = useState<ValueObj>();
         const [newPasswordValueObj, setNewPasswordValueObj] = useState<ValueObj>();
         const [usernameValue] = useState(username);
+
+        useEffect(() => clearStatus, [clearStatus]);
+
         return (
             <>
                 <HeaderHOC/>
                 <main className={styles.main}>
                     <div className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
+                        {status === fetchProcess.success && 'Пользователь успешно изменен!'}
                         {status === fetchProcess.loading && <Loader size={40}/>}
                         <AddUserImage
                             setImg={setSelectedImg}

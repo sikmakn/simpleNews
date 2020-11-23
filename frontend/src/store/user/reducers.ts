@@ -1,4 +1,5 @@
 import {
+    CLEAR_STATUS_OF_USER,
     CLEAR_USER,
     SET_PROCESS_LOGIN_USER_ERRORS,
     SET_PROCESS_LOGIN_USER_STATUS,
@@ -65,6 +66,8 @@ const userReducer = (state = defaultState, action: { type: string, payload: any 
                 statusName: 'updateProcessStatus',
                 errorsName: 'updateError',
             });
+        case CLEAR_STATUS_OF_USER:
+            return {value: state.value};
         case CLEAR_USER:
             window.localStorage.removeItem('user');
             return {};
@@ -74,7 +77,12 @@ const userReducer = (state = defaultState, action: { type: string, payload: any 
 
 export default userReducer;
 
-function setStatus({state, payload, errorsName, statusName}: { state: any, payload: any, statusName: string, errorsName: string }) {
+function setStatus({state, payload, errorsName, statusName}: {
+    state: any
+    payload: any
+    statusName: string
+    errorsName: string
+}) {
     const stateWithoutErrors: any = {};
     for (let [key, value] of Object.entries(state))
         if (key !== errorsName) stateWithoutErrors[key] = value;
