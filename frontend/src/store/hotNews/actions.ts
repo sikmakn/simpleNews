@@ -1,6 +1,7 @@
 import {FIND_MANY_PATH} from '../../server/paths/news';
-import {GET} from '../../server/actions';
+import {GET, PUT} from '../../server/actions';
 import fetchProcess from '../../types/fetching';
+import {LIKE_UPDATE_PATH} from '../../server/paths/like';
 
 export const SET_HOT_NEWS = 'SET_HOT_NEWS';
 export const LIKE_HOT_NEWS = 'LIKE_HOT_NEWS';
@@ -43,8 +44,8 @@ export const loadHotNews = () => (dispatch: any) => {
         }));
 };
 
-export const updateLikeInHotNews = (params: {
-    id: string
-    username: string
-    value: boolean
-}) => (dispatch: any) => dispatch(likeHotNews({...params}));
+export const updateLikeInHotNews = (id: string) => (dispatch: any) => {
+    PUT(LIKE_UPDATE_PATH+id,{})
+        .then(res=>res.json())
+        .then(({value}: any) => dispatch(likeHotNews({value, id})));
+};

@@ -17,11 +17,7 @@ export interface StatisticProps {
             isCommented?: boolean
         }
     }
-    updateLike: (params: {
-        id: string
-        username: string
-        value: boolean
-    }) => void
+    updateLike: (id: string) => void
     username?: string
 }
 
@@ -34,11 +30,7 @@ const Statistic: React.FC<StatisticProps> =
      }) => (<>
         <div onClick={() => {
             if (username && userStatistic)
-                updateLike({
-                    username,
-                    id,
-                    value: !userStatistic.isLiked
-                });
+                updateLike(id);
         }}>
             <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
             {makeFriendlyNumber(statistic.likesCount)}
