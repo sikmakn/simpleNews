@@ -8,10 +8,9 @@ interface OneNewsCommentsContainerHOCProps extends OneNewsCommentsContainerProps
 const OneNewsCommentsContainerHOC: React.FC<OneNewsCommentsContainerHOCProps> = (props) =>
     <OneNewsCommentsContainer {...props}/>;
 
-const mapStateToProps = ({comments, user, oneNews}: any, {oneNewsId}: any) =>
+const mapStateToProps = ({user}: any) =>
     ({
-        isSignedIn: !!user.value,
-        oneNewsId,
+        isSignedIn: !!user.value
     });
 
 const mapDispatchToProps = {};

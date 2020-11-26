@@ -31,7 +31,7 @@ export const loadBigNews = (tag?: string) => (dispatch: any) => {
     let path = FIND_MANY_PATH;
     if (tag) path += `?tag=${tag}`;
     dispatch(loadingBigNewsStatus(fetchProcess.loading));
-    GET(path)
+    GET(path, dispatch)
         .then(res => res.json())
         .then(news => {
             dispatch(loadingBigNewsStatus(fetchProcess.success));
@@ -45,7 +45,7 @@ export const loadBigNews = (tag?: string) => (dispatch: any) => {
 
 export const updateLikeInBigNews = (id: string) =>
     (dispatch: any) => {
-        PUT(LIKE_UPDATE_PATH + id, {})
+        PUT(LIKE_UPDATE_PATH + id, {}, dispatch)
             .then(res => res.json())
             .then(({value}: any) => dispatch(likeBigNews({value, id})));
     }

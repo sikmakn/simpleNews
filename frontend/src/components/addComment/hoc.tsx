@@ -9,10 +9,12 @@ interface AddCommentsHOCProps extends AddCommentsProps {
 const AddCommentHOC: React.FC<AddCommentsHOCProps> = (props) =>
     <AddComment {...props}/>;
 
-const mapStateToProps = ({user, oneNews}: any) =>
+const mapStateToProps = ({user, oneNews, comments}: any,) =>
     ({
         user: user.value,
-        oneNewsId: oneNews?.value?.id
+        oneNewsId: oneNews.id,
+        status: comments.creatingStatus,
+        error: comments.creatingError,
     });
 
 const mapDispatchToProps = {createComment};

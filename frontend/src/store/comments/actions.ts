@@ -1,6 +1,6 @@
 import fetchProcess from '../../types/fetching';
-import {GET} from '../../server/actions';
-import {GET_MANY_PATH} from '../../server/paths/comment';
+import {GET, POST} from '../../server/actions';
+import {CREATE_PATH, GET_MANY_PATH} from '../../server/paths/comment';
 
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
@@ -10,6 +10,26 @@ export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const LOADING_COMMENTS_STATUS = 'LOADING_COMMENTS_STATUS';
 export const LOADING_COMMENTS_ERROR = 'LOADING_COMMENTS_ERROR';
 export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
+export const SET_CREATING_COMMENT_STATUS = 'SET_CREATING_COMMENT_STATUS';
+export const SET_CREATING_ERROR_OF_COMMENT = 'SET_CREATING_ERROR_OF_COMMENT';
+export const SET_SUBCOMMENTS = 'SET_SUBCOMMENTS';
+export const SET_LOADING_SUBCOMMENT_STATUS = 'SET_LOADING_SUBCOMMENT_STATUS';
+export const SET_LOADING_SUBCOMMENT_ERROR = 'SET_LOADING_SUBCOMMENT_ERROR';
+
+export const setLoadingSubCommentStatus = (params: { commentId: string, status: fetchProcess }) =>
+    ({type: SET_LOADING_SUBCOMMENT_STATUS, payload: params});
+
+export const setLoadingSubCommentError = (params: { commentId: string, error: string }) =>
+    ({type: SET_LOADING_SUBCOMMENT_ERROR, payload: params});
+
+export const setSubComments = (params: { commentId: string, subComments: any[] }) =>
+    ({type: SET_SUBCOMMENTS, payload: params});
+
+export const setCreatingCommentStatus = (status: fetchProcess) =>
+    ({type: SET_CREATING_COMMENT_STATUS, payload: status});
+
+export const setCreatingErrorOfComment = (error: string) =>
+    ({type: SET_CREATING_ERROR_OF_COMMENT, payload: error});
 
 export const setLoadingCommentsStatus = (status: fetchProcess) =>
     ({type: LOADING_COMMENTS_STATUS, payload: status});
@@ -63,33 +83,35 @@ export const editComment = (comment: {
 //async
 
 export const cleanStatusOfComments = () =>
-    (dispatch:any) => dispatch({type:CLEAN_STATUS_OF_COMMENT});
+    (dispatch: any) => dispatch({type: CLEAN_STATUS_OF_COMMENT});
 
 export const createComment = (comment: {
     text: string
     authorUsername: string
     oneNewsId: string
-}) => (dispatch: any) =>
-    dispatch(addComment({
-        id: String(Math.random() * 10),
-        text: comment.text,
-        oneNewsId: comment.oneNewsId,
-        author: {
-            username: comment.authorUsername,
-            fullName: 'full name',
-        },
-        subComments: []
-    }));
+}) => (dispatch: any) => {
+    dispatch(setCreatingCommentStatus(fetchProcess.loading));
+    POST(CREATE_PATH + comment.oneNewsId, comment, dispatch)
+        .then(res => res.json())
+        .then(newComment => {
+            dispatch(setCreatingCommentStatus(fetchProcess.success));
+            dispatch(addComment({...newComment, subComments: []}));
+        })
+        .catch(res => res.json().then(({error}: any) => {
+            dispatch(setCreatingCommentStatus(fetchProcess.error));
+            dispatch(setCreatingErrorOfComment(error));
+        }));
+}
 
 export const loadComments = (oneNewsId: string) => (dispatch: any) => {
     dispatch(setLoadingCommentsStatus(fetchProcess.loading));
-    GET(GET_MANY_PATH + oneNewsId)
+    GET(GET_MANY_PATH + oneNewsId, dispatch)
         .then(res => res.json())
         .then(comments => {
             dispatch(setLoadingCommentsStatus(fetchProcess.success));
             dispatch(setComments(comments));
         })
-        .catch(res=> res.json().then(({error}:any)=>{
+        .catch(res => res.json().then(({error}: any) => {
             dispatch(setLoadingCommentsStatus(fetchProcess.error));
             dispatch(setLoadingCommentsError(error));
         }));
@@ -152,3 +174,7 @@ export const updateComment = (comment: {
         },
         oneNewsId: comment.oneNewsId
     }));
+
+export const loadSubComments = (id:string)=>(dispatch:any)=>{
+
+};

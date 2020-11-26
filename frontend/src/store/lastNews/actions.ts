@@ -22,7 +22,7 @@ export const setLastNews = (lastNews: any) => ({
 
 export const loadLastNews = () => (dispatch: any) => {
     dispatch(setLoadingLastNewsStatus(fetchProcess.loading));
-    GET(`${FIND_MANY_BASIC}?sort=last`)
+    GET(`${FIND_MANY_BASIC}?sort=last`, dispatch)
         .then(res => res.json())
         .then(news => {
             dispatch(setLoadingLastNewsStatus(fetchProcess.success));

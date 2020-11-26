@@ -9,12 +9,12 @@ interface CommentsContainerHOCProps extends CommentsContainerProps {
 const CommentsContainerHOC: React.FC<CommentsContainerHOCProps> = (props) =>
     <CommentsContainer {...props}/>;
 
-const mapStateToProps = ({comments, oneNews}: any, {oneNewsId}:any) =>
+const mapStateToProps = ({comments, oneNews}: any) =>
     ({
         comments: comments.value,
         status: comments.loadingStatus,
         error: comments.loadingError,
-        oneNewsId,
+        oneNewsId: oneNews.id,
     });
 
 const mapDispatchToProps = {loadComments, cleanStatus: cleanStatusOfComments};

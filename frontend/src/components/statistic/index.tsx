@@ -29,8 +29,7 @@ const Statistic: React.FC<StatisticProps> =
          fullStatistic: {userStatistic, statistic},
      }) => (<>
         <div onClick={() => {
-            if (username && userStatistic)
-                updateLike(id);
+            if (username && userStatistic) updateLike(id);
         }}>
             <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
             {makeFriendlyNumber(statistic.likesCount)}

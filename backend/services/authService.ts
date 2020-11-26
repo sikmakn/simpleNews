@@ -37,7 +37,7 @@ export async function updateTokens(
         refreshToken,
     };
     const {value: refreshValue} = await validToken({token: refreshToken, secret: JWT_REFRESH_SECRET!});
-    if (refreshToken) return {
+    if (refreshValue) return {
         refreshToken: jwt.sign({username: refreshValue.username},
             JWT_REFRESH_SECRET as string,
             {expiresIn: JWT_REFRESH_EXPIRES_HOURS}),

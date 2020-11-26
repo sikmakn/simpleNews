@@ -51,8 +51,7 @@ export const registerNewUser = (user: {
 }) =>
     (dispatch: any) => {
         dispatch(setProcessRegistrationStatus(fetchProcess.loading));
-
-        POST(REGISTER_PATH, user)
+        POST(REGISTER_PATH, user, dispatch)
             .then(() =>
                 dispatch(setProcessRegistrationStatus(fetchProcess.success)))
             .catch(res => res.json().then((res: any) => {
@@ -66,7 +65,7 @@ export const signInUser = ({username, password}: {
     password: string
 }) => (dispatch: any) => {
     dispatch(setProcessLoginStatus(fetchProcess.loading));
-    POST(LOGIN_PATH, {username, password})
+    POST(LOGIN_PATH, {username, password}, dispatch)
         .then(res => res.json())
         .then(({username, firstName, lastName, imgSrc}) => {
             dispatch(setProcessLoginStatus(fetchProcess.success));
@@ -84,7 +83,7 @@ export const signInUser = ({username, password}: {
 };
 
 export const logOutUser = () => (dispatch: any) => {
-    GET(LOGOUT_PATH).then(() => dispatch(clearUser()));
+    GET(LOGOUT_PATH, dispatch).then(() => dispatch(clearUser()));
 }
 
 export const updateUserData = (user: {
@@ -96,7 +95,7 @@ export const updateUserData = (user: {
     newPassword?: string
 }) => (dispatch: any) => {
     dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
-    PUT(UPDATE_PATH, user)
+    PUT(UPDATE_PATH, user, dispatch)
         .then(res => res.json())
         .then(updatedUser => {
             dispatch(setProcessUpdateUserStatus(fetchProcess.success));

@@ -9,11 +9,11 @@ interface OneNewsStatisticHOCProps extends StatisticProps {
 const OneNewsStatisticHOC: React.FC<OneNewsStatisticHOCProps> = (props) =>
     <Statistic {...props}/>;
 
-const mapStateToProps = ({user, oneNews}: any, {id}: any) =>
+const mapStateToProps = ({user, oneNews}: any) =>
     ({
-        id,
+        id: oneNews.id,
         username: user.value?.username,
-        fullStatistic: {...oneNews.value},
+        fullStatistic: {...(oneNews.value||{})},
     });
 
 const mapDispatchToProps = {updateLike: updateLikeInOneNews};

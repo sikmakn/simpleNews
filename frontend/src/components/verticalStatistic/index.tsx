@@ -5,21 +5,28 @@ import {Link} from 'react-router-dom';
 import {editOneNewsPagePath} from '../../paths';
 import Loader from '../loader';
 import OneNewsStatisticHOC from '../oneNewsStatistic/hoc';
+import fetchProcess from "../../types/fetching";
 
 export interface VerticalStatisticProps {
     id?: string
     authorUsername?: string
     username?: string
+    status?: fetchProcess
 }
 
 const VerticalStatistic: React.FC<VerticalStatisticProps> =
-    ({id, authorUsername, username}) => {
-        if (!id) return <Loader size={50}/>;
+    ({
+         id,
+         authorUsername,
+         username,
+         status
+     }) => {
+        if (!id ||status === fetchProcess.loading) return <Loader size={50}/>;
         return (
             <div className={styles.statisticsContainer}>
-                <OneNewsStatisticHOC id={id}/>
+                <OneNewsStatisticHOC/>
                 {
-                    id && authorUsername === username &&
+                    authorUsername === username &&
                     <Link to={editOneNewsPagePath(id)}>
                         <img src={editImg} className={styles.edit} alt=""/>
                     </Link>

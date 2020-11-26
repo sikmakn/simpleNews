@@ -6,17 +6,15 @@ import CommentsCountHOC from '../commentsCount/hoc';
 
 export interface OneNewsCommentsContainerProps {
     commentCount?: number
-    loadCountOfComments: () => void
-    oneNewsId: string
 }
 
 const OneNewsCommentsContainer: React.FC<OneNewsCommentsContainerProps> =
-    ({oneNewsId}) =>
+    () =>
         (
             <div className={styles.commentsContainer}>
                 <CommentsCountHOC/>
                 <AddCommentContainerHOC/>
-                <CommentsContainerHOC oneNewsId={oneNewsId}/>
+                <CommentsContainerHOC/>
             </div>
         );
 

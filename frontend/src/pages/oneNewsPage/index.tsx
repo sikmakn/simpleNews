@@ -10,10 +10,13 @@ import OneNewsCommentsContainerHOC from '../../components/oneNewsCommentsContain
 export interface OneNewsPageProps {
     id: string
     loadOneNews: (id: string) => void
+    setId: (id: string) => void
 }
 
 const OneNewsPage: React.FC<OneNewsPageProps> =
-    ({id, loadOneNews}) => {
+    ({id, loadOneNews, setId}) => {
+        useEffect(() => setId(id), [id, setId]);
+
         useEffect(() => loadOneNews(id),
             [id, loadOneNews]);
 

@@ -23,17 +23,19 @@ router.post('/:oneNewsId',
         const {oneNewsId} = req.params;
         const {text} = req.body;
 
-        if(!text)
+        if (!text)
             return res.status(404).json({error: 'text can not be empty'});
-        if(!await newsService.findBasicById(oneNewsId))
+        if (!await newsService.findBasicById(oneNewsId))
             return res.status(404).json({error: 'oneNews not found'});
 
-        const result = await commentService.create({authorId, text, oneNewsId});
+        const {id} = await commentService.create({authorId, text, oneNewsId});
+        const result = await commentService.findById(id);
         res.json({
-            id: result.id,
-            text: result.text,
-            authorId: result.authorId,
-            oneNewsId: result.oneNewsId,
+            id: result?.id,
+            text: result?.text,
+            authorId: result?.authorId,
+            oneNewsId: result?.oneNewsId,
+            author: result?.author,
         });
     });
 
@@ -44,12 +46,12 @@ router.put('/:id',
         const {id} = req.params;
         const {text} = req.body;
 
-        if(!text)
+        if (!text)
             return res.status(404).json({error: 'text can not be empty'});
         const oldComment = await commentService.findByIdBasic(id);
-        if(!oldComment)
+        if (!oldComment)
             return res.status(404).json({error: 'comment not found'});
-        if(oldComment.authorId !== authorId)
+        if (oldComment.authorId !== authorId)
             return res.status(403).json({error: 'you are not allowed to edit other\'s comment'});
 
         await commentService.update({id, text});
@@ -58,7 +60,8 @@ router.put('/:id',
             id: result?.id,
             text: result?.text,
             authorId: result?.authorId,
-            oneNewsId: result?.oneNewsId
+            oneNewsId: result?.oneNewsId,
+            author: result?.author,
         });
     });
 

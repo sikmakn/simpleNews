@@ -3,10 +3,10 @@ import EditSubCommentHOC from '../editSubComment/hoc';
 import CommonCommentHOC from '../commonComment/hoc';
 
 export interface SubCommentProps {
-    commentId: string
     subComment: {
         id: string
         text: string
+        commentId: string
         answerTo?: {
             username: string
             fullName: string
@@ -26,14 +26,13 @@ export interface SubCommentProps {
 const SubComment: React.FC<SubCommentProps> =
     ({
          makeAnswer,
-         subComment,
-         commentId
+         subComment
      }) => {
         const [isEdit, setIsEdit] = useState(false);
         return isEdit ?
             <EditSubCommentHOC
                 text={subComment.text}
-                commentId={commentId}
+                commentId={subComment.commentId}
                 subCommentId={subComment.id}
                 hide={() => setIsEdit(false)}
             /> :

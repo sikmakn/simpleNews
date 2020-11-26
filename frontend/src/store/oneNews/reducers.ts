@@ -3,19 +3,27 @@ import {
     LIKE_ONE_NEWS,
     SET_CREATING_ERROR_OF_ONE_NEWS,
     SET_CREATING_ONE_NEWS_STATUS,
-    SET_ERROR_LOADING_OF_ONE_NEWS,
+    SET_ERROR_LOADING_OF_ONE_NEWS, SET_ID_OF_ONE_NEWS,
     SET_LOADING_ONE_NEWS_STATUS,
     SET_ONE_NEWS,
     SET_UPDATE_ERROR_OF_ONE_NEWS
 } from './actions';
-import {updateLikeInOneNews} from "../../helpers/updateLikesInNewsCards";
+import {updateLikeInOneNews} from '../../helpers/updateLikesInNewsCards';
 
-const defaultState: { value?: any } = {};
+const defaultState: { id?: string, value?: any } = {};
 
 const oneNewsReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
+        case SET_ID_OF_ONE_NEWS:
+            return {
+                ...state,
+                id: action.payload
+            };
         case SET_ONE_NEWS:
-            return {value: action.payload};
+            return {
+                id: state.id,
+                value: action.payload,
+            };
         case SET_CREATING_ONE_NEWS_STATUS:
             return {
                 ...state,

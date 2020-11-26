@@ -3,21 +3,39 @@ import {
     ADD_SUB_COMMENT, CLEAN_STATUS_OF_COMMENT,
     EDIT_COMMENT,
     EDIT_SUB_COMMENT, LOADING_COMMENTS_ERROR, LOADING_COMMENTS_STATUS,
-    SET_COMMENTS,
+    SET_COMMENTS, SET_CREATING_COMMENT_STATUS, SET_CREATING_ERROR_OF_COMMENT,
 } from './actions';
+import fetchProcess from '../../types/fetching';
 
 interface CommentsState {
     value?: any[]
+    creatingStatus?: fetchProcess
+    creatingError?: string
+    loadingStatus?: fetchProcess
+    loadingError?: string
+    updatingStatus?: fetchProcess
+    updatingError?: string
 }
 
 const defaultState: CommentsState = {};
 
 const commentsReducers = (state = defaultState, {type, payload}: any) => {
     switch (type) {
+        case SET_CREATING_COMMENT_STATUS:
+            return {
+                ...state,
+                creatingStatus: payload,
+                creatingError: payload === fetchProcess.success ? undefined : state.creatingError,
+            };
+        case SET_CREATING_ERROR_OF_COMMENT:
+            return {
+                ...state,
+                creatingError: payload,
+            };
         case SET_COMMENTS:
             return {
                 ...state,
-                comments: {value: payload},
+                value: payload,
             };
         case LOADING_COMMENTS_STATUS:
             return {
@@ -35,7 +53,6 @@ const commentsReducers = (state = defaultState, {type, payload}: any) => {
             return {
                 ...state,
                 value: [payload, ...state.value!]
-
             };
         case ADD_SUB_COMMENT:
             const commentsCopyForAdd = [...state.value!];
@@ -44,7 +61,6 @@ const commentsReducers = (state = defaultState, {type, payload}: any) => {
             return {
                 ...state,
                 value: commentsCopyForAdd,
-
             };
         case EDIT_COMMENT:
             return {

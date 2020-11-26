@@ -8,9 +8,8 @@ const userRepository = connection.getRepository(User);
 export function findMany(oneNewsId: string) {
     return commentRepository.findAll({
         where: {oneNewsId},
-        raw: true,
-        include:[{
-            model:userRepository,
+        include: [{
+            model: userRepository,
             attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
         }],
     });
@@ -33,13 +32,13 @@ export function update(comment: {
 
 export function findById(id: string) {
     return commentRepository.findByPk(id, {
-        include:[{
-            model:userRepository,
+        include: [{
+            model: userRepository,
             attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
         }]
     });
 }
 
-export function findByIdBasic(id:string){
+export function findByIdBasic(id: string) {
     return commentRepository.findByPk(id);
 }

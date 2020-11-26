@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './addComment.module.scss';
 import ButtonContainer from '../buttonContainer';
 import defaultUserImage from '../../assets/no-image.png';
 import UserImage from '../userImage';
 import Loader from '../loader';
+import fetchProcess from "../../types/fetching";
 
 export interface AddCommentsProps {
-    oneNewsId?: string
+    oneNewsId: string
     user: {
         username: string
         imgSrc?: string
@@ -16,11 +17,23 @@ export interface AddCommentsProps {
         authorUsername: string
         oneNewsId: string
     }) => void
+
+    status?: fetchProcess
+    error?: string
 }
 
 const AddComment: React.FC<AddCommentsProps> =
-    ({user, oneNewsId, createComment}) => {
+    ({
+         user,
+         oneNewsId,
+         createComment,
+         error,
+         status
+     }) => {
         const [text, setText] = useState('');
+        useEffect(() => {
+            if (status === fetchProcess.success) setText('')
+        }, [status, setText]);
         return (<div className={styles.addContainer}>
             <UserImage src={user.imgSrc || defaultUserImage} size={70}/>
             <div>
@@ -29,19 +42,18 @@ const AddComment: React.FC<AddCommentsProps> =
                     value={text}
                     onChange={event => setText(event.target.value)}
                 />
-                {!oneNewsId ? <Loader size={50}/> :
-                    <ButtonContainer
-                        addButtonName="Оставить комментарий"
-                        onClickToCancel={() => setText('')}
-                        onClickToAdd={() => {
-                            createComment({
-                                text,
-                                oneNewsId,
-                                authorUsername: user.username
-                            });
-                            setText('');
-                        }}
-                    />}
+                {error}
+                {status === fetchProcess.loading && <Loader size={50}/>}
+                <ButtonContainer
+                    addButtonName="Оставить комментарий"
+                    onClickToCancel={() => setText('')}
+                    onClickToAdd={() =>
+                        createComment({
+                            text,
+                            oneNewsId,
+                            authorUsername: user.username
+                        })}
+                />
             </div>
         </div>);
     }
