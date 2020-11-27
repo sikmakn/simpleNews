@@ -13,7 +13,8 @@ export interface CommonEditCommentProps {
         lastName: string
     }
     answerTo?: {
-        fullName: string
+        firstName: string
+        lastName: string
         username: string
     }
     text?: string
@@ -60,7 +61,7 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
                         {
                             answerTo &&
                             <span className={styles.answerReference}>
-                                @{answerTo.fullName}&nbsp;
+                                @{`${answerTo.firstName} ${answerTo.lastName}`}&nbsp;
                             </span>
                         }
                         <textarea

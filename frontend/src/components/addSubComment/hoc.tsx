@@ -11,7 +11,8 @@ interface AddSubCommentHOCProps {
         lastName: string
     }
     answerTo?: {
-        fullName: string
+        firstName: string
+        lastName: string
         username: string
     }
     commentId: string

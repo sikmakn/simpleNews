@@ -11,7 +11,8 @@ interface EditSubCommentHOCProps {
         lastName: string
     }
     answerTo?: {
-        fullName: string
+        firstName: string
+        lastName: string
         username: string
     }
     subCommentId: string

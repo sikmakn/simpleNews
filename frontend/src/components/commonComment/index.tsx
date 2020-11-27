@@ -14,7 +14,7 @@ export interface CommonCommentProps {
         }
         author: {
             username: string
-            img?: string
+            imgSrc?: string
             firstName: string
             lastName: string
         }
@@ -35,14 +35,14 @@ const CommonComment: React.FC<CommonCommentProps> =
          edit,
          comment: {
              text,
-             author: {img, firstName, lastName, username},
+             author: {imgSrc, firstName, lastName, username},
              answerTo
          },
          user,
          makeAnswer,
          subComment = false
      }) => (<div className={styles.commentContainer}>
-        <UserImage src={img} size={subComment ? 36 : 70}/>
+        <UserImage src={imgSrc} size={subComment ? 36 : 70}/>
         <div>
             <span className={styles.username}>{`${firstName} ${lastName}`}</span>
             <div className={styles.commentText}>
