@@ -1,6 +1,6 @@
 import fetchProcess from '../../types/fetching';
-import {GET, POST} from '../../server/actions';
-import {ADD_SUB_COMMENT_PATH, GET_BY_COMMENT_ID_PATH} from '../../server/paths/subComment';
+import {GET, POST, PUT} from '../../server/actions';
+import {ADD_SUB_COMMENT_PATH, GET_BY_COMMENT_ID_PATH, UPDATE_SUB_COMMENT_PATH} from '../../server/paths/subComment';
 
 export const SET_SUB_COMMENTS = 'SET_SUB_COMMENTS';
 export const SET_LOADING_SUB_COMMENT_STATUS = 'SET_LOADING_SUB_COMMENT_STATUS';
@@ -9,6 +9,16 @@ export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
 export const EDIT_SUB_COMMENT = 'EDIT_SUB_COMMENT';
 export const SET_CREATING_SUB_COMMENT_STATUS = 'SET_CREATING_SUB_COMMENT_STATUS';
 export const SET_CREATING_SUB_COMMENT_ERROR = 'SET_CREATING_SUB_COMMENT_ERROR';
+export const SET_UPDATING_SUB_COMMENT_STATUS = 'SET_UPDATING_SUB_COMMENT_STATUS';
+export const SET_UPDATING_SUB_COMMENT_ERROR = 'SET_UPDATING_SUB_COMMENT_ERROR';
+
+export const setUpdatingSubCommentStatus =
+    (params: { commentId: string, subCommentId: string, status: fetchProcess }) =>
+        ({type: SET_UPDATING_SUB_COMMENT_STATUS, payload: params});
+
+export const setUpdatingSubCommentError =
+    (params: { commentId: string, subCommentId: string, error: string }) =>
+        ({type: SET_UPDATING_SUB_COMMENT_ERROR, payload: params});
 
 export const setCreatingSubCommentStatus = (params: { commentId: string, status: fetchProcess }) =>
     ({type: SET_CREATING_SUB_COMMENT_STATUS, payload: params});
@@ -99,7 +109,28 @@ export const updateSubComment = (subComment: {
     text: string
     subCommentId: string
     commentId: string
-}) => (dispatch: any) =>
+}) => (dispatch: any) => {
+    const {commentId, subCommentId} = subComment;
+    dispatch(setUpdatingSubCommentStatus({
+        commentId,
+        subCommentId,
+        status: fetchProcess.success,
+    }))
+    PUT(UPDATE_SUB_COMMENT_PATH + subCommentId, {...subComment, id: subCommentId}, dispatch)
+        .then(res => res.json())
+        .then(sc => {
+            dispatch(setUpdatingSubCommentStatus({
+                commentId,
+                subCommentId,
+                status: fetchProcess.success
+            }));
+            dispatch(editSubComment(sc));
+        })
+        .catch(res => res.json().then(({error}: any) => {
+            dispatch(setUpdatingSubCommentStatus({commentId, subCommentId, status: fetchProcess.error}));
+            dispatch(setUpdatingSubCommentError({commentId, subCommentId, error}));
+        }));
+
     dispatch(editSubComment({
         id: subComment.subCommentId,
         answerTo: subComment.answerToUsername ? {
@@ -113,3 +144,4 @@ export const updateSubComment = (subComment: {
         text: subComment.text,
         commentId: subComment.commentId
     }));
+}
