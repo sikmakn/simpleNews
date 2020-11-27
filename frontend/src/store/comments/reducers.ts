@@ -1,9 +1,14 @@
 import {
     ADD_COMMENT,
-    ADD_SUB_COMMENT, CLEAN_STATUS_OF_COMMENT,
+    CLEAN_STATUS_OF_COMMENT,
     EDIT_COMMENT,
-    EDIT_SUB_COMMENT, LOADING_COMMENTS_ERROR, LOADING_COMMENTS_STATUS,
-    SET_COMMENTS, SET_CREATING_COMMENT_STATUS, SET_CREATING_ERROR_OF_COMMENT,
+    LOADING_COMMENTS_ERROR,
+    LOADING_COMMENTS_STATUS,
+    SET_COMMENTS,
+    SET_CREATING_COMMENT_STATUS,
+    SET_CREATING_ERROR_OF_COMMENT,
+    SET_UPDATING_COMMENT_STATUS,
+    SET_UPDATING_ERROR_OF_COMMENT,
 } from './actions';
 import fetchProcess from '../../types/fetching';
 
@@ -13,11 +18,14 @@ interface CommentsState {
     creatingError?: string
     loadingStatus?: fetchProcess
     loadingError?: string
-    updatingStatus?: fetchProcess
-    updatingError?: string
+    updatingStatuses: { [k: string]: fetchProcess }
+    updatingErrors: { [k: string]: string }
 }
 
-const defaultState: CommentsState = {};
+const defaultState: CommentsState = {
+    updatingStatuses: {},
+    updatingErrors: {}
+};
 
 const commentsReducers = (state = defaultState, {type, payload}: any) => {
     switch (type) {
@@ -48,34 +56,39 @@ const commentsReducers = (state = defaultState, {type, payload}: any) => {
                 loadingError: payload,
             };
         case CLEAN_STATUS_OF_COMMENT:
-            return {value: state.value};
+            return {
+                value: state.value,
+                updatingStatuses: {},
+                updatingErrors: {},
+            };
         case ADD_COMMENT:
             return {
                 ...state,
                 value: [payload, ...state.value!]
             };
-        case ADD_SUB_COMMENT:
-            const commentsCopyForAdd = [...state.value!];
-            commentsCopyForAdd.find(c => c.id === payload.commentId)
-                .subComments.push(payload);
-            return {
-                ...state,
-                value: commentsCopyForAdd,
-            };
         case EDIT_COMMENT:
+            const {[payload.id]: err, ...anotherErrors} = state.updatingErrors;
             return {
                 ...state,
                 value: state.value!.map(c => c.id === payload.id ?
-                    {...payload, subComments: c.subComments} : c)
+                    {...payload, subComments: c.subComments} : c),
+                updatingErrors: anotherErrors,
             };
-        case EDIT_SUB_COMMENT:
-            const commentsCopyForEdit = [...state.value!];
-            const commentCopy = commentsCopyForEdit.find(c => c.id === payload.commentId);
-            commentCopy.subComments = commentCopy.subComments
-                .map((sc: any) => sc.id === payload.id ? payload : sc);
+        case SET_UPDATING_COMMENT_STATUS:
             return {
                 ...state,
-                value: commentsCopyForEdit,
+                updatingStatuses: {
+                    ...state.updatingStatuses,
+                    [payload.id]: payload.status,
+                }
+            };
+        case SET_UPDATING_ERROR_OF_COMMENT:
+            return {
+                ...state,
+                updatingErrors: {
+                    ...state.updatingErrors,
+                    [payload.id]: payload.error,
+                },
             };
     }
     return state;

@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './commonEditComment.module.scss';
 import UserImage from '../userImage';
 import ButtonContainer from '../buttonContainer';
+import fetchProcess from '../../types/fetching';
+import Loader from '../loader';
 
 export interface CommonEditCommentProps {
     user: {
@@ -18,6 +20,8 @@ export interface CommonEditCommentProps {
     subCommentId?: string
     commentId: string
     hide: () => void
+    error?: string
+    status?: fetchProcess
     saveComment: (subComment: {
         authorUsername: string
         answerToUsername?: string
@@ -35,9 +39,15 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
          hide,
          saveComment,
          text: defaultText,
-         subCommentId
+         subCommentId,
+         error,
+         status,
      }) => {
         const [text, setText] = useState(defaultText || '');
+        useEffect(() => {
+            if (status === fetchProcess.success)
+                hide();
+        }, [status, hide]);
         return (
             <div className={styles.commentContainer}>
                 <UserImage src={user.imgSrc} size={36}/>
@@ -56,6 +66,8 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
                             onChange={event => setText(event.target.value)}
                         />
                     </div>
+                    {error}
+                    {status === fetchProcess.loading && <Loader size={30}/>}
                     <ButtonContainer
                         addButtonName="Сохранить"
                         onClickToAdd={() => {
@@ -66,7 +78,6 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
                                 authorUsername: user.username,
                                 answerToUsername: answerTo?.username,
                             });
-                            hide();
                         }}
                         onClickToCancel={hide}
                     />

@@ -1,17 +1,23 @@
 import fetchProcess from '../../types/fetching';
-import {GET, POST} from '../../server/actions';
-import {CREATE_PATH, GET_MANY_PATH} from '../../server/paths/comment';
+import {GET, POST, PUT} from '../../server/actions';
+import {CREATE_PATH, GET_MANY_PATH, UPDATE_PATH} from '../../server/paths/comment';
 
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
-export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
-export const EDIT_SUB_COMMENT = 'EDIT_SUB_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const LOADING_COMMENTS_STATUS = 'LOADING_COMMENTS_STATUS';
 export const LOADING_COMMENTS_ERROR = 'LOADING_COMMENTS_ERROR';
 export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
 export const SET_CREATING_COMMENT_STATUS = 'SET_CREATING_COMMENT_STATUS';
 export const SET_CREATING_ERROR_OF_COMMENT = 'SET_CREATING_ERROR_OF_COMMENT';
+export const SET_UPDATING_COMMENT_STATUS = 'SET_UPDATING_COMMENT_STATUS';
+export const SET_UPDATING_ERROR_OF_COMMENT = 'SET_UPDATING_ERROR_OF_COMMENT';
+
+export const setUpdatingCommentStatus = (params: { id: string, status: fetchProcess }) =>
+    ({type: SET_UPDATING_COMMENT_STATUS, payload: params});
+
+export const setUpdatingErrorOfComment = (params: { id: string, error: string }) =>
+    ({type: SET_UPDATING_ERROR_OF_COMMENT, payload: params});
 
 export const setCreatingCommentStatus = (status: fetchProcess) =>
     ({type: SET_CREATING_COMMENT_STATUS, payload: status});
@@ -64,7 +70,7 @@ export const createComment = (comment: {
         .then(res => res.json())
         .then(newComment => {
             dispatch(setCreatingCommentStatus(fetchProcess.success));
-            dispatch(addComment({...newComment, subComments: []}));
+            dispatch(addComment(newComment));
         })
         .catch(res => res.json().then(({error}: any) => {
             dispatch(setCreatingCommentStatus(fetchProcess.error));
@@ -91,13 +97,17 @@ export const updateComment = (comment: {
     text: string
     authorUsername: string
     oneNewsId: string
-}) => (dispatch: any) =>
-    dispatch(editComment({
-        id: comment.commentId,
-        text: comment.text,
-        author: {
-            username: comment.authorUsername,
-            fullName: 'Keker'
-        },
-        oneNewsId: comment.oneNewsId
-    }));
+}) => (dispatch: any) => {
+    const {commentId: id, ...anotherComment} = comment;
+    dispatch(setUpdatingCommentStatus({id, status: fetchProcess.loading}));
+    PUT(UPDATE_PATH + id, {...anotherComment, id}, dispatch)
+        .then(res => res.json())
+        .then(updatingComment => {
+            dispatch(setUpdatingCommentStatus({id, status: fetchProcess.success}));
+            dispatch(editComment(updatingComment));
+        })
+        .catch(res => res.json().then(({error}: any) => {
+            dispatch(setUpdatingCommentStatus({id, status: fetchProcess.error}));
+            dispatch(setUpdatingErrorOfComment({id, error}));
+        }));
+}

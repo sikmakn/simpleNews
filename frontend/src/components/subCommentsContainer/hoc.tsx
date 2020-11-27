@@ -9,7 +9,7 @@ export interface SubCommentContainerHOCProps extends SubCommentsContainerProps {
 const SubCommentContainerHOC: React.FC<SubCommentContainerHOCProps> =
     (props) => <SubCommentsContainer {...props}/>;
 
-const mapStateToProps = ({comments, subComments}: any, {commentId, makeSubCommentAnswer}: any) =>
+const mapStateToProps = ({oneNews, comments, subComments}: any, {commentId, makeSubCommentAnswer}: any) =>
     ({
         commentId,
         makeSubCommentAnswer,

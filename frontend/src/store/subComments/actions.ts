@@ -1,11 +1,13 @@
 import fetchProcess from '../../types/fetching';
-import {ADD_SUB_COMMENT, EDIT_SUB_COMMENT} from '../comments/actions';
-import {GET} from "../../server/actions";
-import {GET_BY_COMMENT_ID_PATH} from "../../server/paths/subComment";
+import {GET} from '../../server/actions';
+import {GET_BY_COMMENT_ID_PATH} from '../../server/paths/subComment';
 
 export const SET_SUBCOMMENTS = 'SET_SUBCOMMENTS';
 export const SET_LOADING_SUBCOMMENT_STATUS = 'SET_LOADING_SUBCOMMENT_STATUS';
 export const SET_LOADING_SUBCOMMENT_ERROR = 'SET_LOADING_SUBCOMMENT_ERROR';
+export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT';
+export const EDIT_SUB_COMMENT = 'EDIT_SUB_COMMENT';
+
 
 export const setLoadingSubCommentStatus = (params: { commentId: string, status: fetchProcess }) =>
     ({type: SET_LOADING_SUBCOMMENT_STATUS, payload: params});

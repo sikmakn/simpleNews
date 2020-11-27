@@ -34,10 +34,12 @@ const EditCommentHOC: React.FC<EditCommentHOCProps> = ({oneNewsId, saveComment, 
         }
     />);
 
-const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
+const mapStateToProps = ({user, oneNews, comments}: any, ownProps: any) =>
     ({
         oneNewsId: oneNews.value.id,
         user: user.value,
+        status: comments.updatingStatuses[ownProps.commentId],
+        error: comments.updatingErrors[ownProps.commentId],
         ...ownProps
     });
 

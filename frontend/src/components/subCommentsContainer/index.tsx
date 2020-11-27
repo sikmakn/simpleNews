@@ -28,7 +28,7 @@ const SubCommentsContainer: React.FC<SubCommentsContainerProps> =
          loadSubComments,
          commentId,
          status,
-         error
+         error,
      }) => {
         useEffect(() => {
             if (!subComments)
