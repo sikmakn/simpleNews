@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {createSubComment} from '../../store/comments/actions';
 import CommonEditComment from '../commonEditComment';
+import {createSubComment} from "../../store/subComments/actions";
 
 interface AddSubCommentHOCProps {
     user: {
@@ -34,8 +34,6 @@ const mapStateToProps = ({user}: any, ownProps: any) =>
         ...ownProps
     });
 
-const mapDispatchToProps = {
-    saveComment: createSubComment
-};
+const mapDispatchToProps = {saveComment: createSubComment};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSubCommentHOC);

@@ -8,11 +8,18 @@ const userRepository = connection.getRepository(User);
 export function findMany(commentId: string) {
     return subCommentRepository.findAll({
         where: {commentId},
-        raw: true,
-        include: [{
-            model: userRepository,
-            attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
-        }],
+        include: [
+            {
+                model: userRepository,
+                attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
+                as: 'author',
+            },
+            {
+                model: userRepository,
+                attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
+                as: 'answerTo',
+            },
+        ],
     });
 }
 
@@ -35,10 +42,18 @@ export function update(comment: {
 
 export function findById(id: string) {
     return subCommentRepository.findByPk(id, {
-        include: [{
-            model: userRepository,
-            attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
-        }],
+        include: [
+            {
+                model: userRepository,
+                attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
+                as: 'author',
+            },
+            {
+                model: userRepository,
+                attributes: ['username', 'firstName', 'lastName', 'imgSrc'],
+                as: 'answerTo',
+            },
+        ],
     });
 }
 

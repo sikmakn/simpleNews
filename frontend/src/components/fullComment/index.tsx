@@ -38,10 +38,10 @@ const FullComment: React.FC<FullCommentProps> =
                         visible={visibleSubComments}
                         setVisible={setVisibleSubComments}
                     />
-                    <SubCommentContainerHOC
+                    {visibleSubComments && <SubCommentContainerHOC
                         makeSubCommentAnswer={makeSubCommentAnswer}
                         commentId={comment.id}
-                    />
+                    />}
                     {
                         isAddAnswer &&
                         <AddSubCommentHOC

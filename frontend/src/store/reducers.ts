@@ -6,6 +6,7 @@ import lastNews from './lastNews/reducers';
 import hotNews from './hotNews/reducers';
 import tag from './tag/reducers';
 import comments from './comments/reducers';
+import subComments from './subComments/reducers';
 
 export default combineReducers({
     bigNews,
@@ -15,4 +16,5 @@ export default combineReducers({
     hotNews,
     tag,
     comments,
+    subComments,
 });

@@ -12,18 +12,6 @@ export const LOADING_COMMENTS_ERROR = 'LOADING_COMMENTS_ERROR';
 export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
 export const SET_CREATING_COMMENT_STATUS = 'SET_CREATING_COMMENT_STATUS';
 export const SET_CREATING_ERROR_OF_COMMENT = 'SET_CREATING_ERROR_OF_COMMENT';
-export const SET_SUBCOMMENTS = 'SET_SUBCOMMENTS';
-export const SET_LOADING_SUBCOMMENT_STATUS = 'SET_LOADING_SUBCOMMENT_STATUS';
-export const SET_LOADING_SUBCOMMENT_ERROR = 'SET_LOADING_SUBCOMMENT_ERROR';
-
-export const setLoadingSubCommentStatus = (params: { commentId: string, status: fetchProcess }) =>
-    ({type: SET_LOADING_SUBCOMMENT_STATUS, payload: params});
-
-export const setLoadingSubCommentError = (params: { commentId: string, error: string }) =>
-    ({type: SET_LOADING_SUBCOMMENT_ERROR, payload: params});
-
-export const setSubComments = (params: { commentId: string, subComments: any[] }) =>
-    ({type: SET_SUBCOMMENTS, payload: params});
 
 export const setCreatingCommentStatus = (status: fetchProcess) =>
     ({type: SET_CREATING_COMMENT_STATUS, payload: status});
@@ -48,27 +36,8 @@ export const addComment = (comment: {
     subComments: any[]
 }) => ({type: ADD_COMMENT, payload: comment});
 
-export const addSubComment = (subComment: {
-    id: string
-    author: {
-        username: string
-        fullName: string
-        imgSrc?: string
-    }
-    answerTo?: {
-        username: string
-        fullName: string
-    }
-    text: string
-    commentId: string
-}) =>
-    ({type: ADD_SUB_COMMENT, payload: subComment});
-
 export const setComments = (comments: any) =>
     ({type: SET_COMMENTS, payload: comments});
-
-export const editSubComment = (subComment: any) =>
-    ({type: EDIT_SUB_COMMENT, payload: subComment});
 
 export const editComment = (comment: {
     id: string
@@ -117,48 +86,6 @@ export const loadComments = (oneNewsId: string) => (dispatch: any) => {
         }));
 };
 
-export const createSubComment = (subComment: {
-    authorUsername: string
-    answerToUsername?: string
-    text: string
-    commentId: string
-}) => (dispatch: any) =>
-    dispatch(addSubComment({
-        id: String(Math.random()),
-        answerTo: subComment.answerToUsername ? {
-            username: subComment.answerToUsername,
-            fullName: "Какой-то челик"
-        } : undefined,
-        author: {
-            fullName: 'Z',
-            username: subComment.authorUsername
-        },
-        text: subComment.text,
-        commentId: subComment.commentId,
-    }));
-
-
-export const updateSubComment = (subComment: {
-    authorUsername: string
-    answerToUsername?: string
-    text: string
-    subCommentId: string
-    commentId: string
-}) => (dispatch: any) =>
-    dispatch(editSubComment({
-        id: subComment.subCommentId,
-        answerTo: subComment.answerToUsername ? {
-            username: subComment.answerToUsername,
-            fullName: "Какой-то челик"
-        } : undefined,
-        author: {
-            fullName: 'Z',
-            username: subComment.authorUsername
-        },
-        text: subComment.text,
-        commentId: subComment.commentId
-    }));
-
 export const updateComment = (comment: {
     commentId: string
     text: string
@@ -174,7 +101,3 @@ export const updateComment = (comment: {
         },
         oneNewsId: comment.oneNewsId
     }));
-
-export const loadSubComments = (id:string)=>(dispatch:any)=>{
-
-};

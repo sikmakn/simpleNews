@@ -1,7 +1,7 @@
 import React from 'react';
 import SubCommentsContainer, {SubCommentsContainerProps} from './index';
 import {connect} from 'react-redux';
-import {loadSubComments} from "../../store/comments/actions";
+import {loadSubComments} from '../../store/subComments/actions';
 
 export interface SubCommentContainerHOCProps extends SubCommentsContainerProps {
 }
@@ -9,11 +9,13 @@ export interface SubCommentContainerHOCProps extends SubCommentsContainerProps {
 const SubCommentContainerHOC: React.FC<SubCommentContainerHOCProps> =
     (props) => <SubCommentsContainer {...props}/>;
 
-const mapStateToProps = ({comments}: any, {commentId, makeSubCommentAnswer}: any) =>
+const mapStateToProps = ({comments, subComments}: any, {commentId, makeSubCommentAnswer}: any) =>
     ({
         commentId,
         makeSubCommentAnswer,
-        subComments: comments.value?.find((c: any) => c.id === commentId)?.subComments,
+        subComments: subComments.value[commentId],
+        status: subComments.loadingStatuses[commentId],
+        error: subComments.loadingErrors[commentId],
     });
 
 const mapDispatchToProps = {loadSubComments};
