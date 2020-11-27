@@ -32,7 +32,10 @@ const FullComment: React.FC<FullCommentProps> =
 
         return (
             <div className={styles.commentContainer}>
-                <Comment makeAnswer={() => setIsAddAnswer(true)} comment={comment}/>
+                <Comment makeAnswer={() => {
+                    setIsAddAnswer(true);
+                    setAnswerTo(undefined);
+                }} comment={comment}/>
                 <div className={styles.subCommentsContainer}>
 
                     <HideShowSubCommentsButton

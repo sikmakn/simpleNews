@@ -5,6 +5,8 @@ import Tag from '../tag';
 import {TagEnum} from '../../types/tag';
 import Loader from '../loader';
 import fetchProcess from '../../types/fetching';
+import {Redirect} from 'react-router-dom';
+import {mainPagePath} from "../../paths";
 
 export interface FullNewsProps {
     status?: fetchProcess
@@ -22,10 +24,10 @@ export interface FullNewsProps {
 const FullNews: React.FC<FullNewsProps> =
     ({content, status, error, cleanStatus}) => {
         useEffect(() => cleanStatus, [cleanStatus]);
+        if (error) return <Redirect to={mainPagePath()}/>;
         return (
             <div className={styles.fullNewsContainer}>
                 {status === fetchProcess.loading && <Loader size={400}/>}
-                {error}
                 {
                     content &&
                     <>

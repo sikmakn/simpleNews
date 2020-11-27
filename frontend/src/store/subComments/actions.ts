@@ -67,13 +67,16 @@ export const createSubComment = (subComment: {
     text: string
     commentId: string
 }) => (dispatch: any) => {
+    console.log(subComment)
     dispatch(setCreatingSubCommentStatus({
         commentId: subComment.commentId,
         status: fetchProcess.loading,
     }));
+    subComment.answerToId='user2'
     POST(ADD_SUB_COMMENT_PATH + subComment.commentId, subComment, dispatch)
         .then(res => res.json())
         .then(sc => {
+            console.log(sc)
             dispatch(setCreatingSubCommentStatus({
                 commentId: subComment.commentId,
                 status: fetchProcess.success,

@@ -12,7 +12,8 @@ const mapStateToProps = ({oneNews, user}: any) => ({
     id: oneNews.id,
     authorUsername: oneNews.value?.authorId,
     username: user.value?.username,
-    status: oneNews.loadingStatus
+    status: oneNews.loadingStatus,
+    error: oneNews.loadingError,
 });
 
 const mapDispatchToProps = {};

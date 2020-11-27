@@ -12,6 +12,7 @@ export interface VerticalStatisticProps {
     authorUsername?: string
     username?: string
     status?: fetchProcess
+    error: string
 }
 
 const VerticalStatistic: React.FC<VerticalStatisticProps> =
@@ -19,9 +20,12 @@ const VerticalStatistic: React.FC<VerticalStatisticProps> =
          id,
          authorUsername,
          username,
-         status
+         status,
+         error,
      }) => {
-        if (!id ||status === fetchProcess.loading) return <Loader size={50}/>;
+        if (!id || status === fetchProcess.loading) return <Loader size={50}/>;
+        if (status === fetchProcess.error)
+            return <div className={styles.statisticsContainer}>{error}</div>;
         return (
             <div className={styles.statisticsContainer}>
                 <OneNewsStatisticHOC/>

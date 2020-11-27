@@ -75,6 +75,7 @@ router.get('/one/:id',
     async (req, res) => {
         const userId = getUsernameFromResponse(res);
         const oneNews = await newsService.findOne({id: req.params.id, userId});
+        if (!oneNews) return res.status(404).json({error: 'not found news with this id'});
         res.json(mapOneNewsToOut(oneNews));
     });
 
