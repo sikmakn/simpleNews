@@ -71,7 +71,7 @@ const subCommentsReducers = (state = defaultState, {type, payload}: any) => {
                 value: {
                     ...state.value,
                     [payload.commentId]: [
-                        ...state.value[payload.commentId],
+                        ...(state.value[payload.commentId] || []),
                         payload,
                     ],
                 },

@@ -36,7 +36,7 @@ class SubComment extends Model implements SubCommentAttr {
     @ForeignKey(() => User)
     authorId!: string;
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, {foreignKey: {field: 'authorId', name: 'authorId'}})
     author!: User;
 
     @ForeignKey(() => OneNews)
@@ -52,9 +52,14 @@ class SubComment extends Model implements SubCommentAttr {
     comment!: Comment;
 
     @ForeignKey(() => User)
+    @Column({
+        allowNull: true,
+        type: DataType.STRING,
+
+    })
     answerToId?: string;
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, {foreignKey: {field: 'answerToId', name: 'answerToId'}})
     answerTo?: User;
 }
 
