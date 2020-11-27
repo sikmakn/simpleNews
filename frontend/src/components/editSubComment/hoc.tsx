@@ -19,19 +19,22 @@ interface EditSubCommentHOCProps {
     commentId: string
     hide: () => void
     saveComment: (subComment: {
-        authorUsername: string
-        answerToUsername?: string
+        authorId: string
+        answerToId?: string
         text: string
         commentId: string
         subCommentId?: string
+        oneNewsId: string
     }) => void
+    oneNewsId: string
 }
 
 const EditSubCommentHOC: React.FC<EditSubCommentHOCProps> = (props) =>
     (<CommonEditComment {...props}/>);
 
-const mapStateToProps = ({user}: any, ownProps: any) =>
+const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
     ({
+        oneNewsId: oneNews.id,
         user: user.value,
         ...ownProps
     });

@@ -8,17 +8,20 @@ export interface CommentProps {
         text: string
         answerTo?: {
             username: string
-            fullName: string
+            firstName: string
+            lastName: string
         }
         author: {
             username: string
             imgSrc?: string
-            fullName: string
+            firstName: string
+            lastName: string
         }
     }
     makeAnswer: (to: {
         username: string
-        fullName: string
+        firstName: string
+        lastName: string
     }) => void
 }
 

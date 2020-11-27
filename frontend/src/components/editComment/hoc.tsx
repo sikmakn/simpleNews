@@ -14,7 +14,7 @@ interface EditCommentHOCProps {
     commentId: string
     hide: () => void
     saveComment: (subComment: {
-        authorUsername: string
+        authorId: string
         text: string
         commentId: string
         oneNewsId: string
@@ -22,17 +22,8 @@ interface EditCommentHOCProps {
     oneNewsId: string
 }
 
-const EditCommentHOC: React.FC<EditCommentHOCProps> = ({oneNewsId, saveComment, ...props}) =>
-    (<CommonEditComment
-        {...props}
-        saveComment={
-            (comment: {
-                authorUsername: string
-                text: string
-                commentId: string
-            }) => saveComment({oneNewsId, ...comment})
-        }
-    />);
+const EditCommentHOC: React.FC<EditCommentHOCProps> = (props) =>
+    (<CommonEditComment{...props}/>);
 
 const mapStateToProps = ({user, oneNews, comments}: any, ownProps: any) =>
     ({
@@ -43,8 +34,6 @@ const mapStateToProps = ({user, oneNews, comments}: any, ownProps: any) =>
         ...ownProps
     });
 
-const mapDispatchToProps = {
-    saveComment: updateComment
-};
+const mapDispatchToProps = {saveComment: updateComment};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCommentHOC);

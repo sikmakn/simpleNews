@@ -35,16 +35,17 @@ router.post('/:commentId',
         if (answerToId && !await userService.find(answerToId))
             return res.status(404).json({error: 'answerTo user not found'});
 
-        const result = await subCommentService.create({text, commentId, authorId, oneNewsId, answerToId});
+        const {id} = await subCommentService.create({text, commentId, authorId, oneNewsId, answerToId});
+        const result = await subCommentService.findById(id);
         res.json({
-            id: result.id,
-            text: result.text,
-            commentId: result.commentId,
-            oneNewsId: result.oneNewsId,
-            authorId: result.authorId,
-            author: result.author,
-            answerToId: result.answerToId,
-            answerTo: result.answerTo,
+            id: result?.id,
+            text: result?.text,
+            commentId: result?.commentId,
+            oneNewsId: result?.oneNewsId,
+            authorId: result?.authorId,
+            author: result?.author,
+            answerToId: result?.answerToId,
+            answerTo: result?.answerTo,
         })
     });
 

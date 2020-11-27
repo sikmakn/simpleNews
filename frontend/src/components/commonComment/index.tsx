@@ -9,17 +9,20 @@ export interface CommonCommentProps {
         text: string
         answerTo?: {
             username: string
-            fullName: string
+            firstName: string
+            lastName: string
         }
         author: {
             username: string
             img?: string
-            fullName: string
+            firstName: string
+            lastName: string
         }
     }
     makeAnswer: (to: {
         username: string
-        fullName: string
+        firstName: string
+        lastName: string
     }) => void
     user?: {
         username: string
@@ -32,7 +35,7 @@ const CommonComment: React.FC<CommonCommentProps> =
          edit,
          comment: {
              text,
-             author: {img, fullName, username},
+             author: {img, firstName, lastName, username},
              answerTo
          },
          user,
@@ -41,11 +44,11 @@ const CommonComment: React.FC<CommonCommentProps> =
      }) => (<div className={styles.commentContainer}>
         <UserImage src={img} size={subComment ? 36 : 70}/>
         <div>
-            <span className={styles.username}>{fullName}</span>
+            <span className={styles.username}>{`${firstName} ${lastName}`}</span>
             <div className={styles.commentText}>
                 {answerTo &&
                 <span className={styles.answerReference}>
-                            @{answerTo.fullName}&nbsp;
+                            @{`${answerTo.firstName} ${answerTo.lastName}`}&nbsp;
                         </span>}
                 {text}
             </div>
@@ -58,7 +61,7 @@ const CommonComment: React.FC<CommonCommentProps> =
                         >Редактировать</span> :
                         <span
                             className={styles.answer}
-                            onClick={makeAnswer.bind(null, {fullName, username})}
+                            onClick={makeAnswer.bind(null, {firstName, lastName, username})}
                         >Ответить</span>
                 )
             }

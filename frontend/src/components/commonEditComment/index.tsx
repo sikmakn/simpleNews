@@ -23,12 +23,14 @@ export interface CommonEditCommentProps {
     error?: string
     status?: fetchProcess
     saveComment: (subComment: {
-        authorUsername: string
-        answerToUsername?: string
+        authorId: string
+        answerToId?: string
         text: string
         commentId: string
         subCommentId?: string
+        oneNewsId: string
     }) => void
+    oneNewsId: string
 }
 
 const CommonEditComment: React.FC<CommonEditCommentProps> =
@@ -42,6 +44,7 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
          subCommentId,
          error,
          status,
+         oneNewsId,
      }) => {
         const [text, setText] = useState(defaultText || '');
         useEffect(() => {
@@ -75,8 +78,9 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
                                 subCommentId,
                                 text,
                                 commentId,
-                                authorUsername: user.username,
-                                answerToUsername: answerTo?.username,
+                                authorId: user.username,
+                                answerToId: answerTo?.username,
+                                oneNewsId,
                             });
                         }}
                         onClickToCancel={hide}
