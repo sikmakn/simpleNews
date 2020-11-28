@@ -30,7 +30,6 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    console.log(req.body)
     const {username, password} = req.body;
     if (!await userService.validate({username, password}))
         return res.status(401).json({errors: ['not valid username or password']});
@@ -52,12 +51,10 @@ router.put('/update',
     authValidateMiddleware,
     async (req, res) => {
         const accessToken = getAccessTokenFromResponse(res);
-        console.log(req.body)
         if (authService.decode(accessToken!)!.payload.username !== req.body.username)
             return res.status(403).json({error: 'forbidden'});
         if (!await userService.find(req.body.username))
             return res.status(404).json({error: 'user not found'});
-        console.log(req.file)
         await userService.update({...req.body, img: req.file});
         const updatedUser = await userService.find(req.body.username);
         res.json({
