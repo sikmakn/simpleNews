@@ -12,7 +12,6 @@ import ErrorLayout from '../../components/errorsLayout';
 import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
 import {checkManyValue} from '../../helpers/valueObj';
-import imgToString from '../../helpers/imgToString';
 import fetchProcess from '../../types/fetching';
 import Loader from '../../components/loader';
 
@@ -21,7 +20,7 @@ export interface UserPageProps {
         username: string
         firstName: string
         lastName: string
-        imgSrc: string
+        imgSrc?: string
     }
 
     updateUserData: (user: {
@@ -67,7 +66,8 @@ const UserPage: React.FC<UserPageProps> =
                         {status === fetchProcess.loading && <Loader size={40}/>}
                         <AddUserImage
                             setImg={setSelectedImg}
-                            img={imgToString(selectedImg) || imgSrc}
+                            img={selectedImg}
+                            defaultSrc={imgSrc}
                         />
                         <UserInput
                             disabled placeholder={username}
@@ -98,7 +98,7 @@ const UserPage: React.FC<UserPageProps> =
                             <FormCheckErrors valueObj={lastNameValueObj}/>
                             <FormCheckErrors valueObj={passwordValueObj}/>
                             {newPasswordValueObj?.value &&
-                                <FormCheckErrors valueObj={newPasswordValueObj}/>}
+                            <FormCheckErrors valueObj={newPasswordValueObj}/>}
                         </ErrorLayout>
                         <UserFormButton
                             title="Сохранить изменения"
