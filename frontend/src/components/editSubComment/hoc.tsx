@@ -33,10 +33,12 @@ interface EditSubCommentHOCProps {
 const EditSubCommentHOC: React.FC<EditSubCommentHOCProps> = (props) =>
     (<CommonEditComment {...props}/>);
 
-const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
+const mapStateToProps = ({user, oneNews, subComments}: any, ownProps: any) =>
     ({
         oneNewsId: oneNews.id,
         user: user.value,
+        status: subComments.updatingStatuses[ownProps.commentId]?.[ownProps.subCommentId],
+        error: subComments.updatingStatuses[ownProps.commentId]?.[ownProps.subCommentId],
         ...ownProps
     });
 

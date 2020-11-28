@@ -1,6 +1,6 @@
 import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
-import {ADD_SUB_COMMENT_PATH, GET_BY_COMMENT_ID_PATH, UPDATE_SUB_COMMENT_PATH} from '../../server/paths/subComment';
+import {createSubCommentPath, getSubCommentsPath, updateSubCommentPath,} from '../../server/paths/subComment';
 
 export const SET_SUB_COMMENTS = 'SET_SUB_COMMENTS';
 export const SET_LOADING_SUB_COMMENT_STATUS = 'SET_LOADING_SUB_COMMENT_STATUS';
@@ -59,7 +59,7 @@ export const editSubComment = (subComment: any) =>
 
 export const loadSubComments = (commentId: string) => (dispatch: any) => {
     dispatch(setLoadingSubCommentStatus({commentId, status: fetchProcess.loading}));
-    GET(GET_BY_COMMENT_ID_PATH + commentId, dispatch)
+    GET(getSubCommentsPath(commentId), dispatch)
         .then(res => res.json())
         .then((subComments: any[]) => {
             dispatch(setSubComments({commentId, subComments}));
@@ -81,7 +81,7 @@ export const createSubComment = (subComment: {
         commentId: subComment.commentId,
         status: fetchProcess.loading,
     }));
-    POST(ADD_SUB_COMMENT_PATH + subComment.commentId, subComment, dispatch)
+    POST(createSubCommentPath(subComment.commentId), subComment, dispatch)
         .then(res => res.json())
         .then(sc => {
             dispatch(setCreatingSubCommentStatus({
@@ -116,7 +116,7 @@ export const updateSubComment = (subComment: {
         subCommentId,
         status: fetchProcess.success,
     }))
-    PUT(UPDATE_SUB_COMMENT_PATH + subCommentId, {...subComment, id: subCommentId}, dispatch)
+    PUT(updateSubCommentPath(subCommentId), {...subComment, id: subCommentId}, dispatch)
         .then(res => res.json())
         .then(sc => {
             dispatch(setUpdatingSubCommentStatus({
@@ -130,18 +130,4 @@ export const updateSubComment = (subComment: {
             dispatch(setUpdatingSubCommentStatus({commentId, subCommentId, status: fetchProcess.error}));
             dispatch(setUpdatingSubCommentError({commentId, subCommentId, error}));
         }));
-
-    dispatch(editSubComment({
-        id: subComment.subCommentId,
-        answerTo: subComment.answerToUsername ? {
-            username: subComment.answerToUsername,
-            fullName: "Какой-то челик"
-        } : undefined,
-        author: {
-            fullName: 'Z',
-            username: subComment.authorUsername
-        },
-        text: subComment.text,
-        commentId: subComment.commentId
-    }));
 }

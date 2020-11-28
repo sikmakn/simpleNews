@@ -1,4 +1,4 @@
-import {FIND_MANY_BASIC} from '../../server/paths/news';
+import {findManyBasicPath} from '../../server/paths/news';
 import {GET} from '../../server/actions';
 import fetchProcess from '../../types/fetching';
 
@@ -22,7 +22,7 @@ export const setLastNews = (lastNews: any) => ({
 
 export const loadLastNews = () => (dispatch: any) => {
     dispatch(setLoadingLastNewsStatus(fetchProcess.loading));
-    GET(`${FIND_MANY_BASIC}?sort=last`, dispatch)
+    GET(findManyBasicPath({sort: 'last'}), dispatch)
         .then(res => res.json())
         .then(news => {
             dispatch(setLoadingLastNewsStatus(fetchProcess.success));

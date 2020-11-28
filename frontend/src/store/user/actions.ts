@@ -47,18 +47,18 @@ export const registerNewUser = (user: {
     username: string,
     password: string,
     firstName: string,
-    lastName: string
-}) =>
-    (dispatch: any) => {
-        dispatch(setProcessRegistrationStatus(fetchProcess.loading));
-        POST(REGISTER_PATH, user, dispatch)
-            .then(() =>
-                dispatch(setProcessRegistrationStatus(fetchProcess.success)))
-            .catch(res => res.json().then((res: any) => {
-                dispatch(setUserRegisterErrors(res.errors));
-                dispatch(setProcessRegistrationStatus(fetchProcess.error));
-            }));
-    };
+    lastName: string,
+}) => (dispatch: any) => {
+    dispatch(setProcessRegistrationStatus(fetchProcess.loading));
+    POST(REGISTER_PATH, user, dispatch)
+        .then(res => res.json())
+        .then(() =>
+            dispatch(setProcessRegistrationStatus(fetchProcess.success)))
+        .catch(res => res.json().then((res: any) => {
+            dispatch(setUserRegisterErrors(res.errors));
+            dispatch(setProcessRegistrationStatus(fetchProcess.error));
+        }));
+};
 
 export const signInUser = ({username, password}: {
     username: string

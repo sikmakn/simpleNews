@@ -71,7 +71,7 @@ export async function findMany(
         }) {
     const parameters: any = {};
     if (sort) parameters.order =
-        [[sort === 'hot' ? Sequelize.literal('likesCount') : 'date', 'ASC']];
+        [[sort === 'hot' ? Sequelize.col('likesCount') : 'date', 'DESC']];
 
     if (tag) parameters.where = {tag};
     return newsRepository.findAll({
@@ -98,17 +98,17 @@ function findAttributes(userId?: string) {
     const userAttr: any[] = [];
     if (userId)
         userAttr.push(
-            [Sequelize.fn('count', Sequelize.literal(`likes.oneNewsId and likes.authorId=\'${userId}\'`)), 'userLikesCount'],
-            [Sequelize.fn('count', Sequelize.literal(`comments.id and comments.authorId=\'${userId}\'`)), 'userCommentsCount'],
-            [Sequelize.fn('count', Sequelize.literal(`subComments.id and subComments.authorId=\'${userId}\'`)), 'userSubCommentsCount'],
+            [Sequelize.where(Sequelize.literal('likes.oneNewsId=oneNews.id and  likes.authorId'), userId), 'userLikesCount'],
+            [Sequelize.where(Sequelize.literal('Comments.authorId'), userId), 'userCommentsCount'],
+            [Sequelize.where(Sequelize.literal('subComments.authorId'), userId), 'userSubCommentsCount'],
         );
     return {
-        raw:true,
+        raw: true,
         attributes: [
             'id', 'title', 'text', 'date', 'imgSrc', 'tag', 'authorId',
-            [Sequelize.fn('count', Sequelize.col('likes.oneNewsId')), 'likesCount'],
-            [Sequelize.fn('count', Sequelize.col('comments.id')), 'commentsCount'],
-            [Sequelize.fn('count', Sequelize.col('subComments.id')), 'subCommentsCount'],
+            [Sequelize.fn('count', Sequelize.literal('DISTINCT(likes.authorId)')), 'likesCount'],
+            [Sequelize.fn('count', Sequelize.literal('DISTINCT(comments.id)')), 'commentsCount'],
+            [Sequelize.fn('count', Sequelize.literal('DISTINCT(subComments.id)')), 'subCommentsCount'],
             ...userAttr
         ],
         include: [
@@ -116,6 +116,6 @@ function findAttributes(userId?: string) {
             {model: commentRepository, attributes: []},
             {model: subCommentRepository, attributes: []},
         ],
-        group: ['id']
+        group: ['oneNews.id']
     };
 }

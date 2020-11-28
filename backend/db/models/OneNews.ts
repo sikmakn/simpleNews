@@ -3,19 +3,20 @@ import User from './User';
 import Like from './Like';
 import Comment from './Comment';
 import {Tag} from '../../types';
-import SubComment from "./SubComment";
+import SubComment from './SubComment';
 
 interface OneNewsAttr {
-    id: string;
-    imgSrc: string;
-    date: Date;
-    title: string;
-    text: string;
-    authorId: string;
-    author?: User;
-    tag: Tag;
-    likes: [Like];
-    comments: [Comment];
+    id: string
+    imgSrc: string
+    date: Date
+    title: string
+    text: string
+    authorId: string
+    author?: User
+    tag: Tag
+    likes: [Like]
+    comments: [Comment]
+    subComments:[SubComment]
 }
 
 @Table
@@ -68,10 +69,10 @@ class OneNews extends Model implements OneNewsAttr {
     @HasMany(() => Like)
     likes!: [Like];
 
-    @HasMany(() => Comment, {onDelete: 'cascade'})
+    @HasMany(() => Comment, {onDelete: 'cascade', as:'comments'})
     comments!: [Comment];
 
-    @HasMany(() => SubComment, {onDelete: 'cascade'})
+    @HasMany(() => SubComment, {onDelete: 'cascade', as:'subComments'})
     subComments!: [SubComment];
 }
 

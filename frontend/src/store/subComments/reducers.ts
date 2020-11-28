@@ -1,10 +1,13 @@
 import {
     ADD_SUB_COMMENT,
+    EDIT_SUB_COMMENT,
     SET_CREATING_SUB_COMMENT_ERROR,
     SET_CREATING_SUB_COMMENT_STATUS,
     SET_LOADING_SUB_COMMENT_ERROR,
     SET_LOADING_SUB_COMMENT_STATUS,
-    SET_SUB_COMMENTS
+    SET_SUB_COMMENTS,
+    SET_UPDATING_SUB_COMMENT_ERROR,
+    SET_UPDATING_SUB_COMMENT_STATUS
 } from './actions';
 import fetchProcess from '../../types/fetching';
 
@@ -14,12 +17,16 @@ const defaultState: {
     loadingErrors: { [k: string]: string }
     creatingStatuses: { [k: string]: fetchProcess }
     creatingErrors: { [k: string]: string }
+    updatingStatuses: { [commentId: string]: { [subCommentId: string]: fetchProcess } }
+    updatingErrors: { [commentId: string]: { [subCommentId: string]: string } }
 } = {
     value: {},
     loadingStatuses: {},
     loadingErrors: {},
     creatingStatuses: {},
     creatingErrors: {},
+    updatingStatuses: {},
+    updatingErrors: {},
 };
 
 const subCommentsReducers = (state = defaultState, {type, payload}: any) => {
@@ -77,6 +84,39 @@ const subCommentsReducers = (state = defaultState, {type, payload}: any) => {
                 },
                 creatingErrors: anotherCreatingErrors,
                 creatingStatuses: anotherCreatingStatuses,
+            };
+        case EDIT_SUB_COMMENT:
+            return {
+                ...state,
+                value: {
+                    ...state.value,
+                    [payload.commentId]: state.value[payload.commentId]
+                        .map(sc => sc.id === payload.id ? payload : sc),
+                },
+            };
+        case SET_UPDATING_SUB_COMMENT_STATUS:
+            const commentUpdatingStatuses = state.updatingStatuses[payload.commentId] || {};
+            return {
+                ...state,
+                updatingStatuses: {
+                    ...state.updatingStatuses,
+                    [payload.commentId]: {
+                        ...commentUpdatingStatuses,
+                        [payload.subCommentId]: payload.status,
+                    },
+                },
+            };
+        case SET_UPDATING_SUB_COMMENT_ERROR:
+            const commentUpdatingErrors = state.updatingErrors[payload.commentId] || {};
+            return {
+                ...state,
+                updatingErrors: {
+                    ...state.updatingErrors,
+                    [payload.commentId]: {
+                        ...commentUpdatingErrors,
+                        [payload.subCommentId]: payload.error,
+                    },
+                },
             };
         default:
             return state;

@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
             .json({errors: ['user already exist']});
 
     await userService.create({username, password, firstName, lastName});
-    res.status(201).send();
+    res.status(201).json({username});
 });
 
 router.post('/login', async (req, res) => {

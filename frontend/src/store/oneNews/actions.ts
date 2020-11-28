@@ -1,8 +1,8 @@
 import {oneNewsPagePath} from '../../paths';
 import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
-import {CREATE_PATH, FIND_ONE_PATH, UPDATE_PATH} from '../../server/paths/news';
-import {LIKE_UPDATE_PATH} from '../../server/paths/like';
+import {createOneNewsPath, findOneNewsPath, updateOneNewsPath} from '../../server/paths/news';
+import {getLikeUpdatePath} from '../../server/paths/like';
 
 export const SET_ID_OF_ONE_NEWS = 'SET_ID_OF_ONE_NEWS';
 export const SET_ONE_NEWS = 'SET_ONE_NEWS';
@@ -67,7 +67,7 @@ export const cleanOneNewsStatus = () =>
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {
         dispatch(setLoadingOneNewsStatus(fetchProcess.loading));
-        GET(`${FIND_ONE_PATH}${id}`, dispatch)
+        GET(findOneNewsPath(id), dispatch)
             .then(res => res.json())
             .then(oneNews => {
                 dispatch(setOneNews(oneNews));
@@ -88,7 +88,7 @@ export const updateOneNews = (oneNews: {
     text: string
 }) => (dispatch: any) => {
     dispatch(setUpdatingOneNewsStatus(fetchProcess.loading));
-    PUT(UPDATE_PATH + oneNews.id, oneNews, dispatch)
+    PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch)
         .then(res => res.json())
         .then(oneNews => {
             dispatch(setUpdatingOneNewsStatus(fetchProcess.success));
@@ -112,18 +112,11 @@ export const createOneNews = (
         redirect: (path: string) => void
     }) => (dispatch: any) => {
     dispatch(setCreationOneNewsStatus(fetchProcess.loading));
-    POST(CREATE_PATH, oneNews, dispatch)
+    POST(createOneNewsPath(), oneNews, dispatch)
         .then(res => res.json())
         .then(oneNews => {
             dispatch(setCreationOneNewsStatus(fetchProcess.success));
-            dispatch(setOneNews({
-                ...oneNews,
-                statistic: {
-                    commentsCount: 0,
-                    likesCount: 0,
-                },
-                userStatistic: {},
-            }));
+            dispatch(setOneNews(oneNews));
             redirect(oneNewsPagePath(oneNews.id));
         })
         .catch(res => res.json().then(({error}: any) => {
@@ -133,7 +126,7 @@ export const createOneNews = (
 };
 
 export const updateLikeInOneNews = (id: string) => (dispatch: any) => {
-    PUT(LIKE_UPDATE_PATH + id, {}, dispatch)
+    PUT(getLikeUpdatePath(id), {}, dispatch)
         .then(res => res.json())
         .then(({value}: any) => dispatch(likeOneNews(value)));
 }

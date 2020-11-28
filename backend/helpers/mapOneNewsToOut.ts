@@ -13,7 +13,7 @@ export default function mapOneNewsToOut(
         },
         userStatistic: {
             isLiked: !!userLikesCount,
-            isCommented: !!userCommentsCount && !!userSubCommentsCount,
+            isCommented: !!userCommentsCount || !!userSubCommentsCount,
         },
     };
 }

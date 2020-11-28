@@ -1,6 +1,10 @@
 import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
-import {CREATE_PATH, GET_MANY_PATH, UPDATE_PATH} from '../../server/paths/comment';
+import {
+    createCommentPath,
+    getManyCommentsPath,
+    updateCommentPath,
+} from '../../server/paths/comment';
 
 export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
@@ -66,7 +70,7 @@ export const createComment = (comment: {
     oneNewsId: string
 }) => (dispatch: any) => {
     dispatch(setCreatingCommentStatus(fetchProcess.loading));
-    POST(CREATE_PATH + comment.oneNewsId, comment, dispatch)
+    POST(createCommentPath(comment.oneNewsId), comment, dispatch)
         .then(res => res.json())
         .then(newComment => {
             dispatch(setCreatingCommentStatus(fetchProcess.success));
@@ -80,7 +84,7 @@ export const createComment = (comment: {
 
 export const loadComments = (oneNewsId: string) => (dispatch: any) => {
     dispatch(setLoadingCommentsStatus(fetchProcess.loading));
-    GET(GET_MANY_PATH + oneNewsId, dispatch)
+    GET(getManyCommentsPath(oneNewsId), dispatch)
         .then(res => res.json())
         .then(comments => {
             dispatch(setLoadingCommentsStatus(fetchProcess.success));
@@ -100,7 +104,7 @@ export const updateComment = (comment: {
 }) => (dispatch: any) => {
     const {commentId: id, ...anotherComment} = comment;
     dispatch(setUpdatingCommentStatus({id, status: fetchProcess.loading}));
-    PUT(UPDATE_PATH + id, {...anotherComment, id}, dispatch)
+    PUT(updateCommentPath(id), {...anotherComment, id}, dispatch)
         .then(res => res.json())
         .then(updatingComment => {
             dispatch(setUpdatingCommentStatus({id, status: fetchProcess.success}));

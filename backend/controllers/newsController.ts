@@ -18,7 +18,20 @@ router.post('/create',
         const authorId = getUsernameFromResponse(res);
         const {id, title, text, imgSrc, date, tag} =
             await newsService.create({...req.body, authorId});
-        res.json({id, title, text, imgSrc, authorId, date, tag});
+        res.json({
+            id,
+            title,
+            text,
+            imgSrc,
+            authorId,
+            date,
+            tag,
+            statistic: {
+                likesCount: 0,
+                commentsCount: 0,
+            },
+            userStatistic: {},
+        });
     });
 
 router.put('/update/:id',

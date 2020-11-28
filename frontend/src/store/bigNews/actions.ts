@@ -1,7 +1,7 @@
 import {GET, PUT} from '../../server/actions';
-import {FIND_MANY_PATH} from '../../server/paths/news';
+import {findManyNewsPath} from '../../server/paths/news';
 import fetchProcess from '../../types/fetching';
-import {LIKE_UPDATE_PATH} from '../../server/paths/like';
+import {getLikeUpdatePath} from '../../server/paths/like';
 
 export const SET_BIG_NEWS = 'SET_BIG_NEWS';
 export const LIKE_BIG_NEWS = 'LIKE_BIG_NEWS';
@@ -28,10 +28,8 @@ export const setBigNews = (bigNews: any[]) => ({
 //async
 
 export const loadBigNews = (tag?: string) => (dispatch: any) => {
-    let path = FIND_MANY_PATH;
-    if (tag) path += `?tag=${tag}`;
     dispatch(loadingBigNewsStatus(fetchProcess.loading));
-    GET(path, dispatch)
+    GET(findManyNewsPath({tag}), dispatch)
         .then(res => res.json())
         .then(news => {
             dispatch(loadingBigNewsStatus(fetchProcess.success));
@@ -45,7 +43,7 @@ export const loadBigNews = (tag?: string) => (dispatch: any) => {
 
 export const updateLikeInBigNews = (id: string) =>
     (dispatch: any) => {
-        PUT(LIKE_UPDATE_PATH + id, {}, dispatch)
+        PUT(getLikeUpdatePath(id), {}, dispatch)
             .then(res => res.json())
             .then(({value}: any) => dispatch(likeBigNews({value, id})));
     }
