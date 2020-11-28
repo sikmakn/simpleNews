@@ -1,5 +1,6 @@
 import {GET, PUT} from '../../server/actions';
 import {findManyNewsPath} from '../../server/paths/news';
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
 import {getLikeUpdatePath} from '../../server/paths/like';
 
@@ -28,23 +29,28 @@ export const setBigNews = (bigNews: any[]) => ({
 //async
 
 export const loadBigNews = (tag?: string) => (dispatch: any) => {
-    dispatch(loadingBigNewsStatus(fetchProcess.loading));
-    GET(findManyNewsPath({tag}), dispatch)
-        .then(res => res.json())
-        .then(news => {
-            dispatch(loadingBigNewsStatus(fetchProcess.success));
-            dispatch(setBigNews(news));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(loadingBigNewsStatus(fetchProcess.error));
-            dispatch(setErrorOfBigNews(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: GET(findManyNewsPath({tag}), dispatch),
+        dispatch,
+        setStatus: loadingBigNewsStatus,
+        setError: setErrorOfBigNews,
+        setSuccessObj: setBigNews
+    });
+    // dispatch(loadingBigNewsStatus(fetchProcess.loading));
+    // GET(findManyNewsPath({tag}), dispatch)
+    //     .then(news => {
+    //         dispatch(loadingBigNewsStatus(fetchProcess.success));
+    //         dispatch(setBigNews(news));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(loadingBigNewsStatus(fetchProcess.error));
+    //         dispatch(setErrorOfBigNews(error));
+    //     }));
 };
 
 export const updateLikeInBigNews = (id: string) =>
     (dispatch: any) => {
         PUT(getLikeUpdatePath(id), {}, dispatch)
-            .then(res => res.json())
             .then(({value}: any) => dispatch(likeBigNews({value, id})));
     }
 

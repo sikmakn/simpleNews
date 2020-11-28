@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import EditOneNewsPage from './index';
+import CommonEditPage from '../../components/commonEditPage';
 import {cleanOneNewsStatus, loadOneNews, updateOneNews} from '../../store/oneNews/actions';
 import {Redirect} from 'react-router-dom';
 import {noMatchPagePath, oneNewsPagePath} from '../../paths';
@@ -9,7 +9,7 @@ import fetchProcess from '../../types/fetching';
 
 interface EditOneNewsPageHOCProps {
     username?: string
-    id: string
+    oneNewsId:string
     loadOneNews: (id: string) => void
     status?: fetchProcess
     error?: string
@@ -35,16 +35,14 @@ interface EditOneNewsPageHOCProps {
 const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
     ({
          username,
-         id,
+         oneNewsId,
          oneNews,
          loadOneNews,
-         cleanStatus,
          save,
          history,
-         status,
-         error,
+         ...props
      }) => {
-        useEffect(() => loadOneNews(id), [id, loadOneNews]);
+        useEffect(() => loadOneNews(oneNewsId), [oneNewsId, loadOneNews]);
 
         if (!username)
             return <Redirect to={noMatchPagePath()}/>;
@@ -55,21 +53,17 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
         if (oneNews.authorId !== username)
             return <Redirect to={noMatchPagePath()}/>;
 
-        return (<EditOneNewsPage
-            cleanStatus={cleanStatus}
+        return (<CommonEditPage
+            {...props}
+            oneNewsId={oneNewsId}
             oneNews={oneNews}
-            status={status}
-            error={error}
             save={
                 (n: {
                     img: File
                     tag: string
                     title: string
                     text: string
-                }) => {
-                    save({...n, id});
-                    history.push(oneNewsPagePath(oneNews.id))
-                }
+                }) => save({...n, id:oneNewsId})
             }
             cancel={() => history.push(oneNewsPagePath(oneNews.id))}
         />);
@@ -77,7 +71,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
 
 const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
     ({
-        id: ownProps.match?.params?.id,
+        oneNewsId: ownProps.match?.params?.id,
         username: user.value?.username,
         oneNews: oneNews.value,
         history: ownProps.history,

@@ -11,15 +11,16 @@ export interface OneNewsPageProps {
     id: string
     loadOneNews: (id: string) => void
     setId: (id: string) => void
+    cleanStatus: () => void
 }
 
 const OneNewsPage: React.FC<OneNewsPageProps> =
-    ({id, loadOneNews, setId}) => {
+    ({id, loadOneNews, setId, cleanStatus}) => {
         useEffect(() => setId(id), [id, setId]);
 
         useEffect(() => loadOneNews(id),
             [id, loadOneNews]);
-
+        useEffect(() => cleanStatus, [cleanStatus]);
         return (
             <>
                 <HeaderHOC/>

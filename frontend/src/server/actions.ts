@@ -13,11 +13,11 @@ export function PUT(path: string, body: any, dispatch: any) {
 export function GET(path: string, dispatch: any) {
     return fetch(process.env.REACT_APP_SERVER_URL + path, {credentials: 'include'})
         .then(res => {
-            //todo add 404 and 500
             accessToken = res.headers.get('authorization') ?? '';
             if (!accessToken) dispatch(clearUser());
             return res.ok ? res : Promise.reject(res)
-        });
+        })
+        .then(res => res.json());
 }
 
 export function request(method: 'POST' | 'PUT', path: string, body: any, dispatch: any) {
@@ -30,9 +30,11 @@ export function request(method: 'POST' | 'PUT', path: string, body: any, dispatc
         },
         credentials: 'include',
         body: JSON.stringify(body),
-    }).then(res => {
-        accessToken = res.headers.get('authorization') ?? '';
-        if (!accessToken) dispatch(clearUser());
-        return res.ok ? res : Promise.reject(res)
-    });
+    })
+        .then(res => {
+            accessToken = res.headers.get('authorization') ?? '';
+            if (!accessToken) dispatch(clearUser());
+            return res.ok ? res : Promise.reject(res)
+        })
+        .then(res => res.json());
 }

@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import styles from './commonEditPage.module.scss';
+import {oneNewsPagePath} from '../../paths';
+import fetchProcess from '../../types/fetching';
 import {TagEnum} from '../../types/tag';
-import ButtonContainer from '../buttonContainer';
-import TagSelect from '../tagSelect';
 import AddNewsImage from '../addNewsImage';
+import ButtonContainer from '../buttonContainer';
 import EditableDiv from '../editableDiv';
 import HeaderHOC from '../header/hoc';
-import fetchProcess from '../../types/fetching';
 import Loader from '../loader';
+import TagSelect from '../tagSelect';
+import styles from './commonEditPage.module.scss';
+import {Redirect} from 'react-router-dom';
 
 export interface CommonEditPageProps {
+    oneNewsId?: string
     oneNews?: {
         id: string
         imgSrc: string
@@ -32,7 +35,7 @@ export interface CommonEditPageProps {
 const CommonEditPage: React.FC<CommonEditPageProps> =
     ({
          oneNews = {imgSrc: '', tag: TagEnum.FINANCE, title: '', text: ''},
-         save, cancel, error, status, cleanStatus
+         save, cancel, error, status, cleanStatus, oneNewsId
      }) => {
         const {imgSrc: defaultImg, tag: defaultTag, text: defaultText, title: defaultTitle} = oneNews;
         const [title, setTitle] = useState(defaultTitle)
@@ -47,6 +50,9 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
         }, [defaultImg]);
 
         useEffect(() => cleanStatus, [cleanStatus]);
+
+        if (status === fetchProcess.success && oneNewsId)
+            return <Redirect to={oneNewsPagePath(oneNewsId)}/>;
 
         return (
             <>

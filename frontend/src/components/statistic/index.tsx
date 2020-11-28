@@ -26,19 +26,23 @@ const Statistic: React.FC<StatisticProps> =
          id,
          username,
          updateLike,
-         fullStatistic: {userStatistic, statistic},
-     }) => (<>
-        <div onClick={() => {
-            if (username && userStatistic) updateLike(id);
-        }}>
-            <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
-            {makeFriendlyNumber(statistic.likesCount)}
-        </div>
-        <div>
-            <img src={userStatistic?.isCommented ? activeCommentImg : commentImg} alt=""/>
-            {makeFriendlyNumber(statistic.commentsCount)}
-        </div>
-    </>);
+         fullStatistic
+     }) => {
+        if (!fullStatistic) return <>Loading error</>;
+        const {userStatistic, statistic} = fullStatistic;
+        return (<>
+            <div onClick={() => {
+                if (username && userStatistic) updateLike(id);
+            }}>
+                <img src={userStatistic?.isLiked ? activeHeartImg : heartImg} alt=""/>
+                {makeFriendlyNumber(statistic.likesCount)}
+            </div>
+            <div>
+                <img src={userStatistic?.isCommented ? activeCommentImg : commentImg} alt=""/>
+                {makeFriendlyNumber(statistic.commentsCount)}
+            </div>
+        </>);
+    }
 
 
 export default Statistic;

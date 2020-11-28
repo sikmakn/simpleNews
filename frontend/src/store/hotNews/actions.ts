@@ -1,5 +1,6 @@
 import {findManyNewsPath} from '../../server/paths/news';
 import {GET, PUT} from '../../server/actions';
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
 import {getLikeUpdatePath} from '../../server/paths/like';
 
@@ -31,21 +32,26 @@ export const cleanStatusOfHotNews = () =>
     (dispatch: any) => dispatch({type: CLEAN_STATUS_OF_HOT_NEWS});
 
 export const loadHotNews = () => (dispatch: any) => {
-    dispatch(setLoadingHotNewsStatus(fetchProcess.loading));
-    GET(findManyNewsPath({sort: 'hot'}), dispatch)
-        .then(res => res.json())
-        .then(news => {
-            dispatch(setLoadingHotNewsStatus(fetchProcess.success));
-            dispatch(setHotNews(news));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setLoadingHotNewsStatus(fetchProcess.error));
-            dispatch(setErrorOfHotNews(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: GET(findManyNewsPath({sort: 'hot'}), dispatch),
+        setStatus: setLoadingHotNewsStatus,
+        setError: setErrorOfHotNews,
+        setSuccessObj: setHotNews,
+        dispatch
+    });
+    // dispatch(setLoadingHotNewsStatus(fetchProcess.loading));
+    // GET(findManyNewsPath({sort: 'hot'}), dispatch)
+    //     .then(news => {
+    //         dispatch(setLoadingHotNewsStatus(fetchProcess.success));
+    //         dispatch(setHotNews(news));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setLoadingHotNewsStatus(fetchProcess.error));
+    //         dispatch(setErrorOfHotNews(error));
+    //     }));
 };
 
 export const updateLikeInHotNews = (id: string) => (dispatch: any) => {
     PUT(getLikeUpdatePath(id), {}, dispatch)
-        .then(res => res.json())
         .then(({value}: any) => dispatch(likeHotNews({value, id})));
 };

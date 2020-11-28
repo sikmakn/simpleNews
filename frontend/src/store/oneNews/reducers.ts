@@ -6,7 +6,7 @@ import {
     SET_ERROR_LOADING_OF_ONE_NEWS, SET_ID_OF_ONE_NEWS,
     SET_LOADING_ONE_NEWS_STATUS,
     SET_ONE_NEWS,
-    SET_UPDATE_ERROR_OF_ONE_NEWS
+    SET_UPDATE_ERROR_OF_ONE_NEWS, SET_UPDATING_ONE_NEWS_STATUS
 } from './actions';
 import {updateLikeInOneNews} from '../../helpers/updateLikesInNewsCards';
 
@@ -39,6 +39,11 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
                 ...state,
                 updateError: action.payload,
             };
+        case SET_UPDATING_ONE_NEWS_STATUS:
+            return {
+                ...state,
+                updatingStatus: action.payload
+            };
         case SET_LOADING_ONE_NEWS_STATUS:
             return {
                 ...state,
@@ -50,9 +55,7 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
                 loadingError: action.payload,
             };
         case CLEAN_ONE_NEWS_STATUS:
-            return {
-                value: state.value,
-            }
+            return {value: state.value};
         case LIKE_ONE_NEWS:
             return {
                 ...state,

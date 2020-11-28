@@ -1,3 +1,4 @@
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
 import {
@@ -69,31 +70,43 @@ export const createComment = (comment: {
     authorUsername: string
     oneNewsId: string
 }) => (dispatch: any) => {
-    dispatch(setCreatingCommentStatus(fetchProcess.loading));
-    POST(createCommentPath(comment.oneNewsId), comment, dispatch)
-        .then(res => res.json())
-        .then(newComment => {
-            dispatch(setCreatingCommentStatus(fetchProcess.success));
-            dispatch(addComment(newComment));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setCreatingCommentStatus(fetchProcess.error));
-            dispatch(setCreatingErrorOfComment(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: POST(createCommentPath(comment.oneNewsId), comment, dispatch),
+        dispatch,
+        setStatus: setCreatingCommentStatus,
+        setSuccessObj: addComment,
+        setError: setCreatingErrorOfComment,
+    })
+    // dispatch(setCreatingCommentStatus(fetchProcess.loading));
+    // POST(createCommentPath(comment.oneNewsId), comment, dispatch)
+    //     .then(newComment => {
+    //         dispatch(setCreatingCommentStatus(fetchProcess.success));
+    //         dispatch(addComment(newComment));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setCreatingCommentStatus(fetchProcess.error));
+    //         dispatch(setCreatingErrorOfComment(error));
+    //     }));
 }
 
 export const loadComments = (oneNewsId: string) => (dispatch: any) => {
-    dispatch(setLoadingCommentsStatus(fetchProcess.loading));
-    GET(getManyCommentsPath(oneNewsId), dispatch)
-        .then(res => res.json())
-        .then(comments => {
-            dispatch(setLoadingCommentsStatus(fetchProcess.success));
-            dispatch(setComments(comments));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setLoadingCommentsStatus(fetchProcess.error));
-            dispatch(setLoadingCommentsError(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: GET(getManyCommentsPath(oneNewsId), dispatch),
+        dispatch,
+        setSuccessObj: setComments,
+        setError: setLoadingCommentsError,
+        setStatus: setLoadingCommentsStatus,
+    });
+    // dispatch(setLoadingCommentsStatus(fetchProcess.loading));
+    // GET(getManyCommentsPath(oneNewsId), dispatch)
+    //     .then(comments => {
+    //         dispatch(setLoadingCommentsStatus(fetchProcess.success));
+    //         dispatch(setComments(comments));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setLoadingCommentsStatus(fetchProcess.error));
+    //         dispatch(setLoadingCommentsError(error));
+    //     }));
 };
 
 export const updateComment = (comment: {
@@ -103,15 +116,21 @@ export const updateComment = (comment: {
     oneNewsId: string
 }) => (dispatch: any) => {
     const {commentId: id, ...anotherComment} = comment;
-    dispatch(setUpdatingCommentStatus({id, status: fetchProcess.loading}));
-    PUT(updateCommentPath(id), {...anotherComment, id}, dispatch)
-        .then(res => res.json())
-        .then(updatingComment => {
-            dispatch(setUpdatingCommentStatus({id, status: fetchProcess.success}));
-            dispatch(editComment(updatingComment));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setUpdatingCommentStatus({id, status: fetchProcess.error}));
-            dispatch(setUpdatingErrorOfComment({id, error}));
-        }));
+    commonReduxServerActionHandler({
+        commonAction:PUT(updateCommentPath(id), {...anotherComment, id}, dispatch),
+        dispatch,
+        setStatus: status => setUpdatingCommentStatus({id, status}),
+        setError: error => setUpdatingErrorOfComment({id, error}),
+        setSuccessObj:editComment,
+    })
+    // dispatch(setUpdatingCommentStatus({id, status: fetchProcess.loading}));
+    // PUT(updateCommentPath(id), {...anotherComment, id}, dispatch)
+    //     .then(updatingComment => {
+    //         dispatch(setUpdatingCommentStatus({id, status: fetchProcess.success}));
+    //         dispatch(editComment(updatingComment));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setUpdatingCommentStatus({id, status: fetchProcess.error}));
+    //         dispatch(setUpdatingErrorOfComment({id, error}));
+    //     }));
 }

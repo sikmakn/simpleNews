@@ -1,5 +1,6 @@
-import {findManyBasicPath} from '../../server/paths/news';
 import {GET} from '../../server/actions';
+import {findManyBasicPath} from '../../server/paths/news';
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
 
 export const SET_LAST_NEWS = 'SET_LAST_NEWS';
@@ -21,17 +22,23 @@ export const setLastNews = (lastNews: any) => ({
 // async
 
 export const loadLastNews = () => (dispatch: any) => {
-    dispatch(setLoadingLastNewsStatus(fetchProcess.loading));
-    GET(findManyBasicPath({sort: 'last'}), dispatch)
-        .then(res => res.json())
-        .then(news => {
-            dispatch(setLoadingLastNewsStatus(fetchProcess.success));
-            dispatch(setLastNews(news));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setLoadingLastNewsStatus(fetchProcess.error));
-            dispatch(setErrorOfLastNews(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: GET(findManyBasicPath({sort: 'last'}), dispatch),
+        dispatch,
+        setStatus: setLoadingLastNewsStatus,
+        setError: setErrorOfLastNews,
+        setSuccessObj: setLastNews,
+    })
+    // dispatch(setLoadingLastNewsStatus(fetchProcess.loading));
+    // GET(findManyBasicPath({sort: 'last'}), dispatch)
+    //     .then(news => {
+    //         dispatch(setLoadingLastNewsStatus(fetchProcess.success));
+    //         dispatch(setLastNews(news));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setLoadingLastNewsStatus(fetchProcess.error));
+    //         dispatch(setErrorOfLastNews(error));
+    //     }));
 };
 
 export const cleanStatusOfLastNews = () => (dispatch: any) =>

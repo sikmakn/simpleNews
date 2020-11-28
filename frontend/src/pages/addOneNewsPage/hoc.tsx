@@ -1,50 +1,26 @@
 import React from 'react';
-import AddOneNewsPage from './index';
+import CommonEditPage, {CommonEditPageProps} from '../../components/commonEditPage';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {mainPagePath, noMatchPagePath} from '../../paths';
 import {cleanOneNewsStatus, createOneNews} from '../../store/oneNews/actions';
-import fetchProcess from '../../types/fetching';
 
-interface AddOneNewsPageHOCProps {
-    error?: string
-    status?: fetchProcess
+interface AddOneNewsPageHOCProps extends CommonEditPageProps {
     user?: any
-    cleanStatus: ()=>void
-    save: (oneNews: {
-        img: File
-        tag: string
-        title: string
-        text: string
-        redirect: (path: string) => void,
-    }) => void,
     history: any
 }
 
 const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> =
-    ({user, save, history, status, error, cleanStatus}) =>
+    ({user, history, ...props}) =>
         user ?
-            <AddOneNewsPage
-                error={error}
-                cleanStatus={cleanStatus}
-                status={status}
-                save={(oneNews: {
-                    img: File
-                    tag: string
-                    title: string
-                    text: string
-                }) =>
-                    save({
-                        ...oneNews,
-                        redirect: history.push
-                    })
-                }
+            <CommonEditPage
+                {...props}
                 cancel={() => history.push(mainPagePath())}
             /> :
             <Redirect to={noMatchPagePath()}/>;
 
-
 const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
+    oneNewsId: oneNews.id,
     user: user.value,
     status: oneNews.creatingStatus,
     error: oneNews.creatingError,

@@ -1,4 +1,4 @@
-import {oneNewsPagePath} from '../../paths';
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
 import {createOneNewsPath, findOneNewsPath, updateOneNewsPath} from '../../server/paths/news';
@@ -66,17 +66,23 @@ export const cleanOneNewsStatus = () =>
 
 export const loadOneNews = (id: string) =>
     (dispatch: any) => {
-        dispatch(setLoadingOneNewsStatus(fetchProcess.loading));
-        GET(findOneNewsPath(id), dispatch)
-            .then(res => res.json())
-            .then(oneNews => {
-                dispatch(setOneNews(oneNews));
-                dispatch(setLoadingOneNewsStatus(fetchProcess.success));
-            })
-            .catch(res => res.json().then(({error}: any) => {
-                dispatch(setLoadingOneNewsStatus(fetchProcess.error));
-                dispatch(setErrorLoadingOfOneNews(error));
-            }));
+        commonReduxServerActionHandler({
+            commonAction: GET(findOneNewsPath(id), dispatch),
+            setSuccessObj: setOneNews,
+            setError: setErrorLoadingOfOneNews,
+            setStatus: setLoadingOneNewsStatus,
+            dispatch,
+        });
+        // dispatch(setLoadingOneNewsStatus(fetchProcess.loading));
+        // GET(findOneNewsPath(id), dispatch)
+        //     .then(oneNews => {
+        //         dispatch(setOneNews(oneNews));
+        //         dispatch(setLoadingOneNewsStatus(fetchProcess.success));
+        //     })
+        //     .catch(res => res.json().then(({error}: any) => {
+        //         dispatch(setLoadingOneNewsStatus(fetchProcess.error));
+        //         dispatch(setErrorLoadingOfOneNews(error));
+        //     }));
     };
 
 
@@ -87,46 +93,52 @@ export const updateOneNews = (oneNews: {
     title: string
     text: string
 }) => (dispatch: any) => {
-    dispatch(setUpdatingOneNewsStatus(fetchProcess.loading));
-    PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch)
-        .then(res => res.json())
-        .then(oneNews => {
-            dispatch(setUpdatingOneNewsStatus(fetchProcess.success));
-            dispatch(setOneNews(oneNews));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setUpdatingOneNewsStatus(fetchProcess.error));
-            dispatch(setUpdateErrorOfOneNews(error));
-        }));
+    commonReduxServerActionHandler({
+        commonAction: PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch),
+        setStatus: setUpdatingOneNewsStatus,
+        setSuccessObj: setOneNews,
+        setError: setUpdateErrorOfOneNews,
+        dispatch,
+    })
+    // dispatch(setUpdatingOneNewsStatus(fetchProcess.loading));
+    // PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch)
+    //     .then(oneNews => {
+    //         dispatch(setUpdatingOneNewsStatus(fetchProcess.success));
+    //         dispatch(setOneNews(oneNews));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setUpdatingOneNewsStatus(fetchProcess.error));
+    //         dispatch(setUpdateErrorOfOneNews(error));
+    //     }));
 };
 
-export const createOneNews = (
-    {
-        redirect,
-        ...oneNews
-    }: {
-        img: File
-        tag: string
-        title: string
-        text: string
-        redirect: (path: string) => void
-    }) => (dispatch: any) => {
-    dispatch(setCreationOneNewsStatus(fetchProcess.loading));
-    POST(createOneNewsPath(), oneNews, dispatch)
-        .then(res => res.json())
-        .then(oneNews => {
-            dispatch(setCreationOneNewsStatus(fetchProcess.success));
-            dispatch(setOneNews(oneNews));
-            redirect(oneNewsPagePath(oneNews.id));
-        })
-        .catch(res => res.json().then(({error}: any) => {
-            dispatch(setCreationOneNewsStatus(fetchProcess.error));
-            dispatch(setCreatingErrorOfOneNews(error));
-        }));
+export const createOneNews = (oneNews: {
+    img: File
+    tag: string
+    title: string
+    text: string
+}) => (dispatch: any) => {
+    commonReduxServerActionHandler({
+        commonAction: POST(createOneNewsPath(), oneNews, dispatch),
+        dispatch,
+        setStatus: setCreationOneNewsStatus,
+        setSuccessObj: res => setIdOfOneNews(res.id),
+        setError: setCreatingErrorOfOneNews,
+    })
+    // dispatch(setCreationOneNewsStatus(fetchProcess.loading));
+    // POST(createOneNewsPath(), oneNews, dispatch)
+    //     .then(oneNews => {
+    //         dispatch(setCreationOneNewsStatus(fetchProcess.success));
+    //         dispatch(setOneNews(oneNews));
+    //         redirect(oneNewsPagePath(oneNews.id));
+    //     })
+    //     .catch(res => res.json().then(({error}: any) => {
+    //         dispatch(setCreationOneNewsStatus(fetchProcess.error));
+    //         dispatch(setCreatingErrorOfOneNews(error));
+    //     }));
 };
 
 export const updateLikeInOneNews = (id: string) => (dispatch: any) => {
     PUT(getLikeUpdatePath(id), {}, dispatch)
-        .then(res => res.json())
         .then(({value}: any) => dispatch(likeOneNews(value)));
 }
