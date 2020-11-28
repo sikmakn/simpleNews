@@ -28,7 +28,7 @@ export const setBigNews = (bigNews: any[]) => ({
 
 //async
 
-export const loadBigNews = (tag?: string) => (dispatch: any) => {
+export const loadBigNews = (tag?: string) => (dispatch: any) =>
     commonReduxServerActionHandler({
         commonAction: GET(findManyNewsPath({tag}), dispatch),
         dispatch,
@@ -36,17 +36,6 @@ export const loadBigNews = (tag?: string) => (dispatch: any) => {
         setError: setErrorOfBigNews,
         setSuccessObj: setBigNews
     });
-    // dispatch(loadingBigNewsStatus(fetchProcess.loading));
-    // GET(findManyNewsPath({tag}), dispatch)
-    //     .then(news => {
-    //         dispatch(loadingBigNewsStatus(fetchProcess.success));
-    //         dispatch(setBigNews(news));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(loadingBigNewsStatus(fetchProcess.error));
-    //         dispatch(setErrorOfBigNews(error));
-    //     }));
-};
 
 export const updateLikeInBigNews = (id: string) =>
     (dispatch: any) => {

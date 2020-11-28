@@ -39,16 +39,6 @@ export const loadHotNews = () => (dispatch: any) => {
         setSuccessObj: setHotNews,
         dispatch
     });
-    // dispatch(setLoadingHotNewsStatus(fetchProcess.loading));
-    // GET(findManyNewsPath({sort: 'hot'}), dispatch)
-    //     .then(news => {
-    //         dispatch(setLoadingHotNewsStatus(fetchProcess.success));
-    //         dispatch(setHotNews(news));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setLoadingHotNewsStatus(fetchProcess.error));
-    //         dispatch(setErrorOfHotNews(error));
-    //     }));
 };
 
 export const updateLikeInHotNews = (id: string) => (dispatch: any) => {

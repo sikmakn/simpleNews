@@ -21,25 +21,14 @@ export const setLastNews = (lastNews: any) => ({
 
 // async
 
-export const loadLastNews = () => (dispatch: any) => {
-    commonReduxServerActionHandler({
+export const loadLastNews = () =>
+    (dispatch: any) => commonReduxServerActionHandler({
         commonAction: GET(findManyBasicPath({sort: 'last'}), dispatch),
         dispatch,
         setStatus: setLoadingLastNewsStatus,
         setError: setErrorOfLastNews,
         setSuccessObj: setLastNews,
-    })
-    // dispatch(setLoadingLastNewsStatus(fetchProcess.loading));
-    // GET(findManyBasicPath({sort: 'last'}), dispatch)
-    //     .then(news => {
-    //         dispatch(setLoadingLastNewsStatus(fetchProcess.success));
-    //         dispatch(setLastNews(news));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setLoadingLastNewsStatus(fetchProcess.error));
-    //         dispatch(setErrorOfLastNews(error));
-    //     }));
-};
+    });
 
 export const cleanStatusOfLastNews = () => (dispatch: any) =>
     dispatch({type: CLEAN_STATUS_OF_LAST_NEWS});

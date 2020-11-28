@@ -66,16 +66,6 @@ export const loadSubComments = (commentId: string) => (dispatch: any) => {
         setError: (error: string) => setLoadingSubCommentError({commentId, error}),
         setSuccessObj: (subComments: any) => setSubComments({commentId, subComments})
     });
-    // dispatch(setLoadingSubCommentStatus({commentId, status: fetchProcess.loading}));
-    // GET(getSubCommentsPath(commentId), dispatch)
-    //     .then((subComments: any[]) => {
-    //         dispatch(setSubComments({commentId, subComments}));
-    //         dispatch(setLoadingSubCommentStatus({commentId, status: fetchProcess.success}));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setLoadingSubCommentStatus({commentId, status: fetchProcess.error}));
-    //         dispatch(setLoadingSubCommentError({commentId, error}));
-    //     }));
 };
 
 export const createSubComment = (subComment: {
@@ -91,25 +81,7 @@ export const createSubComment = (subComment: {
         dispatch,
         setStatus: status => setCreatingSubCommentStatus({commentId, status}),
         setError: error => setCreatingSubCommentError({commentId, error})
-    })
-    // dispatch(setCreatingSubCommentStatus({
-    //     commentId, status: fetchProcess.loading,
-    // }));
-    // POST(createSubCommentPath(subComment.commentId), subComment, dispatch)
-    //     .then(sc => {
-    //         dispatch(setCreatingSubCommentStatus({
-    //             commentId, status: fetchProcess.success,
-    //         }));
-    //         dispatch(addSubComment(sc));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setCreatingSubCommentStatus({
-    //             commentId, status: fetchProcess.error,
-    //         }));
-    //         dispatch(setCreatingSubCommentError({
-    //             commentId, error
-    //         }));
-    //     }));
+    });
 };
 
 export const updateSubComment = (subComment: {
@@ -126,23 +98,5 @@ export const updateSubComment = (subComment: {
         setSuccessObj: editSubComment,
         setStatus: status => setUpdatingSubCommentStatus({commentId, subCommentId, status}),
         setError: error => dispatch(setUpdatingSubCommentError({commentId, subCommentId, error}))
-    })
-    // dispatch(setUpdatingSubCommentStatus({
-    //     commentId,
-    //     subCommentId,
-    //     status: fetchProcess.success,
-    // }))
-    // PUT(updateSubCommentPath(subCommentId), {...subComment, id: subCommentId}, dispatch)
-    //     .then(sc => {
-    //         dispatch(setUpdatingSubCommentStatus({
-    //             commentId,
-    //             subCommentId,
-    //             status: fetchProcess.success
-    //         }));
-    //         dispatch(editSubComment(sc));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setUpdatingSubCommentStatus({commentId, subCommentId, status: fetchProcess.error}));
-    //         dispatch(setUpdatingSubCommentError({commentId, subCommentId, error}));
-    //     }));
-}
+    });
+};

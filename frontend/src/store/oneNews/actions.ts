@@ -103,4 +103,4 @@ export const createOneNews = (oneNews: {
 export const updateLikeInOneNews = (id: string) => (dispatch: any) => {
     PUT(getLikeUpdatePath(id), {}, dispatch)
         .then(({value}: any) => dispatch(likeOneNews(value)));
-}
+};
