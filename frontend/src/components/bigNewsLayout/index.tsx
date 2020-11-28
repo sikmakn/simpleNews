@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import BigNewsCard, {BigNewsCardProps} from '../bigNewsCard';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import styles from './bigNewsLayout.module.scss';
 import Loader from '../loader';
 import fetchProcess from '../../types/fetching';
@@ -29,7 +31,9 @@ const BigNewsLayout: React.FC<BigNewsLayoutProps> =
 
         return (
             <div className={styles.mainNewsContainer}>
-                {error}
+                {error && <ErrorLayout>
+                    <ErrorMessage message={error}/>
+                </ErrorLayout>}
                 {status === fetchProcess.loading && <Loader size={200}/>}
                 {bigNews?.map(n => <BigNewsCard key={n.id} {...n}/>)}
             </div>

@@ -1,6 +1,6 @@
 import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 import fetchProcess from '../../types/fetching';
-import {GET, POST, PUT} from '../../server/actions';
+import {GET, POSTForm, PUT, PUTForm} from '../../server/actions';
 import {createOneNewsPath, findOneNewsPath, updateOneNewsPath} from '../../server/paths/news';
 import {getLikeUpdatePath} from '../../server/paths/like';
 
@@ -65,26 +65,13 @@ export const cleanOneNewsStatus = () =>
     (dispatch: any) => dispatch({type: CLEAN_ONE_NEWS_STATUS});
 
 export const loadOneNews = (id: string) =>
-    (dispatch: any) => {
-        commonReduxServerActionHandler({
-            commonAction: GET(findOneNewsPath(id), dispatch),
-            setSuccessObj: setOneNews,
-            setError: setErrorLoadingOfOneNews,
-            setStatus: setLoadingOneNewsStatus,
-            dispatch,
-        });
-        // dispatch(setLoadingOneNewsStatus(fetchProcess.loading));
-        // GET(findOneNewsPath(id), dispatch)
-        //     .then(oneNews => {
-        //         dispatch(setOneNews(oneNews));
-        //         dispatch(setLoadingOneNewsStatus(fetchProcess.success));
-        //     })
-        //     .catch(res => res.json().then(({error}: any) => {
-        //         dispatch(setLoadingOneNewsStatus(fetchProcess.error));
-        //         dispatch(setErrorLoadingOfOneNews(error));
-        //     }));
-    };
-
+    (dispatch: any) => commonReduxServerActionHandler({
+        commonAction: GET(findOneNewsPath(id), dispatch),
+        setSuccessObj: setOneNews,
+        setError: setErrorLoadingOfOneNews,
+        setStatus: setLoadingOneNewsStatus,
+        dispatch,
+    });
 
 export const updateOneNews = (oneNews: {
     id: string
@@ -92,51 +79,26 @@ export const updateOneNews = (oneNews: {
     tag: string
     title: string
     text: string
-}) => (dispatch: any) => {
-    commonReduxServerActionHandler({
-        commonAction: PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch),
-        setStatus: setUpdatingOneNewsStatus,
-        setSuccessObj: setOneNews,
-        setError: setUpdateErrorOfOneNews,
-        dispatch,
-    })
-    // dispatch(setUpdatingOneNewsStatus(fetchProcess.loading));
-    // PUT(updateOneNewsPath(oneNews.id), oneNews, dispatch)
-    //     .then(oneNews => {
-    //         dispatch(setUpdatingOneNewsStatus(fetchProcess.success));
-    //         dispatch(setOneNews(oneNews));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setUpdatingOneNewsStatus(fetchProcess.error));
-    //         dispatch(setUpdateErrorOfOneNews(error));
-    //     }));
-};
+}) => (dispatch: any) => commonReduxServerActionHandler({
+    commonAction: PUTForm(updateOneNewsPath(oneNews.id), oneNews, dispatch),
+    setStatus: setUpdatingOneNewsStatus,
+    setSuccessObj: setOneNews,
+    setError: setUpdateErrorOfOneNews,
+    dispatch,
+});
 
 export const createOneNews = (oneNews: {
     img: File
     tag: string
     title: string
     text: string
-}) => (dispatch: any) => {
-    commonReduxServerActionHandler({
-        commonAction: POST(createOneNewsPath(), oneNews, dispatch),
-        dispatch,
-        setStatus: setCreationOneNewsStatus,
-        setSuccessObj: res => setIdOfOneNews(res.id),
-        setError: setCreatingErrorOfOneNews,
-    })
-    // dispatch(setCreationOneNewsStatus(fetchProcess.loading));
-    // POST(createOneNewsPath(), oneNews, dispatch)
-    //     .then(oneNews => {
-    //         dispatch(setCreationOneNewsStatus(fetchProcess.success));
-    //         dispatch(setOneNews(oneNews));
-    //         redirect(oneNewsPagePath(oneNews.id));
-    //     })
-    //     .catch(res => res.json().then(({error}: any) => {
-    //         dispatch(setCreationOneNewsStatus(fetchProcess.error));
-    //         dispatch(setCreatingErrorOfOneNews(error));
-    //     }));
-};
+}) => (dispatch: any) => commonReduxServerActionHandler({
+    commonAction: POSTForm(createOneNewsPath(), oneNews, dispatch),
+    dispatch,
+    setStatus: setCreationOneNewsStatus,
+    setSuccessObj: res => setIdOfOneNews(res.id),
+    setError: setCreatingErrorOfOneNews,
+});
 
 export const updateLikeInOneNews = (id: string) => (dispatch: any) => {
     PUT(getLikeUpdatePath(id), {}, dispatch)

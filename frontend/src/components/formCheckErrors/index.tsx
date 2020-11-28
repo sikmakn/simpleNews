@@ -1,19 +1,15 @@
 import React from 'react';
 import {ValueObj} from '../checkInput';
-import styles from './formCheckErrors.module.scss';
+import ErrorMessage from '../errorMessage';
 
 interface FormCheckErrorsProps {
     valueObj?: ValueObj
 }
 
 const FormCheckErrors: React.FC<FormCheckErrorsProps> = ({valueObj}) =>
-    (
-        <>
-            {
-                valueObj?.errors?.map((err, i) =>
-                <span key={i} className={styles.error}>{err}</span>)
-            }
-        </>
-    );
+    (<>
+        {valueObj?.errors?.map((err, i) =>
+            <ErrorMessage message={err} key={i}/>)}
+    </>);
 
 export default FormCheckErrors;

@@ -1,4 +1,4 @@
-import {GET, POST, PUT} from '../../server/actions';
+import {GET, POST, PUTForm} from '../../server/actions';
 import {LOGIN_PATH, LOGOUT_PATH, REGISTER_PATH, UPDATE_PATH} from '../../server/paths/user';
 import fetchProcess from '../../types/fetching';
 
@@ -51,13 +51,19 @@ export const registerNewUser = (user: {
 }) => (dispatch: any) => {
     dispatch(setProcessRegistrationStatus(fetchProcess.loading));
     POST(REGISTER_PATH, user, dispatch)
-        .then(res => res.json())
         .then(() =>
             dispatch(setProcessRegistrationStatus(fetchProcess.success)))
-        .catch(res => res.json().then((res: any) => {
-            dispatch(setUserRegisterErrors(res.errors));
-            dispatch(setProcessRegistrationStatus(fetchProcess.error));
-        }));
+        .catch(res => {
+            if(res.message){
+                dispatch(setUserRegisterErrors([res.message]));
+                dispatch(setProcessRegistrationStatus(fetchProcess.error));
+                return
+            }
+            res.json().then((res: any) => {
+                dispatch(setUserRegisterErrors(res.errors));
+                dispatch(setProcessRegistrationStatus(fetchProcess.error));
+            })
+        });
 };
 
 export const signInUser = ({username, password}: {
@@ -66,7 +72,6 @@ export const signInUser = ({username, password}: {
 }) => (dispatch: any) => {
     dispatch(setProcessLoginStatus(fetchProcess.loading));
     POST(LOGIN_PATH, {username, password}, dispatch)
-        .then(res => res.json())
         .then(({username, firstName, lastName, imgSrc}) => {
             dispatch(setProcessLoginStatus(fetchProcess.success));
             dispatch(setUser({
@@ -76,10 +81,17 @@ export const signInUser = ({username, password}: {
                 imgSrc: imgSrc || undefined,
             }))
         })
-        .catch(res => res.json().then((res: any) => {
-            dispatch(setProcessLoginErrors(res.errors));
-            dispatch(setProcessLoginStatus(fetchProcess.error));
-        }));
+        .catch(res => {
+            if(res.message){
+                dispatch(setProcessLoginErrors([res.message]));
+                dispatch(setProcessLoginStatus(fetchProcess.error));
+                return
+            }
+            res.json().then((res: any) => {
+                dispatch(setProcessLoginErrors(res.errors));
+                dispatch(setProcessLoginStatus(fetchProcess.error));
+            })
+        });
 };
 
 export const logOutUser = () => (dispatch: any) => {
@@ -95,14 +107,20 @@ export const updateUserData = (user: {
     newPassword?: string
 }) => (dispatch: any) => {
     dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
-    PUT(UPDATE_PATH, user, dispatch)
-        .then(res => res.json())
+    PUTForm(UPDATE_PATH, user, dispatch)
         .then(updatedUser => {
             dispatch(setProcessUpdateUserStatus(fetchProcess.success));
             dispatch(setUser(updatedUser));
         })
-        .catch(res => res.json().then((res: any) => {
-            dispatch(setProcessUpdateUserErrors(res.error));
-            dispatch(setProcessUpdateUserStatus(fetchProcess.error));
-        }));
+        .catch(res => {
+            if(res.message){
+                dispatch(setProcessUpdateUserErrors(res.message));
+                dispatch(setProcessUpdateUserStatus(fetchProcess.error));
+                return
+            }
+            res.json().then((res: any) => {
+                dispatch(setProcessUpdateUserErrors(res.error));
+                dispatch(setProcessUpdateUserStatus(fetchProcess.error));
+            })
+        });
 };

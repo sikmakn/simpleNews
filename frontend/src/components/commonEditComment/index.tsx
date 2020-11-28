@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import styles from './commonEditComment.module.scss';
 import UserImage from '../userImage';
 import ButtonContainer from '../buttonContainer';
@@ -70,7 +72,9 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
                             onChange={event => setText(event.target.value)}
                         />
                     </div>
-                    {error}
+                    {error && <ErrorLayout>
+                        <ErrorMessage message={error}/>
+                    </ErrorLayout>}
                     {status === fetchProcess.loading && <Loader size={30}/>}
                     <ButtonContainer
                         addButtonName="Сохранить"

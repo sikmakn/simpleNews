@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import styles from './commentsContainer.module.scss';
 import FullComment, {FullCommentProps} from '../fullComment';
 import Loader from '../loader';
@@ -30,7 +32,9 @@ const CommentsContainer: React.FC<CommentsContainerProps> =
 
         return (
             <div className={styles.commentsContainer}>
-                {error}
+                {error && <ErrorLayout>
+                    <ErrorMessage message={error}/>
+                </ErrorLayout>}
                 {status === fetchProcess.loading && <Loader size={150}/>}
                 {comments?.map(c => <FullComment key={c.id} {...c}/>)}
             </div>

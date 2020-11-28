@@ -8,7 +8,7 @@ import FirstNameInput from '../firstNameInput';
 import LastNameInput from '../lastNameInput';
 import FormCheckErrors from '../formCheckErrors';
 import UsernameInput from '../usernameInput';
-import FormCheckErrorLayout from '../formCheckErrorsLayout';
+import ErrorLayout from '../errorsLayout';
 import {checkManyValue} from '../../helpers/valueObj';
 import fetchProcess from '../../types/fetching';
 import Loader from '../loader';
@@ -55,14 +55,14 @@ const SignUpForm: React.FC<SignUpFormProps> =
                     setValueObj={setPasswordValueObj}
                     className={styles.password}
                 />
-                <FormCheckErrorLayout>
+                <ErrorLayout>
                     <FormCheckErrors valueObj={{errors, value: ''}}/>
 
                     <FormCheckErrors valueObj={usernameValueObj}/>
                     <FormCheckErrors valueObj={firstNameValueObj}/>
                     <FormCheckErrors valueObj={lastNameValueObj}/>
                     <FormCheckErrors valueObj={passwordValueObj}/>
-                </FormCheckErrorLayout>
+                </ErrorLayout>
                 <UserFormButton
                     title="Зарегестрироваться"
                     onClick={() => {

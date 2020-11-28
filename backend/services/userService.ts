@@ -1,6 +1,7 @@
 import User from '../db/models/User';
 import connection from '../db/connection';
 import makeRandomString from '../helpers/makeRandomString';
+import * as s3Service from './s3Service';
 import argon2 from 'argon2';
 
 const userRepository = connection.getRepository(User);
@@ -47,12 +48,20 @@ export async function update(
             lastName: string
             img?: File
         }) {
-    //todo made to fileStorage img
+    let imgSrc: string | undefined;
+    if (img) {
+        const result = await s3Service.removeFile(username);
+        console.log(result)
+        imgSrc = await s3Service.saveFile({key: username, stream: img.stream});
+        console.log(imgSrc)
+    }
+console.log(img)
     let newUser;
     if (newPassword) {
         const {hashedPassword, salt} = await createPassword(newPassword);
         newUser = {
             username,
+            imgSrc,
             salt,
             password: hashedPassword,
             ...name,
@@ -60,6 +69,7 @@ export async function update(
     } else {
         newUser = {
             username,
+            imgSrc,
             ...name,
         };
     }

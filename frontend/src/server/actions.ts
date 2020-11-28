@@ -1,13 +1,36 @@
+import mapObjectToFormData from '../helpers/mapObjectToFormData';
 import {clearUser} from '../store/user/actions';
 
 let accessToken = '';
 
+export function POSTForm(path: string, body: any, dispatch: any) {
+    const formBody = mapObjectToFormData(body);
+    return request({method: 'POST', path, body: formBody, dispatch});
+}
+
 export function POST(path: string, body: any, dispatch: any) {
-    return request('POST', path, body, dispatch);
+    return request({
+        method: 'POST',
+        path,
+        body: JSON.stringify(body),
+        dispatch,
+        contentType: 'application/json',
+    });
+}
+
+export function PUTForm(path: string, body: any, dispatch: any) {
+    const formBody = mapObjectToFormData(body);
+    return request({method: 'PUT', path, body: formBody, dispatch});
 }
 
 export function PUT(path: string, body: any, dispatch: any) {
-    return request('PUT', path, body, dispatch);
+    return request({
+        method: 'PUT',
+        path,
+        body: JSON.stringify(body),
+        dispatch,
+        contentType: 'application/json',
+    });
 }
 
 export function GET(path: string, dispatch: any) {
@@ -20,17 +43,23 @@ export function GET(path: string, dispatch: any) {
         .then(res => res.json());
 }
 
-export function request(method: 'POST' | 'PUT', path: string, body: any, dispatch: any) {
-    return fetch(process.env.REACT_APP_SERVER_URL + path, {
-        method: method,
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': accessToken
-        },
-        credentials: 'include',
-        body: JSON.stringify(body),
-    })
+export function request(
+    {method, dispatch, path, body, contentType}:
+        {
+            method: 'POST' | 'PUT',
+            path: string,
+            body: any,
+            dispatch: any,
+            contentType?: string
+        }) {
+
+    const headers: any = {
+        'Authorization': accessToken
+    };
+    if (contentType) headers['Content-type'] = contentType;
+
+    return fetch(process.env.REACT_APP_SERVER_URL + path,
+        {method, headers, body, mode: 'cors', credentials: 'include'})
         .then(res => {
             accessToken = res.headers.get('authorization') ?? '';
             if (!accessToken) dispatch(clearUser());

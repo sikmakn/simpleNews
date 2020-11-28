@@ -8,7 +8,7 @@ import {ValueObj} from '../../components/checkInput';
 import PasswordInput from '../../components/passwordInput';
 import FirstNameInput from '../../components/firstNameInput';
 import LastNameInput from '../../components/lastNameInput';
-import FormCheckErrorLayout from '../../components/formCheckErrorsLayout';
+import ErrorLayout from '../../components/errorsLayout';
 import FormCheckErrors from '../../components/formCheckErrors';
 import LogOutButtonHOC from '../../components/logoutButton/hoc';
 import {checkManyValue} from '../../helpers/valueObj';
@@ -92,16 +92,14 @@ const UserPage: React.FC<UserPageProps> =
                             setValueObj={setPasswordValueObj}
                             className={styles.newPassword}
                         />
-                        <FormCheckErrorLayout>
+                        <ErrorLayout>
                             <FormCheckErrors valueObj={{value: '', errors: error ? [error] : undefined}}/>
                             <FormCheckErrors valueObj={firstNameValueObj}/>
                             <FormCheckErrors valueObj={lastNameValueObj}/>
                             <FormCheckErrors valueObj={passwordValueObj}/>
-                            {
-                                newPasswordValueObj?.value &&
-                                <FormCheckErrors valueObj={newPasswordValueObj}/>
-                            }
-                        </FormCheckErrorLayout>
+                            {newPasswordValueObj?.value &&
+                                <FormCheckErrors valueObj={newPasswordValueObj}/>}
+                        </ErrorLayout>
                         <UserFormButton
                             title="Сохранить изменения"
                             onClick={() => {

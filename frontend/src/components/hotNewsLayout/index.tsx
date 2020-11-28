@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import HotNewsCard, {HotNewsCardProps} from '../hotNewsCard';
 import NewsColumnLayout from '../newsColumnLayout';
 import Loader from '../loader';
@@ -26,7 +28,9 @@ const HotNewsLayout: React.FC<HotNewsLayoutProps> =
 
         return (
             <NewsColumnLayout columnTitle={'Горячее'}>
-                {error}
+                {error && <ErrorLayout>
+                    <ErrorMessage message={error}/>
+                </ErrorLayout>}
                 {status === fetchProcess.loading && <Loader size={100}/>}
                 {hotNews?.map(n => <HotNewsCard key={n.id} {...n}/>)}
             </NewsColumnLayout>

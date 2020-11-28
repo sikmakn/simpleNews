@@ -28,18 +28,16 @@ const FullNews: React.FC<FullNewsProps> =
         return (
             <div className={styles.fullNewsContainer}>
                 {status === fetchProcess.loading && <Loader size={400}/>}
-                {
-                    content &&
-                    <>
-                        <div className={styles.infoContainer}>
-                            <Tag type={content.tag as TagEnum}/>
-                            <DateString date={content.date}/>
-                        </div>
-                        <h1>{content.title}</h1>
-                        <img src={content.imgSrc} alt=""/>
-                        <div className={styles.fullText}>{content.text}</div>
-                    </>
-                }
+                {content &&
+                <>
+                    <div className={styles.infoContainer}>
+                        <Tag type={content.tag as TagEnum}/>
+                        <DateString date={content.date}/>
+                    </div>
+                    <h1>{content.title}</h1>
+                    <img src={content.imgSrc} alt=""/>
+                    <div className={styles.fullText}>{content.text}</div>
+                </>}
             </div>
         );
     }

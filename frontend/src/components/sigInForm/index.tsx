@@ -4,7 +4,7 @@ import UserFormButton from '../userFormButton';
 import UsernameInput from '../usernameInput';
 import {ValueObj} from '../checkInput';
 import PasswordInput from '../passwordInput';
-import FormCheckErrorLayout from '../formCheckErrorsLayout';
+import ErrorLayout from '../errorsLayout';
 import FormCheckErrors from '../formCheckErrors';
 import checkValue from '../../helpers/valueObj';
 import fetchProcess from '../../types/fetching';
@@ -34,11 +34,11 @@ const SignInForm: React.FC<SignInFormProps> =
                     setValueObj={setPasswordValueObj}
                     className={styles.password}
                 />
-                <FormCheckErrorLayout>
+                <ErrorLayout>
                     <FormCheckErrors valueObj={{errors, value: ''}}/>
                     <FormCheckErrors valueObj={usernameValueObj}/>
                     <FormCheckErrors valueObj={passwordValueObj}/>
-                </FormCheckErrorLayout>
+                </ErrorLayout>
 
                 <UserFormButton title="Войти" onClick={() => {
                     if (!checkValue(usernameValueObj) || !checkValue(passwordValueObj)) return;

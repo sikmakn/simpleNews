@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import styles from './addComment.module.scss';
 import ButtonContainer from '../buttonContainer';
 import defaultUserImage from '../../assets/no-image.png';
@@ -42,7 +44,9 @@ const AddComment: React.FC<AddCommentsProps> =
                     value={text}
                     onChange={event => setText(event.target.value)}
                 />
-                {error}
+                {error && <ErrorLayout>
+                    <ErrorMessage message={error}/>
+                </ErrorLayout>}
                 {status === fetchProcess.loading && <Loader size={50}/>}
                 <ButtonContainer
                     addButtonName="Оставить комментарий"

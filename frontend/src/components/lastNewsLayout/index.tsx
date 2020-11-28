@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import LastNewsCard, {LastNewsCardProps} from '../lastNewsCard';
 import NewsColumnLayout from '../newsColumnLayout';
 import Loader from '../loader';
@@ -27,7 +29,9 @@ const LastNewsLayout: React.FC<LastNewsLayoutProps> =
 
         return (
             <NewsColumnLayout columnTitle="Последние новости">
-                {error}
+                {error && <ErrorLayout>
+                    <ErrorMessage message={error}/>
+                </ErrorLayout>}
                 {status === fetchProcess.loading && <Loader size={50}/>}
                 {lastNews?.map(n => <LastNewsCard key={n.id} {...n}/>)}
             </NewsColumnLayout>

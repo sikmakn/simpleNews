@@ -17,14 +17,15 @@ async function start() {
 
     const app = express();
 
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(cors({
-        exposedHeaders: ['Authorization'],
+        exposedHeaders: ['Authorization','Content-Length'],
+        allowedHeaders:['Authorization','Accept', 'Content-Type', 'X-Requested-With', 'Range'],
         credentials: true,
         origin: process.env.ORIGIN,
     }));
     app.use(cookieParser());
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
     app.use(compression());
     app.use(helmet());
 

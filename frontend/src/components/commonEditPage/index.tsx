@@ -5,6 +5,8 @@ import {TagEnum} from '../../types/tag';
 import AddNewsImage from '../addNewsImage';
 import ButtonContainer from '../buttonContainer';
 import EditableDiv from '../editableDiv';
+import ErrorMessage from '../errorMessage';
+import ErrorLayout from '../errorsLayout';
 import HeaderHOC from '../header/hoc';
 import Loader from '../loader';
 import TagSelect from '../tagSelect';
@@ -60,7 +62,9 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                 <main className={styles.main}>
                     <TagSelect selected={tag} setSelected={setTag}/>
                     {status === fetchProcess.loading && <Loader size={40}/>}
-                    {error}
+                    {error && <ErrorLayout>
+                        <ErrorMessage message={error}/>
+                    </ErrorLayout>}
                     <input
                         type="text" placeholder="Текст заголовка"
                         value={title}
