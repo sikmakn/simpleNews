@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Form from '../form';
 import styles from './signForm.module.scss';
 import SignInFormHOC from '../sigInForm/hoc';
 import SignSwitcher from '../signSwitcher';
@@ -21,13 +22,12 @@ const SignForm: React.FC<SignFormProps> =
                 className={styles.signBackground}
                 onClick={hide}
             >
-                <div
+                <Form
                     className={styles.signForm}
-                    onClick={e => e.stopPropagation()}
                 >
                     <SignSwitcher isSignUp={isSignUp} setIsSignUp={setSignUp}/>
                     {isSignUp ? <SignUpFormHOC/> : <SignInFormHOC/>}
-                </div>
+                </Form>
             </div>
         );
     }

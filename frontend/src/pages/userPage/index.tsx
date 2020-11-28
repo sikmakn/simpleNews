@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Form from '../../components/form';
 import styles from './userPage.module.scss';
 import UserFormButton from '../../components/userFormButton';
 import UserInput from '../../components/userInput';
@@ -34,7 +35,6 @@ export interface UserPageProps {
 
     status?: fetchProcess
     error?: string
-
     clearStatus: () => void
 }
 
@@ -60,7 +60,7 @@ const UserPage: React.FC<UserPageProps> =
             <>
                 <HeaderHOC/>
                 <main className={styles.main}>
-                    <div className={styles.userForm}>
+                    <Form className={styles.userForm}>
                         <h2>Изменение личной информации</h2>
                         {status === fetchProcess.success && 'Пользователь успешно изменен!'}
                         {status === fetchProcess.loading && <Loader size={40}/>}
@@ -121,7 +121,7 @@ const UserPage: React.FC<UserPageProps> =
                             }}
                         />
                         <LogOutButtonHOC/>
-                    </div>
+                    </Form>
                 </main>
             </>
         );
