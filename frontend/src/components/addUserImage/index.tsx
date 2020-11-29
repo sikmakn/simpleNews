@@ -12,8 +12,12 @@ export interface AddUserImageProps {
 const AddUserImage: React.FC<AddUserImageProps> = ({defaultSrc, setImg, img}) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imgString, setImgString] = useState(defaultSrc);
-    useEffect(() => setImgString(imgToString(img)),
-        [img, setImgString]);
+    console.log(imgString)
+    useEffect(() => {
+            if (img) setImgString(imgToString(img))
+        },
+        [img, setImgString]
+    );
     return (
         <label htmlFor="file">
             <div

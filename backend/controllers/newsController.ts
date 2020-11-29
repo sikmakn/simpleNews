@@ -17,7 +17,7 @@ router.post('/create',
     async (req, res) => {
         const authorId = getUsernameFromResponse(res);
         const {id, title, text, imgSrc, date, tag} =
-            await newsService.create({...req.body, authorId});
+            await newsService.create({...req.body, authorId, img:req.file});
         res.json({
             id,
             title,

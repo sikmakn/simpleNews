@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import bufferToStream from 'buffer-to-stream';
 
 const {AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_BUCKET_NAME} = process.env;
 
@@ -16,6 +17,17 @@ export async function saveFile({key, stream}: { stream: any, key: string }): Pro
         Bucket: AWS_BUCKET_NAME as string
     }).promise();
     return Location;
+}
+
+export async function create({key, file}: { key: string, file: Express.Multer.File }) {
+    return await saveFile({key, stream: bufferToStream(file.buffer)});
+}
+
+export async function update({key, file}: { key: string, file?: Express.Multer.File }) {
+    if (!file) return;
+
+    await removeFile(key);
+    return await create({key, file});
 }
 
 export async function saveFiles(filesData: { stream: any, key: string }[]): Promise<string[]> {

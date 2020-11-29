@@ -1,4 +1,3 @@
-import bufferToStream from 'buffer-to-stream';
 import User from '../db/models/User';
 import connection from '../db/connection';
 import makeRandomString from '../helpers/makeRandomString';
@@ -49,12 +48,8 @@ export async function update(
             lastName: string
             img?: Express.Multer.File
         }) {
-    let imgSrc: string | undefined;
-    if (img) {
-        await s3Service.removeFile(username);
-        imgSrc = await s3Service.saveFile({key: username, stream: bufferToStream(img.buffer)});
-    }
-    console.log(img)
+    let imgSrc = await s3Service.update({key: username, file: img});
+
     let newUser;
     if (newPassword) {
         const {hashedPassword, salt} = await createPassword(newPassword);

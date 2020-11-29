@@ -1,44 +1,47 @@
+import {v4 as uuidv4} from 'uuid';
+import {Sequelize} from 'sequelize-typescript';
 import connection from '../db/connection';
 import OneNews from '../db/models/OneNews';
 import {Tag} from '../types';
 import Like from '../db/models/Like';
 import Comment from '../db/models/Comment';
 import SubComment from '../db/models/SubComment';
-import {Sequelize} from 'sequelize-typescript';
+import * as s3Service from './s3Service';
 
 const newsRepository = connection.getRepository(OneNews);
 const likeRepository = connection.getRepository(Like);
 const commentRepository = connection.getRepository(Comment);
 const subCommentRepository = connection.getRepository(SubComment);
 
-export function create(
+export async function create(
     {img, ...newsParams}:
         {
-            img: File
+            img: Express.Multer.File
             tag: string
             title: string
             text: string
             authorId: string
         }) {
-    //todo img to aws
+    const id = uuidv4();
     return newsRepository.create({
         ...newsParams,
+        id,
         date: new Date(Date.now()),
-        imgSrc: 'https://ktonanovenkogo.ru/image/priroda-gora.jpg',
+        imgSrc: await s3Service.create({key: id, file: img}),
     });
 }
 
-export function update(
+export async function update(
     {id, img, ...newsParams}:
         {
             id: string
-            img: File
+            img: Express.Multer.File
             tag: string
             title: string
             text: string
         }) {
-    //todo img to aws
-    return newsRepository.update(newsParams, {where: {id}});
+    let imgSrc = await s3Service.update({key: id, file: img});
+    return newsRepository.update({...newsParams, imgSrc}, {where: {id}});
 }
 
 export function findBasicById(id: string) {
