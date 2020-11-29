@@ -106,6 +106,8 @@ export const updateUserData = (user: {
     password: string
     newPassword?: string
 }) => (dispatch: any) => {
+    console.log(user)
+    console.log(typeof user.newPassword)
     dispatch(setProcessUpdateUserStatus(fetchProcess.loading));
     PUTForm(UPDATE_PATH, user, dispatch)
         .then(updatedUser => {

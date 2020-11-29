@@ -1,33 +1,38 @@
+import copyObjectWithoutUndefined from '../helpers/copyObjectWithoutUndefined';
 import mapObjectToFormData from '../helpers/mapObjectToFormData';
 import {clearUser} from '../store/user/actions';
 
 let accessToken = '';
 
 export function POSTForm(path: string, body: any, dispatch: any) {
-    const formBody = mapObjectToFormData(body);
+    const fullBody = copyObjectWithoutUndefined(body);
+    const formBody = mapObjectToFormData(fullBody);
     return request({method: 'POST', path, body: formBody, dispatch});
 }
 
 export function POST(path: string, body: any, dispatch: any) {
+    const fullBody = copyObjectWithoutUndefined(body);
     return request({
         method: 'POST',
         path,
-        body: JSON.stringify(body),
+        body: JSON.stringify(fullBody),
         dispatch,
         contentType: 'application/json',
     });
 }
 
 export function PUTForm(path: string, body: any, dispatch: any) {
-    const formBody = mapObjectToFormData(body);
+    const fullBody = copyObjectWithoutUndefined(body);
+    const formBody = mapObjectToFormData(fullBody);
     return request({method: 'PUT', path, body: formBody, dispatch});
 }
 
 export function PUT(path: string, body: any, dispatch: any) {
+    const fullBody = copyObjectWithoutUndefined(body);
     return request({
         method: 'PUT',
         path,
-        body: JSON.stringify(body),
+        body: JSON.stringify(fullBody),
         dispatch,
         contentType: 'application/json',
     });
