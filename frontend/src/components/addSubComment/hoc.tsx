@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CommonEditComment from '../commonEditComment';
-import {createSubComment} from '../../store/subComments/actions';
+import {createSubComment, cleanSubCommentsStatuses} from '../../store/subComments/actions';
 
 interface AddSubCommentHOCProps {
     user: {
@@ -26,6 +26,7 @@ interface AddSubCommentHOCProps {
         oneNewsId: string
     }) => void
     oneNewsId: string
+    cleanStatus: () => void
 }
 
 const AddSubCommentHOC: React.FC<AddSubCommentHOCProps> = (props) =>
@@ -40,6 +41,6 @@ const mapStateToProps = ({user, oneNews, subComments}: any, ownProps: any) =>
         ...ownProps
     });
 
-const mapDispatchToProps = {saveComment: createSubComment};
+const mapDispatchToProps = {saveComment: createSubComment, cleanStatus: cleanSubCommentsStatuses};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSubCommentHOC);

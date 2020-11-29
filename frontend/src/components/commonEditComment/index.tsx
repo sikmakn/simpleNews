@@ -34,6 +34,7 @@ export interface CommonEditCommentProps {
         oneNewsId: string
     }) => void
     oneNewsId: string
+    cleanStatus: () => void,
 }
 
 const CommonEditComment: React.FC<CommonEditCommentProps> =
@@ -48,12 +49,17 @@ const CommonEditComment: React.FC<CommonEditCommentProps> =
          error,
          status,
          oneNewsId,
+         cleanStatus,
      }) => {
         const [text, setText] = useState(defaultText || '');
+
         useEffect(() => {
             if (status === fetchProcess.success)
                 hide();
         }, [status, hide]);
+
+        useEffect(() => cleanStatus, [cleanStatus]);
+
         return (
             <div className={styles.commentContainer}>
                 <UserImage src={user.imgSrc} size={36}/>

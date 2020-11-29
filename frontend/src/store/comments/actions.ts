@@ -1,64 +1,53 @@
-import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
-import fetchProcess from '../../types/fetching';
 import {GET, POST, PUT} from '../../server/actions';
 import {
     createCommentPath,
     getManyCommentsPath,
     updateCommentPath,
 } from '../../server/paths/comment';
+import {commonReduxServerActionHandler} from '../../server/reduxServerActions';
 
-export const SET_COMMENTS = 'SET_COMMENTS';
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const EDIT_COMMENT = 'EDIT_COMMENT';
-export const LOADING_COMMENTS_STATUS = 'LOADING_COMMENTS_STATUS';
-export const LOADING_COMMENTS_ERROR = 'LOADING_COMMENTS_ERROR';
-export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
+export const SET_CREATED_COMMENT = 'SET_CREATED_COMMENT';
 export const SET_CREATING_COMMENT_STATUS = 'SET_CREATING_COMMENT_STATUS';
-export const SET_CREATING_ERROR_OF_COMMENT = 'SET_CREATING_ERROR_OF_COMMENT';
+export const SET_CREATING_COMMENT_ERROR = 'SET_CREATING_COMMENT_ERROR';
+
+export const SET_UPDATED_COMMENT = 'SET_UPDATED_COMMENT';
 export const SET_UPDATING_COMMENT_STATUS = 'SET_UPDATING_COMMENT_STATUS';
-export const SET_UPDATING_ERROR_OF_COMMENT = 'SET_UPDATING_ERROR_OF_COMMENT';
+export const SET_UPDATING_COMMENT_ERROR = 'SET_UPDATING_COMMENT_ERROR';
 
-export const setUpdatingCommentStatus = (params: { id: string, status: fetchProcess }) =>
-    ({type: SET_UPDATING_COMMENT_STATUS, payload: params});
+export const SET_LOADED_COMMENTS = 'SET_LOADED_COMMENTS';
+export const SET_LOADING_COMMENTS_STATUS = 'SET_LOADING_COMMENTS_STATUS';
+export const SET_LOADING_COMMENTS_ERROR = 'SET_LOADING_COMMENTS_ERROR';
 
-export const setUpdatingErrorOfComment = (params: { id: string, error: string }) =>
-    ({type: SET_UPDATING_ERROR_OF_COMMENT, payload: params});
+export const CLEAN_STATUS_OF_COMMENT = 'CLEAN_STATUS_OF_COMMENT';
 
-export const setCreatingCommentStatus = (status: fetchProcess) =>
-    ({type: SET_CREATING_COMMENT_STATUS, payload: status});
+export const setUpdatedComment = (comment: Comment) =>
+    ({type: SET_UPDATED_COMMENT, payload: comment});
 
-export const setCreatingErrorOfComment = (error: string) =>
-    ({type: SET_CREATING_ERROR_OF_COMMENT, payload: error});
+export const setUpdatingCommentStatus = (id: string) =>
+    ({type: SET_UPDATING_COMMENT_STATUS, payload: id});
 
-export const setLoadingCommentsStatus = (status: fetchProcess) =>
-    ({type: LOADING_COMMENTS_STATUS, payload: status});
+export const setUpdatingCommentError = (params: { id: string, error: string }) =>
+    ({type: SET_UPDATING_COMMENT_ERROR, payload: params});
+
+
+export const setCreatedComment = (comment: Comment) =>
+    ({type: SET_CREATED_COMMENT, payload: comment});
+
+export const setCreatingCommentStatus = () =>
+    ({type: SET_CREATING_COMMENT_STATUS});
+
+export const setCreatingCommentError = (error: string) =>
+    ({type: SET_CREATING_COMMENT_ERROR, payload: error});
+
+
+export const setLoadedComments = (comments: any) =>
+    ({type: SET_LOADED_COMMENTS, payload: comments});
+
+export const setLoadingCommentsStatus = () =>
+    ({type: SET_LOADING_COMMENTS_STATUS});
 
 export const setLoadingCommentsError = (error: string) =>
-    ({type: LOADING_COMMENTS_ERROR, payload: error});
-
-export const addComment = (comment: {
-    id: string
-    text: string
-    author: {
-        username: string
-        fullName: string
-    }
-    oneNewsId: string
-    subComments: any[]
-}) => ({type: ADD_COMMENT, payload: comment});
-
-export const setComments = (comments: any) =>
-    ({type: SET_COMMENTS, payload: comments});
-
-export const editComment = (comment: {
-    id: string
-    text: string
-    author: {
-        username: string
-        fullName: string
-    }
-    oneNewsId: string
-}) => ({type: EDIT_COMMENT, payload: comment})
+    ({type: SET_LOADING_COMMENTS_ERROR, payload: error});
 
 //async
 
@@ -69,35 +58,37 @@ export const createComment = (comment: {
     text: string
     authorUsername: string
     oneNewsId: string
-}) => (dispatch: any) => commonReduxServerActionHandler({
-    commonAction: POST(createCommentPath(comment.oneNewsId), comment, dispatch),
-    dispatch,
-    setStatus: setCreatingCommentStatus,
-    setSuccessObj: addComment,
-    setError: setCreatingErrorOfComment,
-});
-
-export const loadComments = (oneNewsId: string) =>
-    (dispatch: any) => commonReduxServerActionHandler({
-        commonAction: GET(getManyCommentsPath(oneNewsId), dispatch),
+}) => (dispatch: any) =>
+    commonReduxServerActionHandler({
+        commonAction: POST(createCommentPath(comment.oneNewsId), comment, dispatch),
         dispatch,
-        setSuccessObj: setComments,
-        setError: setLoadingCommentsError,
-        setStatus: setLoadingCommentsStatus,
+        setStatus: setCreatingCommentStatus,
+        setSuccessObj: setCreatedComment,
+        setError: setCreatingCommentError,
     });
 
-export const updateComment = (comment: {
+
+export const loadComments = (oneNewsId: string) =>
+    (dispatch: any) =>
+        commonReduxServerActionHandler({
+            commonAction: GET(getManyCommentsPath(oneNewsId), dispatch),
+            dispatch,
+            setSuccessObj: setLoadedComments,
+            setError: setLoadingCommentsError,
+            setStatus: setLoadingCommentsStatus,
+        });
+
+
+export const updateComment = ({commentId: id, ...anotherComment}: {
     commentId: string
     text: string
     authorUsername: string
     oneNewsId: string
-}) => (dispatch: any) => {
-    const {commentId: id, ...anotherComment} = comment;
+}) => (dispatch: any) =>
     commonReduxServerActionHandler({
         commonAction: PUT(updateCommentPath(id), {...anotherComment, id}, dispatch),
         dispatch,
-        setStatus: status => setUpdatingCommentStatus({id, status}),
-        setError: error => setUpdatingErrorOfComment({id, error}),
-        setSuccessObj: editComment,
+        setStatus: () => setUpdatingCommentStatus(id),
+        setError: error => setUpdatingCommentError({id, error}),
+        setSuccessObj: setUpdatedComment,
     });
-}

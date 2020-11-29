@@ -1,16 +1,22 @@
+import {updateLikeInOneNews} from '../../helpers/updateLikesInNewsCards';
+import fetchProcess from '../../types/fetching';
+import {OneNewsFull} from './types/oneNews';
 import {
     CLEAN_ONE_NEWS_STATUS,
     LIKE_ONE_NEWS,
-    SET_CREATING_ERROR_OF_ONE_NEWS,
+    SET_CREATED_ONE_NEWS,
+    SET_CREATING_ONE_NEWS_ERROR,
     SET_CREATING_ONE_NEWS_STATUS,
-    SET_ERROR_LOADING_OF_ONE_NEWS, SET_ID_OF_ONE_NEWS,
+    SET_ID_OF_ONE_NEWS,
+    SET_LOADED_ONE_NEWS,
+    SET_LOADING_ONE_NEWS_ERROR,
     SET_LOADING_ONE_NEWS_STATUS,
-    SET_ONE_NEWS,
-    SET_UPDATE_ERROR_OF_ONE_NEWS, SET_UPDATING_ONE_NEWS_STATUS
+    SET_UPDATED_ONE_NEWS,
+    SET_UPDATING_ONE_NEWS_ERROR,
+    SET_UPDATING_ONE_NEWS_STATUS
 } from './actions';
-import {updateLikeInOneNews} from '../../helpers/updateLikesInNewsCards';
 
-const defaultState: { id?: string, value?: any } = {};
+const defaultState: { id?: string, value?: OneNewsFull } = {};
 
 const oneNewsReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
@@ -19,43 +25,59 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
                 ...state,
                 id: action.payload
             };
-        case SET_ONE_NEWS:
-            return {
-                id: state.id,
-                value: action.payload,
-            };
         case SET_CREATING_ONE_NEWS_STATUS:
             return {
                 ...state,
-                creatingStatus: action.payload,
+                creatingStatus: fetchProcess.loading,
             };
-        case SET_CREATING_ERROR_OF_ONE_NEWS:
+        case SET_CREATED_ONE_NEWS:
+            return {
+                ...state,
+                id: action.payload,
+                creatingStatus: fetchProcess.success
+            };
+        case SET_CREATING_ONE_NEWS_ERROR:
             return {
                 ...state,
                 creatingError: action.payload,
+                creatingStatus: fetchProcess.error,
             };
-        case SET_UPDATE_ERROR_OF_ONE_NEWS:
+        case SET_UPDATING_ONE_NEWS_ERROR:
             return {
                 ...state,
                 updateError: action.payload,
+                updatingStatus: fetchProcess.error,
             };
         case SET_UPDATING_ONE_NEWS_STATUS:
             return {
                 ...state,
-                updatingStatus: action.payload
+                updatingStatus: fetchProcess.loading,
+            };
+        case SET_UPDATED_ONE_NEWS:
+            return {
+                ...state,
+                value: action.payload,
+                updatingStatus: fetchProcess.success,
             };
         case SET_LOADING_ONE_NEWS_STATUS:
             return {
                 ...state,
-                loadingStatus: action.payload,
+                loadingStatus: fetchProcess.loading,
             };
-        case SET_ERROR_LOADING_OF_ONE_NEWS:
+        case SET_LOADED_ONE_NEWS:
             return {
                 ...state,
+                loadingStatus: fetchProcess.success,
+                value: action.payload,
+            };
+        case SET_LOADING_ONE_NEWS_ERROR:
+            return {
+                ...state,
+                loadingStatus: fetchProcess.error,
                 loadingError: action.payload,
             };
         case CLEAN_ONE_NEWS_STATUS:
-            return {value: state.value};
+            return {value:state.value};
         case LIKE_ONE_NEWS:
             return {
                 ...state,

@@ -1,28 +1,19 @@
-import {
-    ADD_COMMENT,
-    CLEAN_STATUS_OF_COMMENT,
-    EDIT_COMMENT,
-    LOADING_COMMENTS_ERROR,
-    LOADING_COMMENTS_STATUS,
-    SET_COMMENTS,
-    SET_CREATING_COMMENT_STATUS,
-    SET_CREATING_ERROR_OF_COMMENT,
-    SET_UPDATING_COMMENT_STATUS,
-    SET_UPDATING_ERROR_OF_COMMENT,
-} from './actions';
 import fetchProcess from '../../types/fetching';
+import {
+    CLEAN_STATUS_OF_COMMENT,
+    SET_CREATED_COMMENT,
+    SET_CREATING_COMMENT_ERROR,
+    SET_CREATING_COMMENT_STATUS,
+    SET_LOADED_COMMENTS,
+    SET_LOADING_COMMENTS_ERROR,
+    SET_LOADING_COMMENTS_STATUS,
+    SET_UPDATED_COMMENT,
+    SET_UPDATING_COMMENT_ERROR,
+    SET_UPDATING_COMMENT_STATUS,
+} from './actions';
+import {OmmentsState} from './types/сommentsState';
 
-interface CommentsState {
-    value?: any[]
-    creatingStatus?: fetchProcess
-    creatingError?: string
-    loadingStatus?: fetchProcess
-    loadingError?: string
-    updatingStatuses: { [k: string]: fetchProcess }
-    updatingErrors: { [k: string]: string }
-}
-
-const defaultState: CommentsState = {
+const defaultState: OmmentsState = {
     updatingStatuses: {},
     updatingErrors: {}
 };
@@ -32,28 +23,60 @@ const commentsReducers = (state = defaultState, {type, payload}: any) => {
         case SET_CREATING_COMMENT_STATUS:
             return {
                 ...state,
-                creatingStatus: payload,
-                creatingError: payload === fetchProcess.success ? undefined : state.creatingError,
+                creatingStatus: fetchProcess.loading,
+                creatingError: undefined,
             };
-        case SET_CREATING_ERROR_OF_COMMENT:
+        case SET_CREATED_COMMENT:
+            return {
+                ...state,
+                value: [payload, ...state.value!],
+                creatingStatus: fetchProcess.success,
+            };
+        case SET_CREATING_COMMENT_ERROR:
             return {
                 ...state,
                 creatingError: payload,
+                creatingStatus: fetchProcess.error,
             };
-        case SET_COMMENTS:
+        case SET_LOADING_COMMENTS_STATUS:
+            return {
+                ...state,
+                loadingStatus: fetchProcess.loading,
+                loadingError: undefined,
+            };
+        case SET_LOADED_COMMENTS:
             return {
                 ...state,
                 value: payload,
+                loadingStatus: fetchProcess.success,
             };
-        case LOADING_COMMENTS_STATUS:
-            return {
-                ...state,
-                loadingStatus: payload
-            };
-        case LOADING_COMMENTS_ERROR:
+        case SET_LOADING_COMMENTS_ERROR:
             return {
                 ...state,
                 loadingError: payload,
+                loadingStatus: fetchProcess.error,
+            };
+        case SET_UPDATED_COMMENT:
+            const {[payload.id]: err, ...anotherErrors} = state.updatingErrors;
+            return {
+                ...state,
+                value: state.value!.map(c => c.id === payload.id ? payload : c),
+                updatingStatuses: setUpdatingStatus(payload.id, state, fetchProcess.success),
+                updatingErrors: anotherErrors,
+            };
+        case SET_UPDATING_COMMENT_STATUS:
+            return {
+                ...state,
+                updatingStatuses: setUpdatingStatus(payload.id, state, fetchProcess.loading)
+            };
+        case SET_UPDATING_COMMENT_ERROR:
+            return {
+                ...state,
+                updatingErrors: {
+                    ...state.updatingErrors,
+                    [payload.id]: payload.error,
+                },
+                updatingStatuses: setUpdatingStatus(payload.id, state, fetchProcess.error)
             };
         case CLEAN_STATUS_OF_COMMENT:
             return {
@@ -61,37 +84,15 @@ const commentsReducers = (state = defaultState, {type, payload}: any) => {
                 updatingStatuses: {},
                 updatingErrors: {},
             };
-        case ADD_COMMENT:
-            return {
-                ...state,
-                value: [payload, ...state.value!]
-            };
-        case EDIT_COMMENT:
-            const {[payload.id]: err, ...anotherErrors} = state.updatingErrors;
-            return {
-                ...state,
-                value: state.value!.map(c => c.id === payload.id ?
-                    {...payload, subComments: c.subComments} : c),
-                updatingErrors: anotherErrors,
-            };
-        case SET_UPDATING_COMMENT_STATUS:
-            return {
-                ...state,
-                updatingStatuses: {
-                    ...state.updatingStatuses,
-                    [payload.id]: payload.status,
-                }
-            };
-        case SET_UPDATING_ERROR_OF_COMMENT:
-            return {
-                ...state,
-                updatingErrors: {
-                    ...state.updatingErrors,
-                    [payload.id]: payload.error,
-                },
-            };
     }
     return state;
 }
 
 export default commentsReducers;
+
+function setUpdatingStatus(id: string, state: OmmentsState, status: fetchProcess) {
+    return {
+        ...state.updatingStatuses,
+        [id]: status,
+    };
+}

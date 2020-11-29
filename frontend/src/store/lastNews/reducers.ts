@@ -1,31 +1,29 @@
+import fetchProcess from '../../types/fetching';
 import {
     CLEAN_STATUS_OF_LAST_NEWS,
-    SET_LOADING_LAST_NEWS_STATUS,
-    SET_ERROR_OF_LAST_NEWS,
-    SET_LAST_NEWS
+    SET_LOADED_LAST_NEWS,
+    SET_LOADING_LAST_NEWS_ERROR,
+    SET_LOADING_LAST_NEWS_STATUS
 } from './actions';
 
 const defaultState = {};
 
 const lastNewsReducer = (state = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
-        case SET_LAST_NEWS:
+        case SET_LOADED_LAST_NEWS:
             return {
-                ...state,
+                loadingStatus: fetchProcess.success,
                 value: action.payload,
             };
         case SET_LOADING_LAST_NEWS_STATUS:
+            return {loadingStatus: fetchProcess.loading};
+        case SET_LOADING_LAST_NEWS_ERROR:
             return {
-                ...state,
-                loadingStatus: action.payload,
-            };
-        case SET_ERROR_OF_LAST_NEWS:
-            return {
-                ...state,
+                loadingStatus: fetchProcess.error,
                 loadingError: action.payload,
             };
         case CLEAN_STATUS_OF_LAST_NEWS:
-            return {value: action.payload};
+            return {};
     }
     return state;
 };

@@ -13,7 +13,10 @@ const mapStateToProps = ({user, oneNews}: any) =>
     ({
         id: oneNews.id,
         username: user.value?.username,
-        fullStatistic: {...(oneNews.value||{})},
+        fullStatistic: oneNews.value && {
+            statistic:oneNews.value.statistic,
+            userStatistic:oneNews.value.userStatistic,
+        },
     });
 
 const mapDispatchToProps = {updateLike: updateLikeInOneNews};

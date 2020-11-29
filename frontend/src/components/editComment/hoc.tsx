@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {updateComment} from '../../store/comments/actions';
+import {cleanStatusOfComments, updateComment} from '../../store/comments/actions';
 import CommonEditComment from '../commonEditComment';
 
 interface EditCommentHOCProps {
@@ -20,6 +20,7 @@ interface EditCommentHOCProps {
         oneNewsId: string
     }) => void
     oneNewsId: string
+    cleanStatus: () => void
 }
 
 const EditCommentHOC: React.FC<EditCommentHOCProps> = (props) =>
@@ -34,6 +35,6 @@ const mapStateToProps = ({user, oneNews, comments}: any, ownProps: any) =>
         ...ownProps
     });
 
-const mapDispatchToProps = {saveComment: updateComment};
+const mapDispatchToProps = {saveComment: updateComment, cleanStatus: cleanStatusOfComments};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCommentHOC);

@@ -7,7 +7,7 @@ import activeCommentImg from '../../assets/comment_active.svg';
 
 export interface StatisticProps {
     id: string
-    fullStatistic: {
+    fullStatistic?: {
         statistic: {
             likesCount: number
             commentsCount: number
