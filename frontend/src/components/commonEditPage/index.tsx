@@ -45,12 +45,6 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
         const [img, setImg] = useState<File>();
         const [text, setText] = useState(defaultText);
 
-        useEffect(() => {
-            if (defaultImg)
-                fetch(defaultImg).then(e => e.blob())
-                    .then(b => setImg(b as File));
-        }, [defaultImg]);
-
         useEffect(() => cleanStatus, [cleanStatus]);
 
         if (status === fetchProcess.success && oneNewsId)
@@ -70,7 +64,7 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                         value={title}
                         onChange={e => setTitle(e.currentTarget.value)}
                     />
-                    <AddNewsImage img={img} setImg={setImg}/>
+                    <AddNewsImage img={img} setImg={setImg} defaultImg={defaultImg}/>
                     <EditableDiv
                         text={text} setText={setText}
                         placeholder="Основной текст новости"
@@ -83,8 +77,8 @@ const CommonEditPage: React.FC<CommonEditPageProps> =
                             cancel();
                         }}
                         onClickToAdd={() => {
-                            if (img)
-                                save({text, img, title, tag});
+                            if (img || defaultImg)
+                                save({text, img:img!, title, tag});
                         }}
                     />
                 </main>

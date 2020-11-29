@@ -23,7 +23,7 @@ interface EditOneNewsPageHOCProps {
     }
     save: (oneNews: {
         id: string
-        img: File
+        img?: File
         tag: string
         title: string
         text: string
@@ -59,7 +59,7 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
             oneNews={oneNews}
             save={
                 (n: {
-                    img: File
+                    img?: File
                     tag: string
                     title: string
                     text: string

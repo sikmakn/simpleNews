@@ -75,7 +75,7 @@ export const loadOneNews = (id: string) =>
 
 export const updateOneNews = (oneNews: {
     id: string
-    img: File
+    img?: File
     tag: string
     title: string
     text: string

@@ -5,12 +5,13 @@ import addImg from '../../assets/add.svg';
 export interface AddNewsImageProps {
     img?: File
     setImg: (x: File) => void
+    defaultImg?: string
 }
 
 const AddNewsImage: React.FC<AddNewsImageProps> =
-    ({img, setImg}) => {
+    ({img, setImg, defaultImg}) => {
         const fileInputRef = useRef<HTMLInputElement>(null);
-        const [imgString, setImgString] = useState<string | undefined>(img && URL.createObjectURL(img));
+        const [imgString, setImgString] = useState<string | undefined>(defaultImg);
 
         useEffect(() => {
                 if (img)
@@ -20,7 +21,7 @@ const AddNewsImage: React.FC<AddNewsImageProps> =
 
         return (
             <div
-                className={`${style.imageContainer} ${!img && style.error}`}
+                className={`${style.imageContainer} ${!(img || defaultImg) && style.error}`}
                 style={{backgroundImage: `url(${imgString})`}}
             >
                 <label htmlFor="file">
