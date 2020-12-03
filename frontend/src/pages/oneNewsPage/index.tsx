@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import styles from './oneNewsPage.module.scss';
+
 import MainLayout from '../../components/mainLayout';
 import HeaderHOC from '../../components/header/hoc';
 import LastNewsLayoutHOC from '../../components/lastNewsLayout/hoc';
@@ -8,18 +9,11 @@ import VerticalStatisticHOC from '../../components/verticalStatistic/hoc';
 import OneNewsCommentsContainerHOC from '../../components/oneNewsCommentsContainer/hoc';
 
 export interface OneNewsPageProps {
-    id: string
-    loadOneNews: (id: string) => void
-    setId: (id: string) => void
     cleanStatus: () => void
 }
 
 const OneNewsPage: React.FC<OneNewsPageProps> =
-    ({id, loadOneNews, setId, cleanStatus}) => {
-        useEffect(() => setId(id), [id, setId]);
-
-        useEffect(() => loadOneNews(id),
-            [id, loadOneNews]);
+    ({cleanStatus}) => {
         useEffect(() => cleanStatus, [cleanStatus]);
         return (
             <>

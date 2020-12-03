@@ -1,6 +1,6 @@
 import React from 'react';
 import '../setupTests';
-import {mount} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import {MemoryRouter} from 'react-router-dom';
 
 import App from '../App';

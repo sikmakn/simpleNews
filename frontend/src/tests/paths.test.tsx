@@ -28,10 +28,6 @@ describe('PATHS: CHECK FUNCTIONS', () => {
         expect(oneNewsPagePath('id')).toEqual('/news/id');
     });
 
-    it('-- userPagePath return right path', () => {
-       expect(userPagePath()).toEqual(PAGE_PATHS.USER);
-    });
-
     it('--empty mainPagePath return right path', ()=>{
        expect(mainPagePath()).toEqual(PAGE_PATHS.MAIN);
     });
