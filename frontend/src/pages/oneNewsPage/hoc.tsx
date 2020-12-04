@@ -10,13 +10,11 @@ interface OneNewsPageHOCProps extends OneNewsPageProps {
     setId: (id: string) => void
 }
 
-const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
+export const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
     ({setId, id, oldId, loadOneNews, cleanStatus}) => {
-
         useEffect(() => {
             if (oldId !== id) setId(id);
         }, [setId, id, oldId]);
-
         useEffect(() => loadOneNews(id),
             [id, loadOneNews]);
 
@@ -24,17 +22,17 @@ const OneNewsPageHOC: React.FC<OneNewsPageHOCProps> =
     }
 
 
-const mapStateToProps = ({oneNews}: any, ownProps: any) =>
+export const mapStateToProps = ({oneNews}: any, {match}: {match:any}) =>
     ({
-        id: ownProps.match.params.id,
+        id: match.params.id,
         oldId: oneNews.id,
     });
 
 
-const mapDispatchToProps = {
+export const mapDispatchToProps = {
     loadOneNews,
     setId: setIdOfOneNews,
-    clanStatus: cleanOneNewsStatus,
+    cleanStatus: cleanOneNewsStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneNewsPageHOC)

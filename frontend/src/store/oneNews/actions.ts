@@ -61,6 +61,7 @@ export const setIdOfOneNews = (id: string) =>
 export const cleanOneNewsStatus = () =>
     (dispatch: any) => dispatch({type: CLEAN_ONE_NEWS_STATUS});
 
+
 export const loadOneNews = (id: string) => (dispatch: any) =>
     commonReduxServerActionHandler({
         commonAction: GET(findOneNewsPath(id), dispatch),

@@ -77,7 +77,10 @@ const oneNewsReducer = (state = defaultState, action: { type: string, payload: a
                 loadingError: action.payload,
             };
         case CLEAN_ONE_NEWS_STATUS:
-            return {value:state.value};
+            return {
+                id: state.id,
+                value: state.value
+            };
         case LIKE_ONE_NEWS:
             return {
                 ...state,

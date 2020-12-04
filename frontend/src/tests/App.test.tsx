@@ -1,16 +1,10 @@
 import React from 'react';
 import '../setupTests';
-import {mount, shallow} from 'enzyme';
+import {mount} from 'enzyme';
 import {MemoryRouter} from 'react-router-dom';
 
 import App from '../App';
 import {PAGE_PATHS} from '../paths';
-import MainPageHOCMocked from '../pages/mainPage/hoc';
-import OneNewsPageHOCMocked from '../pages/oneNewsPage/hoc';
-import NoMatchPageMocked from '../pages/noMatchPage';
-import AddOneNewsPageHOCMocked from '../pages/addOneNewsPage/hoc';
-import EditOneNewsPageHOCMocked from '../pages/editOneNewsPages/hoc';
-import UserPageHOCMocked from '../pages/userPage/hoc';
 
 const mockedPagesValues = {
     mainPage: 'DummyMainPage',
