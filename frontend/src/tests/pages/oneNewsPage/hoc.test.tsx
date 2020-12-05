@@ -1,13 +1,12 @@
 import React from 'react';
 import '../../../setupTests';
 import {mount, ReactWrapper} from 'enzyme';
-import {OneNewsPageHOC} from '../../../pages/oneNewsPage/hoc';
+import {mapStateToProps, OneNewsPageHOC} from '../../../pages/oneNewsPage/hoc';
 import {act} from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
 
 jest.mock('../../../pages/oneNewsPage', () => () => 'DummyOneNewsPage');
 describe('OneNewsPageHOC: CHECK COMPONENT', () => {
-
     it('-- snapshot', () => {
         const rendererValue = renderer.create(
             <OneNewsPageHOC
@@ -21,6 +20,16 @@ describe('OneNewsPageHOC: CHECK COMPONENT', () => {
                 oldId={'id'}
             />).toJSON();
         expect(rendererValue).toMatchSnapshot();
+    });
+
+    it('--mapStateToProps check', () => {
+        const oneNewsId = 'oneNewsId';
+        const historyId =  'historyId';
+        const oneNewsState = {id: oneNewsId};
+        const history = {match: {params: {id:historyId}}};
+        const result = mapStateToProps({oneNews:oneNewsState}, history)
+        expect(result.id).toEqual(historyId);
+        expect(result.oldId).toEqual(oneNewsId);
     });
 
     describe('-- inner-- props functions calling --', () => {
