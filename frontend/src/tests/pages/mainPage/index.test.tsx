@@ -8,7 +8,7 @@ jest.mock('../../../components/lastNewsLayout/hoc', () => () => 'DummyLastNewsLa
 jest.mock('../../../components/hotNewsLayout/hoc', () => () => 'DummyHotNewsLayout');
 jest.mock('../../../components/bigNewsLayout/hoc', () => () => 'DummyBigNewsLayout');
 
-describe('MAIN PAGE: -- index ', () => {
+describe('MAIN PAGE: -- index', () => {
     it('-- snapshot', () => {
         const rendererValue = renderer.create(<MainPage/>).toJSON();
         expect(rendererValue).toMatchSnapshot();

@@ -16,7 +16,7 @@ export const PAGE_PATHS = {
     MAIN: '/',
     ONE_NEWS: '/news/:id',
     ADD_ONE_NEWS: '/addOneNews',
-    EDIT_ONE_NEWS: '/editOneNews/:id?',
+    EDIT_ONE_NEWS: '/editOneNews/:id',
     USER: '/user',
     NO_MATCH: '*',
 };

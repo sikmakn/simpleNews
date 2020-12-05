@@ -7,8 +7,9 @@ export function commonReduxServerActionHandler({commonAction, dispatch, setError
 }) {
     dispatch(setStatus());
     commonAction
-        .then(result =>  dispatch(setSuccessObj(result)))
+        .then(result => dispatch(setSuccessObj(result)))
         .catch(res => res.message ?
             dispatch(setSuccessObj(res.message)) :
-            res.then(({error}: any) => dispatch(setError(error))));
+            res.json().then(({error}: any) => dispatch(setError(error)))
+        );
 }

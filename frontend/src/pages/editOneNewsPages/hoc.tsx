@@ -1,15 +1,17 @@
 import React, {useEffect} from 'react';
-import CommonEditPage from '../../components/commonEditPage';
-import {cleanOneNewsStatus, loadOneNews, updateOneNews} from '../../store/oneNews/actions';
-import {Redirect} from 'react-router-dom';
-import {noMatchPagePath, oneNewsPagePath} from '../../paths';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import CommonEditPage from '../../components/commonEditPage';
+import ErrorMessage from '../../components/errorMessage';
+import ErrorLayout from '../../components/errorsLayout';
 import Loader from '../../components/loader';
+import {noMatchPagePath, oneNewsPagePath} from '../../paths';
+import {cleanOneNewsStatus, loadOneNews, updateOneNews} from '../../store/oneNews/actions';
 import fetchProcess from '../../types/fetching';
 
 interface EditOneNewsPageHOCProps {
     username?: string
-    oneNewsId:string
+    oneNewsId: string
     loadOneNews: (id: string) => void
     status?: fetchProcess
     error?: string
@@ -30,9 +32,10 @@ interface EditOneNewsPageHOCProps {
     }) => void,
     cleanStatus: () => void
     history: any
+    loadingError?: string
 }
 
-const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
+export const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
     ({
          username,
          oneNewsId,
@@ -40,15 +43,21 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
          loadOneNews,
          save,
          history,
+         loadingError,
          ...props
      }) => {
         useEffect(() => loadOneNews(oneNewsId), [oneNewsId, loadOneNews]);
 
         if (!username)
-            return <Redirect to={noMatchPagePath()}/>;
+            return (<Redirect to={noMatchPagePath()}/>);
 
-        if (!oneNews)
+        if (!oneNews) {
+            if (loadingError)//todo add loading error component
+                return (<ErrorLayout>
+                    <ErrorMessage message={loadingError}/>
+                </ErrorLayout>);
             return (<Loader size={300}/>);
+        }
 
         if (oneNews.authorId !== username)
             return <Redirect to={noMatchPagePath()}/>;
@@ -57,29 +66,24 @@ const EditOneNewsPageHOC: React.FC<EditOneNewsPageHOCProps> =
             {...props}
             oneNewsId={oneNewsId}
             oneNews={oneNews}
-            save={
-                (n: {
-                    img?: File
-                    tag: string
-                    title: string
-                    text: string
-                }) => save({...n, id:oneNewsId})
-            }
+            save={(n: { img?: File, tag: string, title: string, text: string }) =>
+                save({...n, id: oneNewsId})}
             cancel={() => history.push(oneNewsPagePath(oneNews.id))}
         />);
-    }
+    };
 
-const mapStateToProps = ({user, oneNews}: any, ownProps: any) =>
+export const mapStateToProps = ({user, oneNews}: any, {match, history}: any) =>
     ({
-        oneNewsId: ownProps.match?.params?.id,
+        oneNewsId: match.params.id,
+        history: history,
         username: user.value?.username,
         oneNews: oneNews.value,
-        history: ownProps.history,
         status: oneNews.updatingStatus,
         error: oneNews.updatingError,
+        loadingError: oneNews.loadingError,
     });
 
-const mapDispatchToProps = {
+export const mapDispatchToProps = {
     loadOneNews,
     save: updateOneNews,
     cleanStatus: cleanOneNewsStatus,

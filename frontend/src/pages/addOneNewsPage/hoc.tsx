@@ -1,25 +1,37 @@
 import React from 'react';
-import CommonEditPage, {CommonEditPageProps} from '../../components/commonEditPage';
+import CommonEditPage from '../../components/commonEditPage';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {mainPagePath, noMatchPagePath} from '../../paths';
 import {cleanOneNewsStatus, createOneNews} from '../../store/oneNews/actions';
+import fetchProcess from '../../types/fetching';
 
-interface AddOneNewsPageHOCProps extends CommonEditPageProps {
+interface AddOneNewsPageHOCProps {
+    oneNewsId?: string
     user?: any
     history: any
+    cancel: () => void,
+    error?: string
+    status?: fetchProcess
+    cleanStatus: () => void
+    save: (oneNews: {
+        img: File
+        tag: string
+        title: string
+        text: string
+    }) => void,
 }
 
-const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> =
-    ({user, history, ...props}) =>
-        user ?
-            <CommonEditPage
-                {...props}
-                cancel={() => history.push(mainPagePath())}
-            /> :
-            <Redirect to={noMatchPagePath()}/>;
+export const AddOneNewsPageHOC: React.FC<AddOneNewsPageHOCProps> =
+    ({user, history, ...props}) => {
+        if (!user) return <Redirect to={noMatchPagePath()}/>;
+        return <CommonEditPage
+            {...props}
+            cancel={() => history.push(mainPagePath())}
+        />;
+    }
 
-const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
+export const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
     oneNewsId: oneNews.id,
     user: user.value,
     status: oneNews.creatingStatus,
@@ -27,6 +39,6 @@ const mapStateToProps = ({user, oneNews}: any, ownProps: any) => ({
     history: ownProps.history
 });
 
-const mapDispatchToProps = {save: createOneNews, cleanStatus: cleanOneNewsStatus};
+export const mapDispatchToProps = {save: createOneNews, cleanStatus: cleanOneNewsStatus};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddOneNewsPageHOC);
